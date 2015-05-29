@@ -1,0 +1,1 @@
+$HOME/rate4site.3.2.source/sourceMar09/rate4site -s test_r4s/mg_sequences.fasta -t test_r4s/test1.tre
