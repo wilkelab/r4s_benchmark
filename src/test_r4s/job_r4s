@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH -J test_r4s_o           # job name
-#SBATCH -o test_r4s_o.o%j       # output and error file name (%j expands to jobID)
+#SBATCH -J test_r4s           # job name
+#SBATCH -o test_r4s.o%j       # output and error file name (%j expands to jobID)
 #SBATCH -n 32              # total number of mpi tasks requested
 #SBATCH -p normal     # queue (partition) -- normal, development, etc.
 #SBATCH -t 02:00:00        # run time (hh:mm:ss) - 1.5 hours
@@ -8,4 +8,4 @@
 #SBATCH --mail-type=begin  # email me when the job starts
 #SBATCH --mail-type=end    # email me when the job finishes
 #SBATCH -A A-bio7
-ibrun ./test_r4s/test_r4s.sh              # run the MPI executable named a.out
+ibrun $SCRATCH/r4s_benchmark/src/test_r4s/test_r4s.sh # run the MPI executable named a.out
