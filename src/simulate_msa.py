@@ -23,4 +23,4 @@ mg_part = Partition(size = length, models = mg_model)
 #gy_evolve(seqfile = "gy_sequences.fasta")
 
 mg_evolve = Evolver(partitions = mg_part, tree = tree)
-mg_evolve(seqfile = "mg_sequences.fasta")
+mg_evolve(seqfile = "../test_msa/mg_sequences.fasta")
