@@ -1,1 +1,0 @@
-$HOME/rate4site.3.2.source/sourceMar09/rate4site -s $SCRATCH/r4s_benchmark/test_msa/aa_msa/mg_sequences.fasta -t $SCRATCH/r4s_benchmark/test_trees/test1.tre
