@@ -17,4 +17,4 @@ for s in nuc_aln:
 
 msa = MultipleSeqAlignment(aa_aln) # create an MSA object
 base_name = aln_file.split("/")[-1]
-AlignIO.write(msa, "../aln/aa/"+base_name, "fasta") 
+AlignIO.write(msa, "aln/aa/"+base_name, "fasta") 

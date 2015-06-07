@@ -6,9 +6,9 @@ bl=$2
 tree=test_t${num}_b${bl}.tre
 model=mg
 aln=${model}_seq_t${num}_b${bl}.fasta
-r4s_norm_rates=r4s_rates_t${num}_b${bl}.txt
-r4s_unnorm_rates=r4s_rates_t${num}_b${bl}.txt
-r4s_tree=r4s_rates_t${num}_b${bl}.txt
+r4s_norm_rates=r4s_norm_rates_t${num}_b${bl}.txt
+r4s_unnorm_rates=r4s_unnorm_rates_t${num}_b${bl}.txt
+r4s_tree=r4s_tree_t${num}_b${bl}.txt
 
 if [ -f "trees/${tree}" ]; then
 	rm trees/${tree}
@@ -78,8 +78,9 @@ if [ ! -d "r4s_site_rates/" ]; then
 fi
 
 ##run rate4site 
-echo "../rate4site.3.2.source/sourceMar09/rate4site -s aln/aa/$aln -t trees/$tree -o $r4s_norm_rates -y $r4s_unnorm_rates -x $r4s_tree"
+../rate4site.3.2.source/sourceMar09/rate4site -s aln/aa/$aln -t trees/$tree -o $r4s_norm_rates -y $r4s_unnorm_rates -x $r4s_tree
 if [ -f $r4s_norm_rates ]; then
+	rm r4s.res
 	mv $r4s_norm_rates r4s_site_rates/final_site_rates/
 	mv $r4s_unnorm_rates r4s_site_rates/r4s_out/
 	mv $r4s_tree r4s_site_rates/r4s_out/
