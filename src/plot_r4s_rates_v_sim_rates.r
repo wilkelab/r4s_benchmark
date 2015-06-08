@@ -68,7 +68,7 @@ p2 <- ggplot(d,aes(num_taxa,cor)) +
 	xlab("Number of Taxa") +
 	ylab("Correlation (spearman)") +
 	scale_y_continuous(breaks=seq(-0.2,1,0.2), limits = c(-0.2,1)) +
-	geom_text(aes(x=30,y=0.95,label=paste0(round(c2$estimate,2),sig)))
+	geom_text(aes(x=50,y=0.95,label=paste0(round(c2$estimate,2),sig)))
 ggsave("plots/cor_v_num_taxa.pdf")
 
 c3 <- cor.test(d$branch_len,d$cor,method="spearman")
@@ -82,5 +82,5 @@ p3 <- ggplot(d,aes(branch_len,cor)) +
 	xlab("Branch Length") +
 	ylab("Correlation (spearman)") +
   scale_y_continuous(breaks=seq(-0.2,1,0.2), limits = c(-0.2,1))  +
-	geom_text(aes(x=0.001,y=0.95,label=paste0(round(c3$estimate,2),sig)))
+	geom_text(aes(x=0.007,y=0.95,label=paste0(round(c3$estimate,2),sig)))
 ggsave("plots/cor_v_branch_len.pdf")
