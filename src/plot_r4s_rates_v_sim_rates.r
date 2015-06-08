@@ -43,14 +43,14 @@ sig <- rep(" ",length(d$num_taxa))
 sig[d$cor_p_val <= 0.05] = rep("*",length(sig[d$cor_p_val <= 0.05]))
 
 p1 <- ggplot(d,aes(dN,r4s_score)) + 
-	geom_point() + 
+	geom_point(size=1,alpha=0.7) + 
 	geom_smooth(method=lm) +
 	xlab("simulated rate (dN)") +
 	ylab("rate4site score") +
 	theme(axis.text=element_text(size=8),legend.position="none") +
-	geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=8)) +
-	scale_x_continuous(breaks=seq(0.1,1.5,0.2), limits = c(0.1,1.5)) + 
-	scale_y_continuous(breaks=seq(-1,6,2), limits = c(-1,6)) +
+	geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=4)) +
+	scale_x_continuous(breaks=seq(0,1.5,0.5), labels=c("0","0.5","1","1.5"), limits = c(0.0,1.5)) + 
+	scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
 	facet_grid(num_taxa ~ branch_len) +
 	background_grid(major = 'xy') + 
 	panel_border()
