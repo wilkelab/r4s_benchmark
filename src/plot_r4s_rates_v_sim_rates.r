@@ -51,32 +51,36 @@ p1 <- ggplot(d,aes(dN,r4s_score)) +
 	geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=8)) +
 	scale_x_continuous(breaks=seq(0.1,1.5,0.2), limits = c(0.1,1.5)) + 
 	scale_y_continuous(breaks=seq(-1,6,2), limits = c(-1,6)) +
-	facet_grid(num_taxa ~ branch_len)
+	facet_grid(num_taxa ~ branch_len) +
+	background_grid(major = 'xy') + 
+	panel_border()
+ggsave("plots/r4s_rates_v_sim_rates.pdf")
 
 c2 <- cor.test(d$num_taxa,d$cor,method="spearman")
 if (c2$p.value <= 0.05) { sig="*"
 } else sig=""
 
 p2 <- ggplot(d,aes(num_taxa,cor)) + 
-	geom_point() +
+	geom_point(aes(color=factor(branch_len))) +
+	geom_line(aes(color=factor(branch_len), group=branch_len)) +
 	geom_smooth(method=lm) +
+  scale_colour_discrete(name="Branch length") +
 	xlab("Number of Taxa") +
 	ylab("Correlation (spearman)") +
-	scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1)) +
+	scale_y_continuous(breaks=seq(-0.2,1,0.2), limits = c(-0.2,1)) +
 	geom_text(aes(x=30,y=0.95,label=paste0(round(c2$estimate,2),sig)))
-
+ggsave("plots/cor_v_num_taxa.pdf")
 
 c3 <- cor.test(d$branch_len,d$cor,method="spearman")
 if (c3$p.value <= 0.05) { sig="*"
 } else sig=""
 p3 <- ggplot(d,aes(branch_len,cor)) + 
-	geom_point() +
+  geom_point(aes(color=factor(num_taxa))) +
+  geom_line(aes(color=factor(num_taxa), group=num_taxa)) +
 	geom_smooth(method=lm) +
+  scale_colour_discrete(name="Number of taxa") +
 	xlab("Branch Length") +
 	ylab("Correlation (spearman)") +
-	scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1)) +
+  scale_y_continuous(breaks=seq(-0.2,1,0.2), limits = c(-0.2,1))  +
 	geom_text(aes(x=0.001,y=0.95,label=paste0(round(c3$estimate,2),sig)))
-
-ggsave("plots/r4s_rates_v_sim_rates.pdf",p1)
-ggsave("plots/cor_v_num_taxa.pdf",p2)
-ggsave("plots/cor_v_branch_len.pdf",p3)
+ggsave("plots/cor_v_branch_len.pdf")
