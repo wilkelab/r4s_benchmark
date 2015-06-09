@@ -12,11 +12,15 @@ if [ ! -d "${model}" ]; then
 	mkdir "${model}"
 fi
 
+if [ ! -d "${model}/plots/" ]; then
+	mkdir "${model}/plots/"
+fi  
+
 #run the pipeline in the model's directory
 cd ${model}
 
 tree=t${num_taxa}_b${br_len}_${sim_num}.tre ##tree file name
-aln=${style}_seq_t${num_taxa}_b${br_len}.fasta ##multiple sequence alignment file name
+aln=seq_t${num_taxa}_b${br_len}_${sim_num}.fasta ##multiple sequence alignment file name
 sim_rates=site_rates_t${num_taxa}_b${br_len}_${sim_num}.txt ##pyvolve output file name
 sim_rates_info=site_rates__info_t${num_taxa}_b${br_len}_${sim_num}.txt ##pyvolve output file name
 r4s_norm_rates=r4s_norm_rates_t${num_taxa}_b${br_len}_${sim_num}.txt ##rate4site output file name for norm rates

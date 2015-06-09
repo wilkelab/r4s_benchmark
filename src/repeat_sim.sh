@@ -28,3 +28,4 @@
 ./src/run_sim_pipeline.sh dN 28
 ./src/run_sim_pipeline.sh dN 29
 ./src/run_sim_pipeline.sh dN 30
+Rscript ./src/plot_r4s_rates_v_sim_rates.r dN

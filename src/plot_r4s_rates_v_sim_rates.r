@@ -3,15 +3,18 @@ library(ggplot2)
 library(dplyr)
 library(cowplot)
 
-t1 <- list.files("r4s_site_rates/final_site_rates",full.names=T)
-t2 <- list.files("sim_site_rates/final_site_rates",full.names=T)
+args <- commandArgs(trailingOnly = TRUE)
+##model <- as.character(args[1]) 
+model <- "dN"
+t1 <- list.files(paste0(model,"/r4s_site_rates"),full.names=T)
+t2 <- list.files(paste0(model,"/sim_site_rates"),full.names=T)
 
 for (i in 1:length(t1)) 
 {
 	str <- regexpr("b\\d+",t1[i])[1]
-	end <- regexpr(".txt",t1[i])[1]
+	end <- regexpr("_\\d+.txt",t1[i])[1]
 	bl <- as.numeric(substr(t1[i],str+1,end-1))
-	
+
 	r1 <- read.table(t1[i],skip=11,sep="\t")
 
 	#reformat rate4site output
@@ -24,21 +27,40 @@ for (i in 1:length(t1))
 	s$r4s_score <- as.numeric(r$score)
 	s$num_taxa <- as.numeric(r$num_taxa)
 	s$branch_len <- rep(bl,length(s$num_taxa))
-	
+
 	cor_test <- cor.test(s$dN,s$r4s_score,method="spearman")
 	cor <- cor_test$estimate
 	p_val <- cor_test$p.value
 
-	
+
 	s$cor_p_val <- rep(p_val,length(s$num_taxa))
 	s$cor <- rep(cor,length(s$num_taxa))
-	
+
 	if (i==1) {
 		d <- s
 	} else d <- rbind(d, s)
 }
 
 d <- d %>% arrange(num_taxa,branch_len)
+
+##collect correlation coefficients and p-values
+cor_l <- c()
+p_val_l <- c()
+for (n in distinct(select(d,num_taxa))) {
+  for (l in distinct(select(d,branch_len))) {
+    a <- d %>% filter(num_taxa = n, br_len = l)
+    print(head(a))
+    cor_test <- cor.test(a$dN,a$r4s_score,method="spearman")
+    cor <- cor_test$estimate
+    p_val <- cor_test$p.value
+    
+    cor_l <- c(cor_l,rep(cor,length(a$num_taxa)))
+    p_val_l <- c(p_val_l,rep(p_val,length(a$num_taxa)))
+  }
+}
+
+d$cor <- cor_l
+d$cor_p_val <- p_val_l
 sig <- rep(" ",length(d$num_taxa))
 sig[d$cor_p_val <= 0.05] = rep("*",length(sig[d$cor_p_val <= 0.05]))
 
@@ -54,7 +76,7 @@ p1 <- ggplot(d,aes(dN,r4s_score)) +
 	facet_grid(num_taxa ~ branch_len) +
 	background_grid(major = 'xy', minor = "none") + 
 	panel_border()
-ggsave("plots/r4s_rates_v_sim_rates.pdf")
+ggsave(paste0(model,"/plots/r4s_rates_v_sim_rates.pdf"))
 
 p2 <- ggplot(d,aes(num_taxa,cor)) + 
 	geom_point(aes(color=factor(branch_len))) +
@@ -63,7 +85,7 @@ p2 <- ggplot(d,aes(num_taxa,cor)) +
 	xlab("Number of Taxa") +
 	ylab("Correlation (spearman)") +
 	scale_y_continuous(breaks=seq(-0.2,1,0.2), limits = c(-0.2,1)) +
-ggsave("plots/cor_v_num_taxa.pdf")
+ggsave(paste0(model,"/plots/cor_v_num_taxa.pdf"))
 
 p3 <- ggplot(d,aes(branch_len,cor)) + 
   geom_point(aes(color=factor(num_taxa))) +
@@ -73,4 +95,4 @@ p3 <- ggplot(d,aes(branch_len,cor)) +
 	xlab("Branch Length") +
 	ylab("Correlation (spearman)") +
   scale_y_continuous(breaks=seq(-0.2,1,0.2), limits = c(-0.2,1))  +
-ggsave("plots/cor_v_branch_len.pdf")
+ggsave(paste0(model,"/plots/cor_v_branch_len.pdf"))
