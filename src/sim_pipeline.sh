@@ -1,25 +1,36 @@
 #!/bin/bash
 #number of taxa
-num=$1
+model=$1
 #branch lengths
-bl=$2
-tree=test_t${num}_b${bl}.tre
-model=mg
-aln=${model}_seq_t${num}_b${bl}.fasta
-r4s_norm_rates=r4s_norm_rates_t${num}_b${bl}.txt
-r4s_unnorm_rates=r4s_unnorm_rates_t${num}_b${bl}.txt
-r4s_tree=r4s_tree_t${num}_b${bl}.txt
+sim_num=$2
+#number of the simulation
+num_taxa=$3
+#model for the simulation
+br_len=$4
 
-if [ -f "trees/${tree}" ]; then
-	rm trees/${tree}
+if [ ! -d "${model}" ]; then
+	mkdir "${model}"
 fi
+
+#run the pipeline in the model's directory
+cd ${model}
+
+tree=t${num_taxa}_b${br_len}_${sim_num}.tre ##tree file name
+aln=${style}_seq_t${num_taxa}_b${br_len}.fasta ##multiple sequence alignment file name
+sim_rates=site_rates_t${num_taxa}_b${br_len}_${sim_num}.txt ##pyvolve output file name
+sim_rates_info=site_rates__info_t${num_taxa}_b${br_len}_${sim_num}.txt ##pyvolve output file name
+r4s_norm_rates=r4s_norm_rates_t${num_taxa}_b${br_len}_${sim_num}.txt ##rate4site output file name for norm rates
 
 if [ ! -d "trees" ]; then
 	mkdir "trees"
 fi
 
+if [ -f "trees/${tree}" ]; then
+	rm trees/${tree}
+fi
+
 ##simulate a tree 
-Rscript src/generate_balanced_tree_ape.R $num $bl trees/${tree}
+Rscript ../src/generate_balanced_tree_ape.R $num_taxa $br_len trees/${tree}
 
 if [ ! -d "aln" ]; then
 	mkdir "aln"
@@ -27,61 +38,52 @@ if [ ! -d "aln" ]; then
 	mkdir "aln/aa"
 fi
 
+if [ ! -d "sim_site_rates/" ]; then
+	mkdir "sim_site_rates/"
+fi
+
 if [ -f "aln/nuc/$aln" ]; then
 	rm aln/nuc/$aln
 fi
 
-if [ -f "sim_site_rates/pyvolve_out/site_rates_t${num}_b${bl}.txt" ]; then
-	rm sim_site_rates/pyvolve_out/site_rates_t${num}_b${bl}.txt
-fi
-
-if [ -f "sim_site_rates/pyvolve_out/site_rates_info_t${num}_b${bl}.txt" ]; then
-	rm sim_site_rates/pyvolve_out/site_rates_t${num}_b${bl}.txt
-fi
-
-if [ -f "sim_site_rates/final_site_rates/site_rates_t${num}_b${bl}.txt" ]; then
-	rm sim_site_rates/final_site_rates/site_rates_t${num}_b${bl}.txt
+if [ -f "sim_site_rates/pyvolve_out/${sim_rates}" ]; then
+	rm sim_site_rates/pyvolve_out/${sim_rates}
+	rm sim_site_rates/pyvolve_out/${sim_rates_info}
+	rm sim_site_rates/final_site_rates/${sim_rates}
 fi
 
 ##simulate multiple sequence alignment based on the tree
-python src/simulate_aln.py $num $bl trees/${tree} $model aln/nuc/$aln
-
-if [ ! -d "sim_site_rates/" ]; then
-	mkdir "sim_site_rates/"
-	mkdir "sim_site_rates/pyvolve_out/"
-	mkdir "sim_site_rates/final_site_rates/"
-fi
+python ../src/simulate_aln.py $model trees/${tree} aln/nuc/$aln
 
 ##move simulate_aln.py output
 if [ -f "site_rates.txt" ]; then
-	mv site_rates.txt sim_site_rates/pyvolve_out/site_rates_t${num}_b${bl}.txt
+	mv site_rates.txt sim_site_rates/${sim_rates}
+	mv site_rates_info.txt sim_site_rates/${sim_rates_info}
 fi
 
-if [ -f "site_rates_info.txt" ]; then
-	mv site_rates_info.txt sim_site_rates/pyvolve_out/site_rates_info_t${num}_b${bl}.txt
-fi
+##merge simulate_aln.py output
+Rscript ../src/merge_site_rates.r sim_site_rates/${sim_rates} sim_site_rates/${sim_rates_info}
 
-##merge pyvolve output
-Rscript src/merge_site_rates.r sim_site_rates/pyvolve_out/site_rates_t${num}_b${bl}.txt sim_site_rates/pyvolve_out/site_rates_info_t${num}_b${bl}.txt 
+if [ -f "sim_site_rates/${sim_rates_info}" ]; then
+	rm sim_site_rates/${sim_rates_info}
+fi
 
 if [ -f "aln/aa/$aln" ]; then
 	rm aln/aa/$aln
 fi
 
 ##convert an alignment from nuc to aa 
-python src/translate_aln.py aln/nuc/$aln
+python ../src/translate_aln.py aln/nuc/$aln
 
 if [ ! -d "r4s_site_rates/" ]; then
 	mkdir "r4s_site_rates/"
-	mkdir "r4s_site_rates/r4s_out/"
-	mkdir "r4s_site_rates/final_site_rates/"
 fi
 
 ##run rate4site 
-../rate4site.3.2.source/sourceMar09/rate4site -s aln/aa/$aln -t trees/$tree -o $r4s_norm_rates -y $r4s_unnorm_rates -x $r4s_tree
-if [ -f $r4s_norm_rates ]; then
+../../rate4site.3.2.source/sourceMar09/rate4site -s aln/aa/$aln -t trees/$tree -o $r4s_norm_rates 
+if [ -f r4s.res ]; then
 	rm r4s.res
-	mv $r4s_norm_rates r4s_site_rates/final_site_rates/
-	mv $r4s_unnorm_rates r4s_site_rates/r4s_out/
-	mv $r4s_tree r4s_site_rates/r4s_out/
+	rm r4sOrig.res
+	rm TheTree.txt
+	mv $r4s_norm_rates r4s_site_rates/
 fi

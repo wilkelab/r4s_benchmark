@@ -52,7 +52,7 @@ p1 <- ggplot(d,aes(dN,r4s_score)) +
 	scale_x_continuous(breaks=seq(0,1.5,0.5), labels=c("0","0.5","1","1.5"), limits = c(0.0,1.5)) + 
 	scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
 	facet_grid(num_taxa ~ branch_len) +
-	background_grid(major = 'xy') + 
+	background_grid(major = 'xy', minor = "none") + 
 	panel_border()
 ggsave("plots/r4s_rates_v_sim_rates.pdf")
 
