@@ -8,6 +8,10 @@ num_taxa=$3
 #model for the simulation
 br_len=$4
 
+if [ -d "${model}" ]; then
+	exit 0
+fi
+
 if [ ! -d "${model}" ]; then
 	mkdir "${model}"
 fi

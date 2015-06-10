@@ -1,5 +1,5 @@
 #!/bin/bash
-sim_model_arr=(dN) ## dN_dS ms_dS ms_no_dS)
+sim_model_arr=(dN dN_dS) ## ms_dS ms_no_dS)
 num_sim=30
 
 if [ -f "./src/repeat_sim.sh" ]; then
