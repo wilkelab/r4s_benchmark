@@ -5,7 +5,7 @@ library(cowplot)
 
 args <- commandArgs(trailingOnly = TRUE)
 ##model <- as.character(args[1]) 
-model <- "dN"
+model <- "dN_dS"
 t1 <- list.files(paste0(model,"/r4s_site_rates"),full.names=T)
 t2 <- list.files(paste0(model,"/sim_site_rates"),full.names=T)
 
@@ -52,19 +52,37 @@ a <- d %>% filter(sim_num==1)
 sig <- rep(" ",length(a$num_taxa))
 sig[a$p_val <= 0.05] = rep("*",length(sig[a$p_val <= 0.05]))
 
-p1 <- ggplot(a,aes(dN,r4s_score)) + 
-	geom_point(size=1,alpha=0.7) + 
-	geom_smooth(method=lm) +
-	xlab("simulated rate (dN)") +
-	ylab("rate4site score") +
-	theme(axis.text=element_text(size=8),legend.position="none") +
-	geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=4)) +
-	scale_x_continuous(breaks=seq(0,1.5,0.5), labels=c("0","0.5","1","1.5"), limits = c(0.0,1.5)) + 
-	scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
-	facet_grid(num_taxa ~ branch_len) +
-	background_grid(major = 'xy', minor = "none") + 
-	panel_border()
-ggsave(paste0(model,"/plots/r4s_rates_v_sim_rates.pdf"))
+if (model == "dN") {
+	p1 <- ggplot(a,aes(dN,r4s_score)) + 
+		geom_point(size=1,alpha=0.7) + 
+		geom_smooth(method=lm) +
+		xlab("simulated rate (dN)") +
+		ylab("rate4site score") +
+		theme(axis.text=element_text(size=8),legend.position="none") +
+		geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=4)) +
+		scale_x_continuous(breaks=seq(0,1.5,0.5), labels=c("0","0.5","1","1.5"), limits = c(0.0,1.5)) + 
+		scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
+		facet_grid(num_taxa ~ branch_len) +
+		background_grid(major = 'xy', minor = "none") + 
+		panel_border()
+	ggsave(paste0(model,"/plots/r4s_rates_v_sim_rates.pdf"))
+}
+
+if (model == "dN_dS") {
+	p1 <- ggplot(a,aes(dN/ds,r4s_score)) + 
+		geom_point(size=1,alpha=0.7) + 
+		geom_smooth(method=lm) +
+		xlab("simulated rate (dN)") +
+		ylab("rate4site score") +
+		theme(axis.text=element_text(size=8),legend.position="none") +
+		geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=4)) +
+		scale_x_continuous(breaks=seq(0,1.5,0.5), labels=c("0","0.5","1","1.5"), limits = c(0.0,1.5)) + 
+		scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
+		facet_grid(num_taxa ~ branch_len) +
+		background_grid(major = 'xy', minor = "none") + 
+		panel_border()
+	ggsave(paste0(model,"/plots/r4s_rates_v_sim_rates.pdf"))
+}
 
 p2 <- ggplot(d,aes(num_taxa,cor)) + 
 	geom_point() +
