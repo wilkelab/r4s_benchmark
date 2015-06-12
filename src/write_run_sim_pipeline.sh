@@ -20,7 +20,7 @@ do
 			done
 		done
 	done
-	echo "Rscript ./src/plot_r4s_rates_v_sim_rates.r $model" >> ./src/run_sim_pipeline.sh
+	##echo "Rscript ./src/plot_r4s_rates_v_sim_rates.r $model" >> ./src/run_sim_pipeline.sh
 done
 
 chmod +x ./src/run_sim_pipeline.sh
