@@ -14,10 +14,15 @@ if model=="dN" or model=="dN_dS": #aa mutation is symmetric
 	kappa = 4.5 #set transition:transversion ratio
 	model_name="MG" #set model to mg-style
 	
-	if model=="dN":
+	if model=="dN": ##varying dN 
 		parameters = {"kappa": kappa, "omega": np.arange(0.1, 1.6, 0.1) } # dN/dS values ranging from 0.1 - 1.5
-	if model=="dN_dS":
-		parameters = {"kappa": kappa, "alpha": np.arange(0.1, 1.6, 0.1), "beta": np.arange(0.1, 1.6, 0.1) }
+	if model=="dN_dS": ##varying dN and dS
+		##make every combination of rates 0.1-1.5 of dN to 0.1-1.5 of dS, i.e. 0.1 to 0.1, 0.1 to 0.2, etc.
+		r = np.arange(0.1, 1.6, 0.1)
+		n = len(r)
+		l1 = np.repeat(r,n)
+		l2 = np.tile(r,n)
+		parameters = {"kappa": kappa, "alpha": l1, "beta": l2 }
 
 	mg_model = Model(model_name, parameters, scale_matrix = "neutral")
 	mg_part = Partition(size = length, models = mg_model)
