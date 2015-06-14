@@ -2,7 +2,7 @@
 #$ -V	#Inherit the submission environment
 #$ -N sim_rates	# Job Name
 #$ -j y	# Combine stderr and stdout
-#$ -o $JOB_NAME.o$JOB_ID	# Name of the output file (eg. myMPI.oJobID)
+#$ -o sim_rates.o$JOB_ID	# Name of the output file (eg. myMPI.oJobID)
 #$ -pe 12way 24	# Requests 12 tasks/node, 24 cores total
 #$ -q normal	# Queue name normal
 #$ -l h_rt=3:00:00	# Run time (hh:mm:ss) - 1.5 hours
