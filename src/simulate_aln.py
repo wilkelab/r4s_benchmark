@@ -12,7 +12,6 @@ length = 100 # number of codon positions
 
 if model=="dN" or model=="dN_dS": #aa mutation is symmetric 
 	kappa = 4.5 #set transition:transversion ratio
-	model_name="MG" #set model to mg-style
 	
 	if model=="dN": ##varying dN 
 		parameters = {"kappa": kappa, "omega": np.arange(0.1, 1.6, 0.1) } # dN/dS values ranging from 0.1 - 1.5
@@ -23,14 +22,16 @@ if model=="dN" or model=="dN_dS": #aa mutation is symmetric
 		l1 = np.repeat(r,n)
 		l2 = np.tile(r,n)
 		parameters = {"kappa": kappa, "alpha": l1, "beta": l2 }
-
-	mg_model = Model(model_name, parameters, scale_matrix = "neutral")
+	mg_model = Model("MG", parameters, scale_matrix = "neutral")
 	mg_part = Partition(size = length, models = mg_model)
 	mg_evolve = Evolver(partitions = mg_part, tree = tree)
 	mg_evolve(seqfile = aln_file)
 	
-#elif model="ms_dS" or model=="ms_no_dS":
-#	model_name="MutSel"
+elif model="ms_dS" or model=="ms_no_dS":
+	mu = {"AC":,"CA":,"TC"
+	if model="ms_dS":
+		model_name = "MutSel
+		
 else:
 	sys.exit("wrong input model")
 	
