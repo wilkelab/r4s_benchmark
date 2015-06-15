@@ -22,18 +22,27 @@ if model=="dN" or model=="dN_dS": #aa mutation is symmetric
 		l1 = np.repeat(r,n)
 		l2 = np.tile(r,n)
 		parameters = {"kappa": kappa, "alpha": l1, "beta": l2 }
-	mg_model = Model("MG", parameters, scale_matrix = "neutral")
-	mg_part = Partition(size = length, models = mg_model)
-	mg_evolve = Evolver(partitions = mg_part, tree = tree)
-	mg_evolve(seqfile = aln_file)
+	model = Model("MG", parameters, scale_matrix = "neutral")
 	
 elif model="ms_dS" or model=="ms_no_dS":
-	mu = {"AC":,"CA":,"TC"
+	nuc_list = {"AC","CA","AG","GA","AT","TA","CG","GC","CT","TC","GT","TG")
+	rates = np.random.
+	mu = dict(zip(nuc_list,rates))
+	
 	if model="ms_dS":
-		model_name = "MutSel
+		parameters = {"mu":mu,"alpha": np.arange(0.1, 1.6, 0.1)}
+	
+	if model="ms_no_dS":
+		parameters = {"mu":mu}
 		
+	codon_fitness = np.random.normal(size = 61) # constructs a vector of normally distributed codon fitness values, as an example
+	model = pyvolve.Model("MutSel", ,{"fitness": codon_fitness})	
+
 else:
 	sys.exit("wrong input model")
 	
+part = Partition(size = length, models = model)
+evolve = Evolver(partitions = part, tree = tree)
+evolve(seqfile = aln_file)
 
 
