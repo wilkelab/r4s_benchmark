@@ -24,20 +24,23 @@ if model=="dN" or model=="dN_dS": #aa mutation is symmetric
 		parameters = {"kappa": kappa, "alpha": l1, "beta": l2 }
 	model = Model("MG", parameters, scale_matrix = "neutral")
 	
-#elif model=="ms_dS" or model=="ms_no_dS":
-#	nuc_list = ["AC","CA","AG","GA","AT","TA","CG","GC","CT","TC","GT","TG"]
-#	rates =[ 1.33772085,  1.03590118,  0.1616799 ,  0.48613279,  1.43143935, 0.0910265 ,  0.56344429,  0.55420064,  0.46036002,  1.2304828 ,0.76040527,  0.30253117]
-#	mu = dict(zip(nuc_list,rates))
-	
-#	codon_fitness = np.random.normal(size = 61) # constructs a vector of normally distributed codon fitness values, as an example
-
-#	if model=="ms_dS":
-#		parameters = {"mu":mu,"alpha": np.arange(0.1, 1.6, 0.1),"fitness": codon_fitness}
-	
-#	if model=="ms_no_dS":
-#		parameters = {"mu":mu,"fitness": codon_fitness}
-		
-#	model = Model("MutSel",parameters)	
+# elif model=="ms_dS" or model=="ms_no_dS":
+# 	#nuc_list = ["AC","CA","AG","GA","AT","TA","CG","GC","CT","TC","GT","TG"]
+# 	#rates =[ 1.33772085,  1.03590118,  0.1616799 ,  0.48613279,  1.43143935, 0.0910265 ,  0.56344429,  0.55420064,  0.46036002,  1.2304828 ,0.76040527,  0.30253117]
+# 	#mu = dict(zip(nuc_list,rates))
+# 	##set all mut rates to 1
+# 	
+# 	codon_fitness = np.random.normal(size = 61) # constructs a vector of normally distributed codon fitness values, as an example
+# 	##different fitness for each amino acid, but no dS
+# 	##Stephanie uses exponential distr
+# 	
+# 	if model=="ms_dS":
+# 		parameters = {"mu":mu,"fitness": codon_fitness}
+#  	
+# 	if model=="ms_no_dS":
+#  		parameters = {"mu":mu,"fitness": codon_fitness}
+# 		
+# #	model = Model("MutSel",parameters)	
 
 else:
 	sys.exit("wrong input model")

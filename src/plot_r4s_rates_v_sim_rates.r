@@ -69,7 +69,7 @@ if (model == "dN") {
 }
 
 if (model == "dN_dS") {
-	p1 <- ggplot(a,aes(dN/ds,r4s_score)) + 
+	p1 <- ggplot(a,aes(dN/dS,r4s_score)) + 
 		geom_point(size=1,alpha=0.7) + 
 		geom_smooth(method=lm) +
 		xlab("simulated rate (dN)") +

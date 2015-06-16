@@ -1,5 +1,6 @@
 ##This script takes in nucleotide msa (in fasta format) and converts it to amino acid msa (also in fasta format)
 import sys
+sys.path.append("/home1/02159/ds29583/lib64/python/")
 from Bio import AlignIO
 from Bio.Align import MultipleSeqAlignment
 from Bio.SeqRecord import SeqRecord
