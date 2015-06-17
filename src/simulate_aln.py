@@ -23,7 +23,24 @@ if model=="dN" or model=="dN_dS": #aa mutation is symmetric
 		l2 = np.tile(r,n)
 		parameters = {"kappa": kappa, "alpha": l1, "beta": l2 }
 	model = Model("MG", parameters, scale_matrix = "neutral")
-	
+
+######STEPHANIE'S CODE############
+from pyvolve import *
+import numpy as np
+
+size = 100 # 100 sites to evolve
+t = read_tree("tre.txt")
+parts = []
+for i in range(size):
+    simulated_fitness = np.random.exponential(scale=1, size = 20) # draw 20 fitness values, so each codon family gets the same fitness. you should probably save these to a file.. the scale argument (i think that's the argument?) is the mean of the distribution. look this up, though..
+    m = Model("mutsel", {"fitness":simulated_fitness})     
+    p = Partition(models = m, size = 1)
+    parts.append(p)
+
+e = Evolver(partitions = parts, tree = t)
+e()	
+###################################
+
 # elif model=="ms_dS" or model=="ms_no_dS":
 # 	#nuc_list = ["AC","CA","AG","GA","AT","TA","CG","GC","CT","TC","GT","TG"]
 # 	#rates =[ 1.33772085,  1.03590118,  0.1616799 ,  0.48613279,  1.43143935, 0.0910265 ,  0.56344429,  0.55420064,  0.46036002,  1.2304828 ,0.76040527,  0.30253117]
