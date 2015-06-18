@@ -32,7 +32,7 @@ fi
 ##simulate tree a tree
 if [ ! -f "trees/${tree}" ]; then
 	Rscript ../src/generate_balanced_tree_ape.R $num_taxa $br_len trees/${tree}
-	return
+	exit 1
 fi
 
 if [ ! -d "aln" ]; then
