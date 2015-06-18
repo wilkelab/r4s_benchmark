@@ -12,12 +12,12 @@ if [ ! -d "${model}" ]; then
 	mkdir "${model}"
 fi
 
-if [ ! -d "${model}/plots/" ]; then
-	mkdir "${model}/plots/"
-fi  
-
 #run the pipeline in the model's directory
 cd ${model}
+
+if [ ! -d "plots" ]; then
+	mkdir "plots"
+fi  
 
 tree=t${num_taxa}_b${br_len}_${sim_num}.tre ##tree file name
 aln=seq_t${num_taxa}_b${br_len}_${sim_num}.fasta ##multiple sequence alignment file name
