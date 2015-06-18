@@ -1,7 +1,7 @@
 from pyvolve import *
 import numpy as np
 import sys
-from dnds_functions import *
+##from dnds_functions import *
 
 # Read in phylogeny
 model = sys.argv[1]
@@ -25,17 +25,23 @@ if model=="dN" or model=="dN_dS": #aa mutation is symmetric
 		parameters = {"kappa": kappa, "alpha": l1, "beta": l2 }
 	model = Model("MG", parameters, scale_matrix = "neutral")
 
+	part = Partition(size = length, models = model)
+	evolve = Evolver(partitions = part, tree = tree)
+	evolve(seqfile = aln_file)
+
+elif model=="ms_dS" or model=="ms_no_dS":
+
 # ######STEPHANIE'S CODE############
-# from pyvolve import *
-# import numpy as np
+#
 # 
 # size = 100 # 100 sites to evolve
 # t = read_tree("tre.txt")
 # parts = []
-# for i in range(size):
-#     simulated_fitness = np.random.exponential(scale=1, size = 20) # draw 20 fitness values, so each codon family gets the same fitness. you should probably save these to a file.. the scale argument (i think that's the argument?) is the mean of the distribution. look this up, though..
-#     m = Model("mutsel", {"fitness":simulated_fitness})     
-#     p = Partition(models = m, size = 1)
+
+# for i in range(length):
+#     simulated_fitness = np.random.exponential(scale=1, size = 20) # draw 20 fitness values, scale is the mean or beta of the exponential distribution
+#     model = Model("mutsel", {"fitness":simulated_fitness})     
+#     p = Partition(models = model, size = 1)
 #     parts.append(p)
 #
 #	  # dN/dS calculation
@@ -73,8 +79,6 @@ if model=="dN" or model=="dN_dS": #aa mutation is symmetric
 else:
 	sys.exit("wrong input model")
 	
-part = Partition(size = length, models = model)
-evolve = Evolver(partitions = part, tree = tree)
-evolve(seqfile = aln_file)
+
 
 
