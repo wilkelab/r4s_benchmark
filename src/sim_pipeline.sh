@@ -29,12 +29,11 @@ if [ ! -d "trees" ]; then
 	mkdir "trees"
 fi
 
-if [ -f "trees/${tree}" ]; then
-	rm trees/${tree}
+##simulate tree a tree
+if [ ! -f "trees/${tree}" ]; then
+	Rscript ../src/generate_balanced_tree_ape.R $num_taxa $br_len trees/${tree}
+	return
 fi
-
-##simulate a tree 
-Rscript ../src/generate_balanced_tree_ape.R $num_taxa $br_len trees/${tree}
 
 if [ ! -d "aln" ]; then
 	mkdir "aln"
