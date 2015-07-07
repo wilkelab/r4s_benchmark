@@ -65,7 +65,7 @@ if [ -f "site_rates.txt" ]; then
 fi
 
 ##merge simulate_aln.py output
-Rscript ../src/merge_site_rates.r sim_site_rates/${sim_rates} sim_site_rates/${sim_rates_info}
+#Rscript ../src/merge_site_rates.r sim_site_rates/${sim_rates} sim_site_rates/${sim_rates_info}
 
 if [ -f "sim_site_rates/${sim_rates_info}" ]; then
 	rm sim_site_rates/${sim_rates_info}
