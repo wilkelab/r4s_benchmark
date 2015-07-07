@@ -3,7 +3,6 @@ sim_num=30
 sim_model_arr=(dN dN_dS ms_dS ms_no_dS)
 taxa_num_arr=(32 64 128 256)
 br_len_arr=(0.001 0.0033 0.01 0.033 0.1)
-tree=t${num_taxa}_b${br_len}_${sim_num}.tre ##tree file nam
 
 if [ -f "./src/run_sim_tree.sh" ]; then
 	rm ./src/run_sim_tree.sh 
@@ -17,6 +16,7 @@ if [ ! -d "${model}/trees" ]; then
 fi
 	for i in $(seq 1 $sim_num)
 	do	
+		tree=t${num_taxa}_b${br_len}_${i}.tre ##tree file nam
 		for num_taxa in ${taxa_num_arr[*]}
 		do	
 			for br_len in ${br_len_arr[*]}  
