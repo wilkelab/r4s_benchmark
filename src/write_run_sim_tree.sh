@@ -3,6 +3,7 @@ sim_num=30
 sim_model_arr=(dN dN_dS ms_dS ms_no_dS)
 taxa_num_arr=(32 64 128 256)
 br_len_arr=(0.001 0.0033 0.01 0.033 0.1)
+tree=t${num_taxa}_b${br_len}_${sim_num}.tre ##tree file nam
 
 if [ -f "./src/run_sim_tree.sh" ]; then
 	rm ./src/run_sim_tree.sh 
@@ -20,7 +21,8 @@ fi
 		do	
 			for br_len in ${br_len_arr[*]}  
 			do
-    			echo "Rscript src/generate_balanced_tree_ape.R $num_taxa $br_len trees/${tree}" >> ./src/run_sim_tree.sh
+				echo "cd $model" >> ./src/run_sim_tree.sh
+    			echo "Rscript ../src/generate_balanced_tree_ape.R $num_taxa $br_len trees/${tree}" >> ./src/run_sim_tree.sh
 			done
 		done
 	done
