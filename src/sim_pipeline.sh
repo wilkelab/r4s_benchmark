@@ -25,16 +25,6 @@ sim_rates=site_rates_t${num_taxa}_b${br_len}_${sim_num}.txt ##pyvolve output fil
 sim_rates_info=site_rates__info_t${num_taxa}_b${br_len}_${sim_num}.txt ##pyvolve output file name
 r4s_norm_rates=r4s_norm_rates_t${num_taxa}_b${br_len}_${sim_num}.txt ##rate4site output file name for norm rates
 
-if [ ! -d "trees" ]; then
-	mkdir "trees"
-fi
-
-##simulate tree a tree
-if [ ! -f "trees/${tree}" ]; then
-	Rscript ../src/generate_balanced_tree_ape.R $num_taxa $br_len trees/${tree}
-	exit 0
-fi
-
 if [ ! -d "aln" ]; then
 	mkdir "aln"
 	mkdir "aln/nuc"
