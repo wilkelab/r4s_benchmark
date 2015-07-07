@@ -16,13 +16,14 @@ if [ ! -d "${model}/trees" ]; then
 fi
 	for i in $(seq 1 $sim_num)
 	do	
-		tree=t${num_taxa}_b${br_len}_${i}.tre ##tree file nam
 		for num_taxa in ${taxa_num_arr[*]}
 		do	
 			for br_len in ${br_len_arr[*]}  
 			do
-				echo "cd $model" >> ./src/run_sim_tree.sh
-    			echo "Rscript ../src/generate_balanced_tree_ape.R $num_taxa $br_len trees/${tree}" >> ./src/run_sim_tree.sh
+				tree=t${num_taxa}_b${br_len}_${i}.tre ##tree file nam
+				if [ ! -d "${model}/trees/${tree}" ]; then
+    				echo "Rscript ./src/generate_balanced_tree_ape.R $num_taxa $br_len ${model}/trees/${tree}" >> ./src/run_sim_tree.sh
+				fi
 			done
 		done
 	done
