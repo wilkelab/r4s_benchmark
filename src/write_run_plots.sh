@@ -1,0 +1,29 @@
+#!/bin/bash
+sim_num=30
+sim_model_arr=("dN" "dN_dS" "ms_dS" "ms_no_dS")
+taxa_num_arr=(32 64 128 256)
+br_len_arr=(0.001 0.0033 0.01 0.033 0.1)
+
+if [ -f "./src/run_plots.sh" ]; then
+	rm ./src/run_plots.sh 
+fi
+
+for model in ${sim_model_arr[*]}
+do
+	for i in $(seq 1 $sim_num)
+	do	
+		for num_taxa in ${taxa_num_arr[*]}
+		do	
+			for br_len in ${br_len_arr[*]}  
+			do
+				if [ $model = "dN" ] || [ $model = "dN_dS" ]; then 
+					sim_rates=site_rates_t${num_taxa}_b${br_len}_${sim_num}.txt 
+    				echo "Rscript ./src/merge_site_rates.r sim_site_rates/${sim_rates} sim_site_rates/${sim_rates_info}" >> ./src/run_plots.sh
+				fi
+			done
+		done
+	done
+	echo "Rscript ./src/plot_r4s_rates_v_sim_rates.r $model" >> ./src/run_plots.sh
+done
+
+chmod +x ./src/run_plots.sh
