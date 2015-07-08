@@ -4,10 +4,19 @@ library(dplyr)
 library(cowplot)
 
 args <- commandArgs(trailingOnly = TRUE)
-##model <- as.character(args[1]) 
-model <- "dN_dS"
+model <- as.character(args[1]) 
 t1 <- list.files(paste0(model,"/r4s_site_rates"),full.names=T)
-t2 <- list.files(paste0(model,"/sim_site_rates"),full.names=T)
+
+if (model=="dN" | model=="dS"){
+	t2 <- list.files(paste0(model,"/sim_site_rates"),
+	pattern="^site_rates_t",
+	full.names=T)
+	}
+if (model=="ms_dS" | model=="ms_no_dS"){
+	t2 <- list.files(paste0(model,"/sim_site_rates"),
+	pattern="^dnds_site_rates_t",
+	full.names=T)
+	}
 
 for (i in 1:length(t1)) 
 {
