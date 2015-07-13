@@ -13,16 +13,12 @@ if [ ! -d "${model}" ]; then
 fi
 
 #run the pipeline in the model's directory
-cd ${model}
-
-if [ ! -d "plots" ]; then
-	mkdir "plots"
-fi  
+cd ${model} 
 
 tree=t${num_taxa}_b${br_len}_${sim_num}.tre ##tree file name
 aln=seq_t${num_taxa}_b${br_len}_${sim_num}.fasta ##multiple sequence alignment file name
 sim_rates=site_rates_t${num_taxa}_b${br_len}_${sim_num}.txt ##pyvolve output file name
-sim_rates_info=site_rates__info_t${num_taxa}_b${br_len}_${sim_num}.txt ##pyvolve output file name
+sim_rates_info=site_rates_info_t${num_taxa}_b${br_len}_${sim_num}.txt ##pyvolve output file name
 r4s_norm_rates=r4s_norm_rates_t${num_taxa}_b${br_len}_${sim_num}.txt ##rate4site output file name for norm rates
 
 if [ ! -d "aln" ]; then
@@ -35,35 +31,14 @@ if [ ! -d "sim_site_rates/" ]; then
 	mkdir "sim_site_rates/"
 fi
 
-if [ -f "aln/nuc/$aln" ]; then
-	rm aln/nuc/$aln
-fi
-
-if [ -f "sim_site_rates/pyvolve_out/${sim_rates}" ]; then
-	rm sim_site_rates/pyvolve_out/${sim_rates}
-	rm sim_site_rates/pyvolve_out/${sim_rates_info}
-	rm sim_site_rates/final_site_rates/${sim_rates}
-fi
-
 ##simulate multiple sequence alignment based on the tree
-python ../src/simulate_aln.py $model trees/${tree} aln/nuc/$aln
-
-##move simulate_aln.py output
-if [ -f "site_rates.txt" ]; then
-	mv site_rates.txt sim_site_rates/${sim_rates}
-	mv site_rates_info.txt sim_site_rates/${sim_rates_info}
-fi
+python ../src/simulate_aln.py $model trees/${tree} aln/nuc/$aln sim_site_rates/${sim_rates} sim_site_rates/${sim_rates_info}
 
 ##merge simulate_aln.py output
 #Rscript ../src/merge_site_rates.r sim_site_rates/${sim_rates} sim_site_rates/${sim_rates_info}
-
-if [ -f "sim_site_rates/${sim_rates_info}" ]; then
-	rm sim_site_rates/${sim_rates_info}
-fi
-
-if [ -f "aln/aa/$aln" ]; then
-	rm aln/aa/$aln
-fi
+# if [ -f "sim_site_rates/${sim_rates_info}" ]; then
+# 	rm sim_site_rates/${sim_rates_info}
+# fi
 
 ##convert an alignment from nuc to aa 
 python ../src/translate_aln.py aln/nuc/$aln

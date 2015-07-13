@@ -1,0 +1,13 @@
+#!/bin/bash
+#SBATCH -J sim_ms_dS   # job name
+#SBATCH -o sim_ms_dS.o%j       # output and error file name (%j expands to jobID)
+#SBATCH -n 1216              # total number of mpi tasks requested
+#SBATCH -p normal     # queue (partition) -- normal, development, etc.
+#SBATCH -t 24:00:00       # run time (hh:mm:ss) - 1.5 hours
+#SBATCH --mail-user=dariya.k.sydykova@gmail.com
+#SBATCH --mail-type=begin  # email me when the job starts
+#SBATCH --mail-type=end    # email me when the job finishes
+#SBATCH -A A-bio7
+module load python
+module load R
+ibrun ./src/run_ms_dS_sim_pipeline.sh
