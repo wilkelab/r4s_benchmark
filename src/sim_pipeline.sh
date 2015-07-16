@@ -2,11 +2,11 @@
 #number of taxa
 model=$1
 #branch lengths
-sim_num=$2
-#number of the simulation
-num_taxa=$3
+num_taxa=$2
 #model for the simulation
-br_len=$4
+br_len=$3
+#number of the simulation
+sim_num=$4
 
 if [ ! -d "${model}" ]; then
 	mkdir "${model}"
