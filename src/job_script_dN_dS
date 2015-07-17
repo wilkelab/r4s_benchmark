@@ -1,13 +1,16 @@
 #!/bin/bash
-#SBATCH -J sim_dN_dS   # job name
-#SBATCH -o sim_dN_dS.o%j       # output and error file name (%j expands to jobID)
-#SBATCH -n 1216              # total number of mpi tasks requested
-#SBATCH -p normal     # queue (partition) -- normal, development, etc.
-#SBATCH -t 12:00:00       # run time (hh:mm:ss) - 1.5 hours
-#SBATCH --mail-user=dariya.k.sydykova@gmail.com
-#SBATCH --mail-type=begin  # email me when the job starts
-#SBATCH --mail-type=end    # email me when the job finishes
-#SBATCH -A A-bio7
+#$ -V	#Inherit the submission environment
+#$ -cwd	# Start job in submission directory
+#$ -N sim_dN_dS	# Job Name
+#$ -j y	# Combine stderr and stdout
+#$ -o $JOB_NAME.o$JOB_ID 	# Name of the output file (eg. myMPI.oJobID)
+#$ -pe 12way 96	# Requests 12 tasks/node, 24 cores total
+#$ -q normal	# Queue name normal
+#$ -l h_rt=12:00:00	# Run time (hh:mm:ss) - 1.5 hours
+#$ -M dariya.k.sydykova@gmail.com	# Address for email notification
+#$ -m be	# Email at Begin and End of job
+#$ -A A-bio7
 module load python
 module load R
-ibrun ./src/run_dN_dS_sim_pipeline.sh
+set -x	# Echo commands, use set echo with csh
+ibrun ./src/run_dN_dS_sim_pipeline.sh	# Run the MPI executable named a.out
