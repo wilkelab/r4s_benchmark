@@ -48,10 +48,9 @@ if [ ! -d "r4s_site_rates/" ]; then
 fi
 
 ##run rate4site 
-../../rate4site.3.2.source/sourceMar09/rate4site -s aln/aa/$aln -t trees/$tree -o $r4s_norm_rates 
+../../rate4site.3.2.source/sourceMar09/rate4site -s aln/aa/$aln -t trees/$tree -o r4s_site_rates/$r4s_norm_rates 
 if [ -f r4s.res ]; then
 	rm r4s.res
 	rm r4sOrig.res
 	rm TheTree.txt
-	mv $r4s_norm_rates r4s_site_rates/
 fi
