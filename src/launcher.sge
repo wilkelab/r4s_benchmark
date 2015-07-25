@@ -17,10 +17,11 @@
 #$ -pe 6way 12
 #$ -q normal
 #$ -o sim.o$JOB_ID
-#$ -l h_rt=2:00:00
+#$ -l h_rt=4:00:00
 #$ -V
 #$ -cwd
 #$ -M dariya.k.sydykova@gmail.com
+#$ -m be
 #   <------ You MUST Specify a Project String ----->
 #$ -A  A-bio7
 #------------------------------------------------------
