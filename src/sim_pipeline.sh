@@ -51,6 +51,12 @@ fi
 ../../rate4site.3.2.source/sourceMar09/rate4site -s aln/aa/$aln -t trees/$tree -o r4s_site_rates/$r4s_norm_rates 
 if [ -f r4s.res ]; then
 	rm r4s.res
+fi 
+
+if [ -f r4sOrig.res ]; then
 	rm r4sOrig.res
+fi 
+
+if [ -f TheTree.txt ]; then
 	rm TheTree.txt
 fi
