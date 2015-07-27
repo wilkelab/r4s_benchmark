@@ -34,9 +34,8 @@ if model=="dN" or model=="dN_dS": #aa mutation is symmetric
 elif model=="ms_dS" or model=="ms_no_dS":
 	parts = []
 	
-	base_name = rate_file.split("_")
-	dnds_file_name = "dnds_site_rates_" + "_".join(base_name[-3:])
-	dnds_file = open("sim_site_rates/"+dnds_file_name,"w")
+	base_name = rate_file.split("/")[-1]
+	dnds_file = open("sim_site_rates/"+base_name,"w")
 	dnds_file.write("Site_Index\tdN/dS\n")
 	dnds_list = []
 
@@ -72,7 +71,7 @@ elif model=="ms_dS" or model=="ms_no_dS":
 			 dnds_file.write("%d\t%f\n" % (i+1, dnds))
 
 	evolve = Evolver(partitions = parts, tree = tree)
-	evolve(ratefile = rate_file, infofile = rate_info_file, seqfile = aln_file)	
+	evolve(ratefile = None, infofile = None, seqfile = aln_file)	
 
 else:
 	sys.exit("wrong input model")

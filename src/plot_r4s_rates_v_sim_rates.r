@@ -4,14 +4,15 @@ library(dplyr)
 library(cowplot)
 
 args <- commandArgs(trailingOnly = TRUE)
-model <- as.character(args[1]) 
+#model <- as.character(args[1]) 
 t1 <- list.files(paste0(model,"/r4s_site_rates"),full.names=T)
 
-if (model=="dN" | model=="dS"){
+if (model=="dN" | model=="dN_dS"){
 	t2 <- list.files(paste0(model,"/sim_site_rates"),
 	pattern="^site_rates_t",
 	full.names=T)
 	}
+	
 if (model=="ms_dS" | model=="ms_no_dS"){
 	t2 <- list.files(paste0(model,"/sim_site_rates"),
 	pattern="^dnds_site_rates_t",
@@ -25,10 +26,11 @@ for (i in 1:length(t1))
 	r1 <- read.table(t1[i],skip=11,sep="\t")
 	
 	#reformat rate4site output
-	r <- r1 %>% separate(V1,into=c("pos","seq","score","none1","qq_int_lower","qq_int_upper","stdev","msa_data"),sep="[:blank:]+|[:blank:]*\\[[:blank:]*|[:blank:]*\\,[:blank:]*|[:blank:]*\\][:blank:]*",extra="drop") %>% 
-	separate(msa_data,into=c("num_taxa","none2"),sep="\\/") %>% 
-	select(-c(none1,none2))
-
+	r <- r1 %>% separate(V1,into=c("c1","c2","c3","c4","c5","c6","c7","c8"),sep="\\][:blank:]*|[:blank:]*\\[[:blank:]*|\\,[:blank:]*|[:blank:]+",extra="drop") %>%
+	  separate(c8,into=c("c8","c9"),sep="\\/") %>% 
+	  select(-c(c1,c9))
+	colnames(r) <- c("pos","seq","score","qq_int_lower","qq_int_upper","stdev","num_taxa")
+	
 	s <- read.table(t2[i],sep="\t",header=T,col.names=c("pos","rate_probability","dN","dS"))
 
 	s$r4s_score <- as.numeric(r$score)
@@ -64,7 +66,7 @@ sig <- rep(" ",length(a$num_taxa))
 sig[a$p_val <= 0.05] = rep("*",length(sig[a$p_val <= 0.05]))
 
 if (model == "dN") {
-	p1 <- ggplot(a,aes(dN,r4s_score)) + 
+	p1 <- ggplot(d,aes(dN,r4s_score)) + 
 		geom_point(size=1,alpha=0.7) + 
 		geom_smooth(method=lm) +
 		xlab("simulated rate (dN)") +
@@ -80,7 +82,7 @@ if (model == "dN") {
 }
 
 if (model == "dN_dS") {
-	p1 <- ggplot(a,aes(dN/dS,r4s_score)) + 
+	p1 <- ggplot(d,aes(dN,r4s_score)) + 
 		geom_point(size=1,alpha=0.7) + 
 		geom_smooth(method=lm) +
 		xlab("simulated rate (dN)") +
@@ -92,7 +94,7 @@ if (model == "dN_dS") {
 		facet_grid(num_taxa ~ branch_len) +
 		background_grid(major = 'xy', minor = "none") + 
 		panel_border()
-	ggsave(paste0(model,"/plots/r4s_rates_v_sim_rates.pdf"))
+	ggsave(paste0("/plots/",model,"_r4s_rates_v_sim_rates.pdf"))
 }
 
 p2 <- ggplot(d,aes(num_taxa,cor)) + 
@@ -107,7 +109,7 @@ p2 <- ggplot(d,aes(num_taxa,cor)) +
   xlab("Number of Taxa") +
   ylab("Correlation (spearman)") +
 	scale_y_continuous(breaks=seq(-0.2,1,0.2), limits = c(-0.2,1)) 
-ggsave(paste0(model,"/plots/cor_v_num_taxa.pdf"))
+ggsave(paste0("plots/",model,"_cor_v_num_taxa.pdf"))
 
 p3 <- ggplot(d,aes(branch_len,cor)) + 
   geom_point() +
@@ -121,4 +123,4 @@ p3 <- ggplot(d,aes(branch_len,cor)) +
 	xlab("Branch Length") +
 	ylab("Correlation (spearman)") +
   scale_y_continuous(breaks=seq(-0.2,1,0.2), limits = c(-0.2,1))  
-ggsave(paste0(model,"/plots/cor_v_branch_len.pdf"))
+ggsave(paste0("plots/",model,"_cor_v_branch_len.pdf"))
