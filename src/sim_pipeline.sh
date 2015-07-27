@@ -34,12 +34,6 @@ fi
 ##simulate multiple sequence alignment based on the tree
 python ../src/simulate_aln.py $model trees/${tree} aln/nuc/$aln sim_site_rates/${sim_rates} sim_site_rates/${sim_rates_info}
 
-##merge simulate_aln.py output
-#Rscript ../src/merge_site_rates.r sim_site_rates/${sim_rates} sim_site_rates/${sim_rates_info}
-# if [ -f "sim_site_rates/${sim_rates_info}" ]; then
-# 	rm sim_site_rates/${sim_rates_info}
-# fi
-
 ##convert an alignment from nuc to aa 
 python ../src/translate_aln.py aln/nuc/$aln
 

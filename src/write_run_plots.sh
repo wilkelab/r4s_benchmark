@@ -8,18 +8,24 @@ if [ -f "./src/run_plots.sh" ]; then
 	rm ./src/run_plots.sh 
 fi
 
+if [ ! -d "plots" ]; then
+	mkdir plots
+fi
+
 for model in ${sim_model_arr[*]}
 do
-	for i in $(seq 1 $sim_num)
+	for num_taxa in ${taxa_num_arr[*]}
 	do	
-		for num_taxa in ${taxa_num_arr[*]}
-		do	
-			for br_len in ${br_len_arr[*]}  
+		for br_len in ${br_len_arr[*]}  
+		do
+			for i in $(seq 1 $sim_num)
 			do
 				if [ $model = "dN" ] || [ $model = "dN_dS" ]; then 
-					sim_rates=site_rates_t${num_taxa}_b${br_len}_${sim_num}.txt 
-    				echo "Rscript ./src/merge_site_rates.r sim_site_rates/${sim_rates} sim_site_rates/${sim_rates_info}" >> ./src/run_plots.sh
+					sim_rates=site_rates_t${num_taxa}_b${br_len}_${i}.txt 
+					sim_rates_info=site_rates_info_t${num_taxa}_b${br_len}_${i}.txt ##pyvolve output file name
+    				echo "Rscript ./src/merge_site_rates.r ${model}/sim_site_rates/${sim_rates} ${model}/sim_site_rates/${sim_rates_info}" >> ./src/run_plots.sh
 				fi
+				echo "Rscript ./src/merge_site_rates.r ${model}/sim_site_rates/${sim_rates} ${model}/sim_site_rates/${sim_rates_info}" >> ./src/run_plots.sh
 			done
 		done
 	done

@@ -20,8 +20,10 @@ if (model=="ms_dS" | model=="ms_no_dS"){
 
 for (i in 1:length(t1)) 
 {
+	print(t1[i])
+	print(t2[i])
 	r1 <- read.table(t1[i],skip=11,sep="\t")
-
+	
 	#reformat rate4site output
 	r <- r1 %>% separate(V1,into=c("pos","seq","score","none1","qq_int_lower","qq_int_upper","stdev","msa_data"),sep="[:blank:]+|[:blank:]*\\[[:blank:]*|[:blank:]*\\,[:blank:]*|[:blank:]*\\][:blank:]*",extra="drop") %>% 
 	separate(msa_data,into=c("num_taxa","none2"),sep="\\/") %>% 
