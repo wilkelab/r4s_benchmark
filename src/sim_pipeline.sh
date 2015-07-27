@@ -31,18 +31,13 @@ if [ ! -d "sim_site_rates/" ]; then
 	mkdir "sim_site_rates/"
 fi 
 
-if [ model = "dN" -o model = "dN_dS" ]: then
+if [ $model = "dN" -o $model = "dN_dS" ]; then
 	mkdir "sim_site_rates/simulation_output"
-	mkdir "sim_site_rates/final_rates"
+	mkdir "sim_site_rates/merged_output"
 fi
 
 ##simulate multiple sequence alignment based on the tree
 python ../src/simulate_aln.py $model trees/${tree} aln/nuc/$aln sim_site_rates/simulation_output/${sim_rates} sim_site_rates/simulation_output/${sim_rates_info}
-
-##merge simulation output files for models dN and dN_dS
-if [ model = "dN" -o model = "dN_dS" ]: then
-	Rscript ./src/merge_site_rates.r sim_site_rates/simulation_output/${sim_rates} sim_site_rates/simulation_output/${sim_rates_info} sim_site_rates/final_rates/${sim_rates}
-fi 
 
 ##convert an alignment from nuc to aa 
 python ../src/translate_aln.py aln/nuc/$aln
