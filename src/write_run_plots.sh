@@ -20,12 +20,11 @@ do
 		do
 			for i in $(seq 1 $sim_num)
 			do
+				sim_rates=site_rates_t${num_taxa}_b${br_len}_${i}.txt 
+				sim_rates_info=site_rates_info_t${num_taxa}_b${br_len}_${i}.txt ##pyvolve output file name
 				if [ $model = "dN" ] || [ $model = "dN_dS" ]; then 
-					sim_rates=site_rates_t${num_taxa}_b${br_len}_${i}.txt 
-					sim_rates_info=site_rates_info_t${num_taxa}_b${br_len}_${i}.txt ##pyvolve output file name
     				echo "Rscript ./src/merge_site_rates.r ${model}/sim_site_rates/${sim_rates} ${model}/sim_site_rates/${sim_rates_info}" >> ./src/run_plots.sh
 				fi
-				echo "Rscript ./src/merge_site_rates.r ${model}/sim_site_rates/${sim_rates} ${model}/sim_site_rates/${sim_rates_info}" >> ./src/run_plots.sh
 			done
 		done
 	done
