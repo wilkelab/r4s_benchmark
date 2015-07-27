@@ -8,14 +8,12 @@ args <- commandArgs(trailingOnly = TRUE)
 t1 <- list.files(paste0(model,"/r4s_site_rates"),full.names=T)
 
 if (model=="dN" | model=="dN_dS"){
-	t2 <- list.files(paste0(model,"/sim_site_rates"),
-	pattern="^site_rates_t",
+	t2 <- list.files(paste0(model,"/sim_site_rates/final_rates/"),
 	full.names=T)
 	}
 	
 if (model=="ms_dS" | model=="ms_no_dS"){
-	t2 <- list.files(paste0(model,"/sim_site_rates"),
-	pattern="^dnds_site_rates_t",
+	t2 <- list.files(paste0(model,"/sim_site_rates/"),
 	full.names=T)
 	}
 
@@ -65,7 +63,7 @@ a <- d %>% filter(sim_num==1)
 sig <- rep(" ",length(a$num_taxa))
 sig[a$p_val <= 0.05] = rep("*",length(sig[a$p_val <= 0.05]))
 
-if (model == "dN") {
+if (model == "dN" | model == "dN_dS") {
 	p1 <- ggplot(d,aes(dN,r4s_score)) + 
 		geom_point(size=1,alpha=0.7) + 
 		geom_smooth(method=lm) +
@@ -81,8 +79,8 @@ if (model == "dN") {
 	ggsave(paste0(model,"/plots/r4s_rates_v_sim_rates.pdf"))
 }
 
-if (model == "dN_dS") {
-	p1 <- ggplot(d,aes(dN,r4s_score)) + 
+if (model == "ms_dS" | model == "ms_no_dS") {
+	p1 <- ggplot(d,aes(dN/dS,r4s_score)) + 
 		geom_point(size=1,alpha=0.7) + 
 		geom_smooth(method=lm) +
 		xlab("simulated rate (dN)") +
