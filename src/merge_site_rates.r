@@ -12,4 +12,4 @@ j <- inner_join(t,s,by="Rate_Category") %>%
   separate(Rate_Factor, into = c("dN", "dS"), sep = "\\,") %>%
   select(-c(Partition_Index.x,Rate_Category,Partition_Index.y,Model_Name))
 
-write.table(j,f1,sep="\t",quote=F,row.names=F) #overwrite site_rate
+write.table(j,out_f,sep="\t",quote=F,row.names=F) #overwrite site_rate
