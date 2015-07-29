@@ -85,7 +85,7 @@ if (model == "dN" | model == "dN_dS") {
 		facet_grid(num_taxa ~ branch_len) +
 		background_grid(major = 'xy', minor = "none") + 
 		panel_border()
-	ggsave(paste0("plots/",model,"_r4s_rates_v_sim_rates.pdf"))
+	ggsave(paste0("plots/",model,"_r4s_rates_v_sim_rates.png"))
 }
 
 if (model == "ms_dS" | model == "ms_no_dS") {
@@ -101,33 +101,32 @@ if (model == "ms_dS" | model == "ms_no_dS") {
 		facet_grid(num_taxa ~ branch_len) +
 		background_grid(major = 'xy', minor = "none") + 
 		panel_border()
-	ggsave(paste0("plots/",model,"_r4s_rates_v_sim_rates.pdf"))
+	ggsave(paste0("plots/",model,"_r4s_rates_v_sim_rates.png"))
 }
 
-p2 <- ggplot(d,aes(num_taxa,cor)) + 
-	geom_point() +
+p2 <- ggplot(d,aes(num_taxa,cor,colour=factor(branch_len),group=branch_len)) + 
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x), 
                fun.ymax = function(x) mean(x) + sd(x), 
-               geom = "pointrange",
-               colour="red") +
+               geom = "pointrange") +
   scale_colour_discrete(name="Branch length") +
-  stat_summary(fun.data = "mean_cl_boot",colour = "red") +
+  stat_summary(fun.y = mean,geom = "line",aes(color=factor(branch_len)))+
   xlab("Number of Taxa") +
   ylab("Correlation (spearman)") +
+  scale_x_continuous(breaks=seq(0,300,50), labels=c("0"," ","100"," ","200"," ","300"), limits = c(0,300)) + 
 	scale_y_continuous(breaks=seq(-0.2,1,0.2), limits = c(-0.2,1)) 
-ggsave(paste0("plots/",model,"_cor_v_num_taxa.pdf"))
+ggsave(paste0("plots/",model,"_cor_v_num_taxa.png"))
 
-p3 <- ggplot(d,aes(branch_len,cor)) + 
-  geom_point() +
+p3 <- ggplot(d,aes(branch_len,cor,colour=factor(num_taxa),group=num_taxa)) + 
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x), 
                fun.ymax = function(x) mean(x) + sd(x), 
-               geom = "pointrange",
-               colour="red") +
+               geom = "pointrange") +
+  stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)))+
   scale_colour_discrete(name="Number of taxa") +
-  scale_x_log10() +
 	xlab("Branch Length") +
 	ylab("Correlation (spearman)") +
+  scale_x_log10(breaks=round(c(0.001,0.0033,0.01,0.033,0.1),3),
+                         limits=c(0.001,0.1)) + 
   scale_y_continuous(breaks=seq(-0.2,1,0.2), limits = c(-0.2,1))  
-ggsave(paste0("plots/",model,"_cor_v_branch_len.pdf"))
+ggsave(paste0("plots/",model,"_cor_v_branch_len.png"))
