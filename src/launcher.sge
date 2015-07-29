@@ -17,7 +17,7 @@
 #$ -pe 6way 24
 #$ -q normal
 #$ -o sim.o$JOB_ID
-#$ -l h_rt=8:00:00
+#$ -l h_rt=24:00:00
 #$ -V
 #$ -cwd
 #$ -M dariya.k.sydykova@gmail.com

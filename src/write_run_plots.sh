@@ -13,13 +13,7 @@ if [ ! -d "plots" ]; then
 fi
 
 for model in ${sim_model_arr[*]}
-do
-	if [ $model = "dN" -o $model = "dN_dS" ]; then 
-		if [ ! -d "${model}/sim_site_rates/merged_output/" ]; then
-			mkdir ${model}/sim_site_rates/merged_output/
-		fi
-	fi
-	
+do	
 	for num_taxa in ${taxa_num_arr[*]}
 	do	
 		for br_len in ${br_len_arr[*]}  
@@ -35,7 +29,6 @@ do
 			done
 		done
 	done
-	#echo "Rscript ./src/plot_r4s_rates_v_sim_rates.r $model" >> ./src/run_plots.sh
 done
 
 chmod +x ./src/run_plots.sh
