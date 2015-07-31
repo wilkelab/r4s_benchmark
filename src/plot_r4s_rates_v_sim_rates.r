@@ -15,7 +15,7 @@ if (model=="dN" | model=="dN_dS"){
 	}
 	
 if (model=="ms_dS" | model=="ms_no_dS"){
-	t2 <- list.files(paste0(model,"/sim_site_rates"),
+	t2 <- list.files(paste0(model,"/sim_site_rates/inferred_rates"),
 	full.names=T)
 	}
 t2 <- t2[info$size != 0]
@@ -37,7 +37,7 @@ for (i in 1:length(t1))
     s <- read.table(t2[i],sep="\t",header=T,col.names=c("pos","rate_probability","dN","dS"))
 	}
 	if (model=="ms_dS" | model=="ms_no_dS"){
-	  s <- read.table(t2[i],sep="\t",header=T,col.names=c("pos","dN/dS"))
+	  s <- read.table(t2[i],sep="\t",header=T,col.names=c("pos","dN_dS"))
 	}
 	
 	s$r4s_score <- as.numeric(r$score)
@@ -72,11 +72,26 @@ a <- d %>% filter(sim_num==2)
 sig <- rep(" ",length(a$num_taxa))
 sig[a$p_val <= 0.05] = rep("*",length(sig[a$p_val <= 0.05]))
 
-if (model == "dN" | model == "dN_dS") {
+if (model == "dN") {
+  p1 <- ggplot(a,aes(dN,r4s_score)) + 
+    geom_point(size=1,alpha=0.7) + 
+    geom_smooth(method=lm) +
+    xlab("simulated rate (dN)") +
+    ylab("rate4site score") +
+    theme(axis.text=element_text(size=8),legend.position="none") +
+    geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=4)) +
+    scale_x_continuous(breaks=seq(0,1.5,0.5), labels=c("0","0.5","1","1.5"), limits = c(0.0,1.5)) + 
+    scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
+    facet_grid(num_taxa ~ branch_len) +
+    background_grid(major = 'xy', minor = "none") + 
+    panel_border()
+  ggsave(paste0("plots/",model,"_r4s_rates_v_sim_rates.png"))
+}
+if (model == "dN_dS") {
 	p1 <- ggplot(a,aes(dN,r4s_score)) + 
 		geom_point(size=1,alpha=0.7) + 
 		geom_smooth(method=lm) +
-		xlab("simulated rate (dN)") +
+		xlab("simulated rate (dN/dS)") +
 		ylab("rate4site score") +
 		theme(axis.text=element_text(size=8),legend.position="none") +
 		geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=4)) +
@@ -88,15 +103,15 @@ if (model == "dN" | model == "dN_dS") {
 	ggsave(paste0("plots/",model,"_r4s_rates_v_sim_rates.png"))
 }
 
-if (model == "ms_dS" | model == "ms_no_dS") {
-	p1 <- ggplot(a,aes(dN.dS,r4s_score)) + 
+if (model == "ms_dS") {
+	p1 <- ggplot(a,aes(dN_dS,r4s_score)) + 
 		geom_point(size=1,alpha=0.7) + 
 		geom_smooth(method=lm) +
-		xlab("simulated rate (dN)") +
+		xlab("simulated rate (dN/dS)") +
 		ylab("rate4site score") +
 		theme(axis.text=element_text(size=8),legend.position="none") +
-		geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=4)) +
-		scale_x_continuous(breaks=seq(0,2.0,0.5), labels=c("0","0.5","1","1.5","2.0"), limits = c(0.0,2.0)) + 
+		geom_text(aes(x=0.5,y=5,label=paste0(round(cor,2),sig),size=4)) +
+		scale_x_continuous(breaks=seq(0,2.0,1), labels=c("0","1.0","2.0"), limits = c(0.0,2.0)) + 
 		scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
 		facet_grid(num_taxa ~ branch_len) +
 		background_grid(major = 'xy', minor = "none") + 
@@ -104,6 +119,21 @@ if (model == "ms_dS" | model == "ms_no_dS") {
 	ggsave(paste0("plots/",model,"_r4s_rates_v_sim_rates.png"))
 }
 
+if (model == "ms_no_dS") {
+  p1 <- ggplot(a,aes(dN_dS,r4s_score)) + 
+    geom_point(size=1,alpha=0.7) + 
+    geom_smooth(method=lm) +
+    xlab("simulated rate (dN/dS)") +
+    ylab("rate4site score") +
+    theme(axis.text=element_text(size=8),legend.position="none") +
+    geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=4)) +
+    scale_x_continuous(breaks=seq(0,1.0,0.5), labels=c("0","0.5","1"), limits = c(0.0,1.0)) + 
+    scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
+    facet_grid(num_taxa ~ branch_len) +
+    background_grid(major = 'xy', minor = "none") + 
+    panel_border()
+  ggsave(paste0("plots/",model,"_r4s_rates_v_sim_rates.png"))
+}
 p2 <- ggplot(d,aes(num_taxa,cor,colour=factor(branch_len),group=branch_len)) + 
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x), 
@@ -117,6 +147,7 @@ p2 <- ggplot(d,aes(num_taxa,cor,colour=factor(branch_len),group=branch_len)) +
 	scale_y_continuous(breaks=seq(-0.2,1,0.2), limits = c(-0.2,1)) 
 ggsave(paste0("plots/",model,"_cor_v_num_taxa.png"))
 
+if (model == "ms_no_dS" | model=="ms_dS") {
 p3 <- ggplot(d,aes(branch_len,cor,colour=factor(num_taxa),group=num_taxa)) + 
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x), 
@@ -126,7 +157,23 @@ p3 <- ggplot(d,aes(branch_len,cor,colour=factor(num_taxa),group=num_taxa)) +
   scale_colour_discrete(name="Number of taxa") +
 	xlab("Branch Length") +
 	ylab("Correlation (spearman)") +
-  scale_x_log10(breaks=round(c(0.001,0.0033,0.01,0.033,0.1),3),
-                         limits=c(0.001,0.1)) + 
+  scale_x_log10(breaks=round(c(0.001,0.0033,0.01,0.033,0.1,0.33,1.0,3.3),3),
+                         limits=c(0.001,3.3)) + 
   scale_y_continuous(breaks=seq(-0.2,1,0.2), limits = c(-0.2,1))  
 ggsave(paste0("plots/",model,"_cor_v_branch_len.png"))
+}
+if (model=="dN" | model=="dN_dS") {
+    p3 <- ggplot(d,aes(branch_len,cor,colour=factor(num_taxa),group=num_taxa)) + 
+      stat_summary(fun.y = mean,
+                   fun.ymin = function(x) mean(x) - sd(x), 
+                   fun.ymax = function(x) mean(x) + sd(x), 
+                   geom = "pointrange") +
+      stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)))+
+      scale_colour_discrete(name="Number of taxa") +
+      xlab("Branch Length") +
+      ylab("Correlation (spearman)") +
+      scale_x_log10(breaks=round(c(0.001,0.0033,0.01,0.033,0.1),4),
+                    limits=c(0.001,0.1)) + 
+      scale_y_continuous(breaks=seq(-0.2,1,0.2), limits = c(-0.2,1))  
+    ggsave(paste0("plots/",model,"_cor_v_branch_len.png"))
+}

@@ -1,6 +1,6 @@
 #!/bin/bash
 sim_num=30
-sim_model_arr=(dN ms_dS ms_no_dS)
+sim_model_arr=(dN_dS) #ms_dS ms_no_dS)
 taxa_num_arr=(32 64 128 256)
 br_len_arr1=(0.001 0.0033 0.01 0.033 0.1)
 br_len_arr2=(0.001 0.0033 0.01 0.033 0.1 0.33 1.0 3.3)
@@ -29,20 +29,20 @@ do
 	fi
 	
 	echo "cd $model" >> ./src/run_sim_aln.sh
-	
-	for i in $(seq 1 $sim_num)
+		
+	for num_taxa in ${taxa_num_arr[*]}
 	do	
-		for num_taxa in ${taxa_num_arr[*]}
-		do	
-			for br_len in ${br_len_arr[*]}  
-			do
+		for br_len in ${br_len_arr[*]}  
+		do
+			for i in $(seq 1 $sim_num)
+			do	
 				tree=t${num_taxa}_b${br_len}_${i}.tre ##tree file nam
 				aln=seq_t${num_taxa}_b${br_len}_${i}.fasta ##multiple sequence alignment file name
 				sim_rates=site_rates_t${num_taxa}_b${br_len}_${i}.txt ##pyvolve output file name
 				sim_rates_info=site_rates_info_t${num_taxa}_b${br_len}_${i}.txt
-				if [ ! -f "${model}/aln/nuc/${aln}" ]; then
-    				echo "python ../src/simulate_aln.py $model trees/${tree} aln/nuc/$aln sim_site_rates/assigned_rates/${sim_rates} sim_site_rates/assigned_rates/${sim_rates_info}" >> ./src/run_sim_aln.sh
-				fi
+				#if [ ! -f "${model}/aln/nuc/${aln}" ]; then
+    			echo "python ../src/simulate_aln.py $model trees/${tree} aln/nuc/$aln sim_site_rates/assigned_rates/${sim_rates} sim_site_rates/assigned_rates/${sim_rates_info}" >> ./src/run_sim_aln.sh
+				#fi
 			done
 		done
 	done
