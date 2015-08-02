@@ -24,7 +24,7 @@ do
 				sim_rates_info=site_rates_info_t${num_taxa}_b${br_len}_${i}.txt ##pyvolve output file name
 
 				if [ $model = "dN" -o $model = "dN_dS" ]; then 
-    				echo "Rscript ./src/merge_site_rates.r ${model}/sim_site_rates/assigned_rates/${sim_rates} ${model}/sim_site_rates/assigned_rates/${sim_rates_info} ${model}/sim_site_rates/merged_output/${sim_rates}">> ./src/run_plots.sh
+    				echo "Rscript ./src/merge_site_rates.r ${model}/sim_site_rates/simulation_output/${sim_rates} ${model}/sim_site_rates/simulation_output/${sim_rates_info} ${model}/sim_site_rates/merged_output/${sim_rates}">> ./src/run_plots.sh
 				fi
 			done
 		done
