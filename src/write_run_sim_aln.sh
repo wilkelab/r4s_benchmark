@@ -11,13 +11,14 @@ fi
 
 for model in ${sim_model_arr[*]}
 do
-	if [ ! -d "../r4s_benchmark_data/${model}" ]; then
-		mkdir "../r4s_benchmark_data/${model}"
-		mkdir "../r4s_benchmark_data/${model}/aln"
-		mkdir "../r4s_benchmark_data/${model}/aln/nuc"
+	if [ ! -d "$SCRATCH/r4s_benchmark_data/${model}" ]; then
+		mkdir "$SCRATCH/r4s_benchmark_data/${model}"
+		mkdir "$SCRATCH/r4s_benchmark_data/${model}/aln"
+		mkdir "$SCRATCH/r4s_benchmark_data/${model}/aln/nuc"
 	fi
 	
-	if [ ! -d "${model}/sim_site_rates/" ]; then
+	if [ ! -d "$model" ]; then
+		mkdir "$model"
 		mkdir "${model}/sim_site_rates/"
 		mkdir "${model}/sim_site_rates/assigned_rates"
 		mkdir "${model}/sim_site_rates/inferred_rates"
@@ -31,18 +32,18 @@ do
 	
 	echo "cd $model" >> ./src/run_sim_aln.sh
 	
-	for i in $(seq 1 $sim_num)
+	for num_taxa in ${taxa_num_arr[*]}
 	do	
-		for num_taxa in ${taxa_num_arr[*]}
-		do	
-			for br_len in ${br_len_arr[*]}  
-			do
+		for br_len in ${br_len_arr[*]}  
+		do
+			for i in $(seq 1 $sim_num)
+			do	
 				tree=t${num_taxa}_b${br_len}.tre ##tree file nam
 				aln=seq_t${num_taxa}_b${br_len}_${i}.fasta ##multiple sequence alignment file name
 				sim_rates=site_rates_t${num_taxa}_b${br_len}_${i}.txt ##pyvolve output file name
 				sim_rates_info=site_rates_info_t${num_taxa}_b${br_len}_${i}.txt
 				if [ ! -f "${model}/aln/nuc/${aln}" ]; then
-    				echo "python ../src/simulate_aln.py $model ../r4s_benchmark_data/trees/${tree} aln/nuc/$aln sim_site_rates/assigned_rates/${sim_rates} sim_site_rates/assigned_rates/${sim_rates_info}" >> ./src/run_sim_aln.sh
+    				echo "python ../src/simulate_aln.py $model $SCRATCH/r4s_benchmark_data/trees/${tree} $SCRATCH/r4s_benchmark_data/${model}/aln/nuc/$aln sim_site_rates/assigned_rates/${sim_rates} sim_site_rates/assigned_rates/${sim_rates_info}" >> ./src/run_sim_aln.sh
 				fi
 			done
 		done
