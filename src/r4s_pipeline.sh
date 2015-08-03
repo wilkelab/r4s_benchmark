@@ -24,14 +24,14 @@ if [ ! -d "aln/aa" ]; then
 fi
 
 ##convert an alignment from nuc to aa 
-python ../src/translate_aln.py aln/nuc/$aln
+python ../src/translate_aln.py $SCRATCH/r4s_benchmark_aln/${model}/aln/nuc/$aln
 
 if [ ! -d "r4s_site_rates/" ]; then
 	mkdir "r4s_site_rates/"
 fi
 
 ##run rate4site 
-../../rate4site.3.2.source/sourceMar09/rate4site -s aln/aa/${aln} -t trees/${tree} -o r4s_site_rates/${r4s_norm_rates} 
+../../rate4site.3.2.source/sourceMar09/rate4site -s $SCRATCH/r4s_benchmark_aln/${model}/aln/aa/${aln} -t $SCRATCH/r4s_benchmark_trees/${model}/trees/${tree} -o r4s_site_rates/${r4s_norm_rates} 
 if [ -f r4s.res ]; then
 	rm r4s.res
 fi 
