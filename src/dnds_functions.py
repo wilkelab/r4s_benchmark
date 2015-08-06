@@ -44,7 +44,7 @@ def derive_dnds(codon_freqs_dict, mu_dict):
         denom_ds += sites
 
     assert( denom_dn != 0. and denom_ds != 0.), "dN/dS calc indicates no evolution, maybe????"
-    return (numer_dn/denom_dn)/(numer_ds/denom_ds)
+    return (numer_dn/denom_dn),(numer_ds/denom_ds)
     
 
 

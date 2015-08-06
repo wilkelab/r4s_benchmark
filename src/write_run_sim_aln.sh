@@ -1,5 +1,4 @@
 #!/bin/bash
-sim_num=30
 sim_model_arr=(mech_codon_dN mech_codon_dN_dS mut_sel_dN mut_sel_dN_dS)
 taxa_num_arr=(32 64 128 256)
 br_len_arr1=(0.001 0.0033 0.01 0.033 0.1)
@@ -11,10 +10,10 @@ fi
 
 for model in ${sim_model_arr[*]}
 do
-	if [ ! -d "$SCRATCH/r4s_benchmark_data/${model}" ]; then
-		mkdir "$SCRATCH/r4s_benchmark_data/${model}"
-		mkdir "$SCRATCH/r4s_benchmark_data/${model}/aln"
-		mkdir "$SCRATCH/r4s_benchmark_data/${model}/aln/nuc"
+	if [ ! -d "../r4s_benchmark_data/${model}" ]; then
+		mkdir "../r4s_benchmark_data/${model}"
+		mkdir "../r4s_benchmark_data/${model}/aln"
+		mkdir "../r4s_benchmark_data/${model}/aln/nuc"
 	fi
 	
 	if [ ! -d "$model" ]; then
@@ -24,10 +23,12 @@ do
 		mkdir "${model}/sim_site_rates/inferred_rates"
 	fi 
 	
-	if [ $model = "dN" -o $model = "dN_dS" ]; then 
+	if [ $model = "mech_codon_dN" -o $model = "mech_codon_dN_dS" ]; then 
 		br_len_arr=("${br_len_arr1[*]}")
+		sim_num=30
 	else 
 		br_len_arr=("${br_len_arr2[*]}")
+		sim_num=1
 	fi
 	
 	echo "cd $model" >> ./src/run_sim_aln.sh
@@ -43,7 +44,7 @@ do
 				sim_rates=site_rates_t${num_taxa}_b${br_len}_${i}.txt ##pyvolve output file name
 				sim_rates_info=site_rates_info_t${num_taxa}_b${br_len}_${i}.txt
 				if [ ! -f "${model}/aln/nuc/${aln}" ]; then
-    				echo "python ../src/simulate_aln.py $model $SCRATCH/r4s_benchmark_data/trees/${tree} $SCRATCH/r4s_benchmark_data/${model}/aln/nuc/$aln sim_site_rates/assigned_rates/${sim_rates} sim_site_rates/assigned_rates/${sim_rates_info}" >> ./src/run_sim_aln.sh
+    				echo "python ../src/simulate_aln.py $model ../../r4s_benchmark_data/trees/${tree} ../../r4s_benchmark_data/${model}/aln/nuc/$aln sim_site_rates/assigned_rates/${sim_rates} sim_site_rates/assigned_rates/${sim_rates_info}" >> ./src/run_sim_aln.sh
 				fi
 			done
 		done
