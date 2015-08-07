@@ -28,12 +28,12 @@ def make_mc_model(var, tree_file, aln_file, rate_file, rate_info_file, length, i
 	
 	# Mutation rate dictionary - FYI you can also grab this from pyvolve directly, just use the next line:
 	# mu = 1
-# 	mu_dict = {'AT': mu, 'CG': mu, 'AC': mu, 'GT':mu, 'AG': kappa*mu,'GA': kappa*mu, 'TA': mu, 'GC': mu, 'CA': mu, 'TG':mu, 'GA': kappa*mu,'CT': kappa*mu, 'TC': kappa*mu}
-# 	
-# 	# Count dN/dS
-# 	print "Counting site-specific dN/dS"
-# 	my_slaculator = slaculator.Slaculator(aln_file, tree_file, mu_dict)
-# 	my_slaculator.calculate_dnds() #savefile = inf_rate_file) # To change name of output file from default 'slaculator_output.txt', add argument savefile = "filename.txt". It will be tab-delimited.
+	mu_dict = {'AT': mu, 'CG': mu, 'AC': mu, 'GT':mu, 'AG': kappa*mu,'GA': kappa*mu, 'TA': mu, 'GC': mu, 'CA': mu, 'TG':mu, 'GA': kappa*mu,'CT': kappa*mu, 'TC': kappa*mu}
+	
+	# Count dN/dS
+	print "Counting site-specific dN/dS"
+	my_slaculator = slaculator.Slaculator(aln_file, tree_file, mu_dict)
+	my_slaculator.calculate_dnds() #savefile = inf_rate_file) # To change name of output file from default 'slaculator_output.txt', add argument savefile = "filename.txt". It will be tab-delimited.
 
 def make_ms_model(var, tree_file, aln_file, rate_file, rate_info_file, length, inf_rate_file):
 	tree=read_tree(file = tree_file)

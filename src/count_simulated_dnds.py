@@ -1,7 +1,28 @@
 '''
-    SJS 7/31/15 - 8/2/15
-    This script implements functions for a SLAC counting scheme to compute dN/dS [Kosakovsky Pond & Frost (2005) MBE].
-    !!!! NOTE: this script accompanies pyvolve, and thus can't handle gaps or ambiguities. !!!!
+    SJS.
+    This script implements a module counting site-specific dN/dS values, as simulated by pyvolve. The counting method implemented is similar to the SLAC method [Kosakovsky Pond & Frost (2005) MBE], although as the actual ancestral sequences are known, no reconstruction is performed.
+    NOTE: this module is meant to be used ONLY with sequences simulated with pyvolve and thus can't handle gaps or ambiguities.
+    
+    Usage:
+        from count_simulated_dnds import *
+    
+        c = dNdS_Counter(<alnfile>, <treefile>, <mutation_dictionary>)
+        # alnfile: a FASTA-formatted sequence alignment file produced by a pyvolve simulation. This file **MUST** contain ancestral sequences (get this alignment by including the argument `write_anc=True` when calling a pyvolve Evolver class).
+        # treefile: a file containing the *exact* newick tree used in the pyvolve simulation which produced the alnfile.
+        # mutation_dictionary: **optional** argument indicating the mutation rates between nucleotides. This argument is analogous to the "mu" dictionary provided to pyvolve when simulating with custom mutation rates. If this argument is not provided, this module assumes equal mutation rates (e.g. a JC69 situation).
+        
+        c.calculate_dnds()
+        # This method will compute site-specific dN/dS values and output a tab-delimited file of this format:
+        # site  ns_changes  s_changes   ns_sites    s_sites
+        #  ...      ...         ...        ...         ... 
+          
+        # You can then calculate dN/dS from this file with this calculation: (ns_changes/ns_sites) / (s_changes/s_sites) . This is straight-forward in something like R or the python pandas package. Beware your parentheses placement, and also keep a look-out for NA or Inf values (these can happen when no synonymous changes occurred).
+        # By default, the output file will be called "counted_dnds.txt". To change this name, include the argument savefile, e.g. c.calculate_dnds(savefile = "my_preferred_filename.txt")
+
+    
+    
+    Please post all questions, bugs, etc. to https://github.com/sjspielman/pyvolve/Issues
+    
 '''
 from copy import deepcopy
 from pyvolve import newick
@@ -216,16 +237,18 @@ class CalcOverBranch(object):
 
 
 
-class Slaculator(object):
+class dNdS_Counter(object):
     '''
-        Cool name RIGHT!
+        Class to count simulated, site-specific dN/dS.
         Required positional arguments:
             alnfile:  alignment file (fasta) produced by pyvolve *with ancestral sequences*
             treefile: file with newick tree 
-            mu_dict:  dictionary of nucleotide mutation rates (must have forward and back, i.e. 12 keys). If missing, assumes equal mutation rates.
+            
+        Optional positional arguments:
+            mu_dict: dictionary of nucleotide mutation rates. If missing, assumes equal mutation rates.
     '''
     
-    def __init__(self, alnfile, treefile, mu_dict):
+    def __init__(self, alnfile, treefile, mu_dict = None):
 
         # Parse initial tree
         self.tree = newick.read_tree(file = treefile)
@@ -268,6 +291,11 @@ class Slaculator(object):
         '''
         nuc_probs /= np.sum(nuc_probs)
         pi_dict = {"A": nuc_probs[0], "C": nuc_probs[1], "G": nuc_probs[2], "T": nuc_probs[3]} 
+        
+        # Default.
+        if mu_dict is None:
+            mu_dict = {"AC":1., "AG":1., "AT":1., "CG":1., "CT":1., "GT":1.}
+        
         # Fill in missing mutation rates symmetrically
         temp_mu_dict = {}
         for key in mu_dict:
@@ -339,7 +367,7 @@ class Slaculator(object):
         return storage_index
        
 
-    def calculate_dnds(self, savefile = "slaculator_output.txt"):
+    def calculate_dnds(self, savefile = "counted_dnds.txt"):
         '''
             Function *for users to call* in order to compute, save site-wise dnds quantities over a tree.
         '''
@@ -359,55 +387,12 @@ class Slaculator(object):
         final_ssites   = np.mean(self.s_sites, axis=1)
         final_nchanges = np.mean(self.n_changes, axis=1)
         final_schanges = np.mean(self.s_changes, axis=1)
-        
-#        print final_nsites
-#        print final_ssites
-#        print final_nchanges
-#        print final_schanges
-#        print final_nchanges/final_nsites
-#        print final_schanges/final_ssites
-
-
-                
+                        
         # Finally, save this csv: site_index, nonsyn_changes, syn_changes, nonsyn_sites, syn_sites
         with open(savefile, "w") as f:
             site = 1
             f.write("site\tns_changes\ts_changes\tns_sites\ts_sites")
-            for w,x,y,z in np.nditer([final_nchanges, final_schanges, final_nsites, final_ssites]):
-                f.write("\n" + str(site) + "\t" + str(w) + "\t" + str(x) + "\t" + str(y) + "\t" + str(z))
+            for i in range(len(final_nsites)):
+                f.write("\n" + str(site) + "\t" + str(final_nchanges[i]) + "\t" + str(final_schanges[i]) + "\t" + str(final_nsites[i]) + "\t" + str(final_ssites[i]))
                 site += 1
-
-
-# 
-# def main():
-#     alnfile = "withanc.fasta"
-#     treefile = "giant.tre"
-#     # Equal mutation rates 
-#     mu = 1.
-#     mu_dict = {'AT': mu, 'CG': mu, 'AC': mu, 'GT':mu, 'AG': mu, 'CT':mu}
-# 
-#     slaculator = Slaculator(alnfile, treefile, mu_dict)
-#     slaculator.calculate_dnds()
-# 
-# 
-# main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
