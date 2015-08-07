@@ -4,8 +4,10 @@ import sys
 import dnds_functions
 import random
 import math
+import slaculator 
 
-def make_mc_model(var, tree, aln_file, rate_file, rate_info_file, length):
+def make_mc_model(var, tree_file, aln_file, rate_file, rate_info_file, length, inf_rate_file):
+	tree=read_tree(file = tree_file)
 	kappa=4.5
 
 	if var=="dN": ##varying dN 
@@ -23,11 +25,19 @@ def make_mc_model(var, tree, aln_file, rate_file, rate_info_file, length):
 
 	evolve = Evolver(partitions = parts, tree = tree)
 	evolve(ratefile = rate_file, infofile = rate_info_file, seqfile = aln_file)
-
-def make_ms_model(var, tree, aln_file, rate_file, rate_info_file, length):
 	
-	out_file=rate_file.replace('assigned_rates','inferred_rates')
-	dnds_file=open(out_file,"w")
+	# Mutation rate dictionary - FYI you can also grab this from pyvolve directly, just use the next line:
+	# mu = 1
+# 	mu_dict = {'AT': mu, 'CG': mu, 'AC': mu, 'GT':mu, 'AG': kappa*mu,'GA': kappa*mu, 'TA': mu, 'GC': mu, 'CA': mu, 'TG':mu, 'GA': kappa*mu,'CT': kappa*mu, 'TC': kappa*mu}
+# 	
+# 	# Count dN/dS
+# 	print "Counting site-specific dN/dS"
+# 	my_slaculator = slaculator.Slaculator(aln_file, tree_file, mu_dict)
+# 	my_slaculator.calculate_dnds() #savefile = inf_rate_file) # To change name of output file from default 'slaculator_output.txt', add argument savefile = "filename.txt". It will be tab-delimited.
+
+def make_ms_model(var, tree_file, aln_file, rate_file, rate_info_file, length, inf_rate_file):
+	tree=read_tree(file = tree_file)
+	dnds_file=open(inf_rate_file,"w")
 	dnds_file.write("Site_Index\tdN\tdS\n")
 
 	parts = []			
@@ -110,7 +120,7 @@ simulate_aln.py <model> <tree_file> <aln_file> <rate_file> <rate_info_file>
 		sys.exit()
 		
 	model = argv[1]
-	tree = read_tree(file = argv[2])
+	tree_file = argv[2]
 	aln_file=argv[3]
 	rate_file=argv[4]
 	rate_info_file=argv[5]
@@ -118,14 +128,17 @@ simulate_aln.py <model> <tree_file> <aln_file> <rate_file> <rate_info_file>
 	# Define partition(s)
 	length = 100 # number of codon positions
 	
+	##inferred rates file	
+	inf_rate_file=rate_file.replace('assigned_rates','inferred_rates')
+	
 	if model=="mech_codon_dN":
-		make_mc_model("dN",tree, aln_file, rate_file, rate_info_file, length)
+		make_mc_model("dN",tree_file, aln_file, rate_file, rate_info_file, length, inf_rate_file)
 	elif model=="mech_codon_dN_dS":
-		make_mc_model("dN_dS",tree, aln_file, rate_file, rate_info_file, length)
+		make_mc_model("dN_dS",tree_file, aln_file, rate_file, rate_info_file, length, inf_rate_file)
 	elif model=="mut_sel_dN":
-		make_ms_model("dN",tree, aln_file, rate_file, rate_info_file, length)
+		make_ms_model("dN",tree_file, aln_file, rate_file, rate_info_file, length, inf_rate_file)
 	elif model=="mut_sel_dN_dS":
-		make_ms_model("dN_dS",tree, aln_file, rate_file, rate_info_file, length)
+		make_ms_model("dN_dS",tree_file, aln_file, rate_file, rate_info_file, length, inf_rate_file)
 	else:
 		print """
 		Incorrect model name!
