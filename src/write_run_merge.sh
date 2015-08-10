@@ -14,6 +14,10 @@ fi
 
 for model in ${sim_model_arr[*]}
 do	
+	if [ ! -d "${model}/sim_site_rates/merged_output/" ]; then
+		mkdir ${model}/sim_site_rates/merged_output/
+	fi
+
 	for num_taxa in ${taxa_num_arr[*]}
 	do	
 		for br_len in ${br_len_arr[*]}  
@@ -22,13 +26,10 @@ do
 			do
 				sim_rates=site_rates_t${num_taxa}_b${br_len}_${i}.txt 
 				sim_rates_info=site_rates_info_t${num_taxa}_b${br_len}_${i}.txt ##pyvolve output file name
-
-				if [ $model = "dN" -o $model = "dN_dS" ]; then 
-    				echo "Rscript ./src/merge_site_rates.r ${model}/sim_site_rates/simulation_output/${sim_rates} ${model}/sim_site_rates/simulation_output/${sim_rates_info} ${model}/sim_site_rates/merged_output/${sim_rates}">> ./src/run_plots.sh
-				fi
+    			echo "Rscript ./src/merge_site_rates.r ${model}/sim_site_rates/assigned_rates/${sim_rates} ${model}/sim_site_rates/assigned_rates/${sim_rates_info} ${model}/sim_site_rates/merged_output/${sim_rates}" >> ./src/run_merge.sh
 			done
 		done
 	done
 done
 
-chmod +x ./src/run_plots.sh
+chmod +x ./src/run_merge.sh
