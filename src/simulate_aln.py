@@ -1,10 +1,10 @@
 from pyvolve import *
 import numpy as np
 import sys
-import dnds_functions
 import random
 import math
-import slaculator 
+import dnds_functions
+
 
 def make_mc_model(var, tree_file, aln_file, rate_file, rate_info_file, length, inf_rate_file):
 	tree=read_tree(file = tree_file)
@@ -39,6 +39,7 @@ def make_ms_model(var, tree_file, aln_file, rate_file, rate_info_file, length, i
 	tree=read_tree(file = tree_file)
 	dnds_file=open(inf_rate_file,"w")
 	dnds_file.write("Site_Index\tdN\tdS\n")
+	codons=["AAA", "AAC", "AAG", "AAT", "ACA", "ACC", "ACG", "ACT", "AGA", "AGC", "AGG", "AGT", "ATA", "ATC", "ATG", "ATT", "CAA", "CAC", "CAG", "CAT", "CCA", "CCC", "CCG", "CCT", "CGA", "CGC", "CGG", "CGT", "CTA", "CTC", "CTG", "CTT", "GAA", "GAC", "GAG", "GAT", "GCA", "GCC", "GCG", "GCT", "GGA", "GGC", "GGG", "GGT", "GTA", "GTC", "GTG", "GTT", "TAC", "TAT", "TCA", "TCC", "TCG", "TCT", "TGC", "TGG", "TGT", "TTA", "TTC", "TTG", "TTT"]
 
 	parts = []			
 	if var=="dN":
@@ -48,11 +49,10 @@ def make_ms_model(var, tree_file, aln_file, rate_file, rate_info_file, length, i
 			p = Partition(models = model, size = 1)
 			parts.append(p)
 
-			codon_freqs = dict(zip(dnds_functions.codons, model.params["state_freqs"]))
+			freq_dict = dict(zip(codons, model.params["state_freqs"]))
 			mu = model.params["mu"]
-			
 			try:
-				dn,ds = dnds_functions.derive_dnds(codon_freqs, mu)
+				dn,ds = dnds_functions.derive_dnds(freq_dict, mu)
 			except:
 				dn = None
 				ds = None
@@ -61,7 +61,7 @@ def make_ms_model(var, tree_file, aln_file, rate_file, rate_info_file, length, i
 	if var=="dN_dS": 	
 		codon_index = {'A': [37, 38, 39, 40], 'C': [55, 57], 'E': [33, 35], 'D': [34, 36], 'G': [41, 42, 43, 44], 'F': [59, 61], 'I': [13, 14, 16], 'H': [18, 20], 'K': [1, 3], 'M': [15], 'L': [29, 30, 31, 32, 58, 60], 'N': [2, 4], 'Q': [17, 19], 'P': [21, 22, 23, 24], 'S': [10, 12, 51, 52, 53, 54], 'R': [9, 11, 25, 26, 27, 28], 'T': [5, 6, 7, 8], 'W': [56], 'V': [45, 46, 47, 48], 'Y': [49, 50]}
 		index_list = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
-
+		
 		mu = 1.
 		kappa = 1.
 		mu_dict = {'AT': mu, 'CG': mu, 'AC': mu, 'GT':mu, 'AG': kappa*mu,'GA': kappa*mu, 'TA': mu, 'GC': mu, 'CA': mu, 'TG':mu, 'GA': kappa*mu,'CT': kappa*mu, 'TC': kappa*mu}
@@ -93,15 +93,14 @@ def make_ms_model(var, tree_file, aln_file, rate_file, rate_info_file, length, i
 					codon_freq[codon_index[aa][j]-1] = norm_freq_cod[j] #for codon index starts from 1
 				codon_bias[aa] = np.var(norm_freq_cod)/np.mean(norm_freq_cod)  # codon bias in coefficient of variance
 			
-			freq_dict = dict(zip(dnds_functions.codons, codon_freq))
+			freq_dict = dict(zip(codons, codon_freq))
 
-			model = Model("mutsel", {"state_freqs": codon_freq, "mu":mu_dict})
+			model = Model("mutsel", {"state_freqs": codon_freq})
 			p = Partition(models = model, size = 1)
 			parts.append(p)
 		 
-			mu = model.params["mu"]			
 			try:
-				dn,ds = dnds_functions.derive_dnds(freq_dict, mu)
+				dn,ds = dnds_functions.derive_dnds(freq_dict, mu_dict)
 			except:
 				dn = None
 				ds = None

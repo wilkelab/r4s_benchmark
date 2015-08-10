@@ -46,7 +46,7 @@ class dNdS_from_MutSel():
         # Frequency setup
         self.codon_freqs = codon_frequencies
         if type(codon_frequencies) is dict:
-            self.codon_freqs_dict = frequencies
+            self.codon_freqs_dict = codon_frequencies
         else:
             self.codon_freqs_dict = {}
             for c in range(len(self.codons)):
