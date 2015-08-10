@@ -5,6 +5,7 @@ from Bio.Align import MultipleSeqAlignment
 from Bio.SeqRecord import SeqRecord
 
 aln_file = sys.argv[1] 
+out_file = sys.argv[2]
 nuc_aln = AlignIO.read(aln_file, "fasta") 
 
 aa_aln = []
@@ -16,5 +17,4 @@ for s in nuc_aln:
 	aa_aln.append(aa_seq_r) 
 
 msa = MultipleSeqAlignment(aa_aln) # create an MSA object
-base_name = aln_file.split("/")[-1]
-AlignIO.write(msa, "aln/aa/"+base_name, "fasta") 
+AlignIO.write(msa, out_file, "fasta") 
