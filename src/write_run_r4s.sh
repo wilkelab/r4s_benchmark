@@ -11,7 +11,6 @@ do
 		br_len_arr=("${br_len_arr1[*]}")
 	else 
 		br_len_arr=("${br_len_arr2[*]}")
-		sim_num=1
 	fi
 	
 	rm ./src/run_${model}_r4s.sh 
