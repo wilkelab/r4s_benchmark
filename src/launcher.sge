@@ -36,7 +36,7 @@
 #
 module load launcher
 setenv EXECUTABLE     $TACC_LAUNCHER_DIR/init_launcher 
-setenv CONTROL_FILE   ../../../home1/02159/ds29583/r4s_benchmark/src/run_mut_sel_dN_r4s.sh
+setenv CONTROL_FILE   ../../../home1/02159/ds29583/r4s_benchmark/src/run_mut_sel_dN_dS_r4s.sh
 setenv WORKDIR        /scratch/02159/ds29583/
 # 
 # Variable description:

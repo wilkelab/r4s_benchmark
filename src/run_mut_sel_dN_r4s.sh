@@ -1,3 +1,4 @@
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.001 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.001 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.001 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.001 4
@@ -27,6 +28,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.001 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.001 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.001 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.0033 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.0033 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.0033 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.0033 4
@@ -56,6 +58,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.0033 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.0033 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.0033 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.01 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.01 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.01 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.01 4
@@ -85,6 +88,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.01 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.01 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.01 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.033 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.033 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.033 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.033 4
@@ -114,6 +118,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.033 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.033 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.033 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.1 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.1 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.1 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.1 4
@@ -143,6 +148,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.1 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.1 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.1 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.33 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.33 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.33 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.33 4
@@ -172,6 +178,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.33 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.33 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 0.33 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 1.0 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 1.0 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 1.0 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 1.0 4
@@ -201,6 +208,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 1.0 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 1.0 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 1.0 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 3.3 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 3.3 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 3.3 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 3.3 4
@@ -230,6 +238,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 3.3 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 3.3 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 32 3.3 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.001 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.001 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.001 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.001 4
@@ -259,6 +268,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.001 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.001 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.001 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.0033 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.0033 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.0033 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.0033 4
@@ -288,6 +298,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.0033 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.0033 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.0033 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.01 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.01 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.01 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.01 4
@@ -317,6 +328,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.01 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.01 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.01 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.033 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.033 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.033 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.033 4
@@ -346,6 +358,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.033 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.033 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.033 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.1 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.1 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.1 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.1 4
@@ -375,6 +388,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.1 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.1 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.1 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.33 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.33 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.33 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.33 4
@@ -404,6 +418,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.33 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.33 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 0.33 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 1.0 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 1.0 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 1.0 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 1.0 4
@@ -433,6 +448,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 1.0 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 1.0 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 1.0 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 3.3 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 3.3 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 3.3 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 3.3 4
@@ -462,6 +478,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 3.3 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 3.3 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 64 3.3 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.001 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.001 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.001 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.001 4
@@ -491,6 +508,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.001 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.001 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.001 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.0033 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.0033 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.0033 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.0033 4
@@ -520,6 +538,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.0033 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.0033 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.0033 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.01 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.01 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.01 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.01 4
@@ -549,6 +568,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.01 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.01 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.01 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.033 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.033 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.033 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.033 4
@@ -578,6 +598,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.033 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.033 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.033 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.1 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.1 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.1 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.1 4
@@ -607,6 +628,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.1 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.1 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.1 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.33 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.33 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.33 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.33 4
@@ -636,6 +658,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.33 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.33 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 0.33 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 1.0 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 1.0 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 1.0 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 1.0 4
@@ -665,6 +688,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 1.0 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 1.0 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 1.0 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 3.3 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 3.3 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 3.3 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 3.3 4
@@ -694,6 +718,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 3.3 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 3.3 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 128 3.3 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.001 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.001 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.001 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.001 4
@@ -723,6 +748,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.001 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.001 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.001 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.0033 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.0033 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.0033 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.0033 4
@@ -752,6 +778,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.0033 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.0033 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.0033 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.01 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.01 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.01 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.01 4
@@ -781,6 +808,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.01 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.01 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.01 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.033 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.033 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.033 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.033 4
@@ -810,6 +838,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.033 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.033 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.033 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.1 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.1 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.1 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.1 4
@@ -839,6 +868,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.1 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.1 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.1 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.33 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.33 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.33 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.33 4
@@ -868,6 +898,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.33 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.33 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 0.33 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 1.0 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 1.0 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 1.0 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 1.0 4
@@ -897,6 +928,7 @@
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 1.0 28
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 1.0 29
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 1.0 30
+/home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 3.3 1
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 3.3 2
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 3.3 3
 /home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh mut_sel_dN 256 3.3 4

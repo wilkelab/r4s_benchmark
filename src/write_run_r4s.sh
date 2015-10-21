@@ -22,9 +22,7 @@ do
 			for i in $(seq 1 $sim_num) 
 			do
 				r4s_norm_rates=r4s_norm_rates_t${num_taxa}_b${br_len}_${i}.txt ##rate4site output file name for norm rates
-				if [ ! -f "$HOME/r4s_benchmark/${model}/r4s_site_rates/${r4s_norm_rates}" ]; then
-    				echo "$HOME/r4s_benchmark/src/r4s_pipeline.sh $model $num_taxa $br_len $i" >> ./src/run_${model}_r4s.sh
-    			fi
+    			echo "$HOME/r4s_benchmark/src/r4s_pipeline.sh $model $num_taxa $br_len $i" >> ./src/run_${model}_r4s.sh
 			done
 		done
 	done
