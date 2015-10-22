@@ -111,3 +111,4 @@
   100     G    0.99   [0.6048, 1.219]  0.4776   64/64
 #Average = 0.9999
 #Standard Deviation = 0.05535
+#Standard Deviation = 0.4053
