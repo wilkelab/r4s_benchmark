@@ -3,11 +3,18 @@ import numpy as np
 import sys
 import random
 import math
-import dnds_functions
+import count_simulated_dnds
+import compute_dnds_from_mutsel
+from Bio import AlignIO
+from Bio.Align import MultipleSeqAlignment
+from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
+
 
 
 def make_mc_model(var, tree_file, aln_file, rate_file, rate_info_file, length, inf_rate_file):
 	tree=read_tree(file = tree_file)
+	anc_aln_file = aln_file.replace('nuc','nuc_anc')
 	kappa=4.5
 
 	if var=="dN": ##varying dN 
@@ -20,20 +27,28 @@ def make_mc_model(var, tree_file, aln_file, rate_file, rate_info_file, length, i
 		l2 = np.tile(r,n)
 		parameters = {"kappa":4.5, "alpha": l1, "beta": l2 }
 
-	model = Model("MG", parameters, scale_matrix = "neutral")
+	model = Model("MG", parameters)
 	parts = Partition(models = model, size = length)
 
 	evolve = Evolver(partitions = parts, tree = tree)
 	evolve(ratefile = rate_file, infofile = rate_info_file, seqfile = aln_file)
 	
+	anc_anl_dict = evolve.get_sequences(anc = True) ##get simulated ancestor sequences 
+	aln_list=[]
+	
+	for node in anc_aln_dict.keys():
+		seq_r = SeqRecord(Seq(anc_aln_dict[node]), id=node, description='') #create a SeqRecord object from amino acid Seq object to start a list 
+		aln_list.append(seq_r)
+	msa = MultipleSeqAlignment(aln_list) # create an MSA object
+	AlignIO.write(msa, anc_aln_file, "fasta") 
+		
 	# Mutation rate dictionary - FYI you can also grab this from pyvolve directly, just use the next line:
-	# mu = 1
+	mu = 1
 	mu_dict = {'AT': mu, 'CG': mu, 'AC': mu, 'GT':mu, 'AG': kappa*mu,'GA': kappa*mu, 'TA': mu, 'GC': mu, 'CA': mu, 'TG':mu, 'GA': kappa*mu,'CT': kappa*mu, 'TC': kappa*mu}
 	
 	# Count dN/dS
-	print "Counting site-specific dN/dS"
-	my_slaculator = slaculator.Slaculator(aln_file, tree_file, mu_dict)
-	my_slaculator.calculate_dnds() #savefile = inf_rate_file) # To change name of output file from default 'slaculator_output.txt', add argument savefile = "filename.txt". It will be tab-delimited.
+	c = count_simulated_dnds.dNdS_Counter(anc_aln_file, tree_file, mu_dict)
+	c.calculate_dnds(savefile = inf_rate_file)
 
 def make_ms_model(var, tree_file, aln_file, rate_file, rate_info_file, length, inf_rate_file):
 	tree=read_tree(file = tree_file)
@@ -41,31 +56,27 @@ def make_ms_model(var, tree_file, aln_file, rate_file, rate_info_file, length, i
 	dnds_file.write("Site_Index\tdN\tdS\n")
 	codons=["AAA", "AAC", "AAG", "AAT", "ACA", "ACC", "ACG", "ACT", "AGA", "AGC", "AGG", "AGT", "ATA", "ATC", "ATG", "ATT", "CAA", "CAC", "CAG", "CAT", "CCA", "CCC", "CCG", "CCT", "CGA", "CGC", "CGG", "CGT", "CTA", "CTC", "CTG", "CTT", "GAA", "GAC", "GAG", "GAT", "GCA", "GCC", "GCG", "GCT", "GGA", "GGC", "GGG", "GGT", "GTA", "GTC", "GTG", "GTT", "TAC", "TAT", "TCA", "TCC", "TCG", "TCT", "TGC", "TGG", "TGT", "TTA", "TTC", "TTG", "TTT"]
 
-	parts = []			
+	parts = []		
 	if var=="dN":
 		for i in range(length):
+			print i
 			simulated_fitness = np.random.exponential(scale=1, size = 20) # draw 20 fitness values for amino acid, scale is the mean or beta of the exponential distribution
 			model = Model("mutsel", {"fitness":simulated_fitness})     
 			p = Partition(models = model, size = 1)
 			parts.append(p)
-
+			
 			freq_dict = dict(zip(codons, model.params["state_freqs"]))
-			mu = model.params["mu"]
-			try:
-				dn,ds = dnds_functions.derive_dnds(freq_dict, mu)
-			except:
-				dn = None
-				ds = None
+			mu_dict = model.params["mu"]
+			
+			c = compute_dnds_from_mutsel.dNdS_from_MutSel(freq_dict , mu_dict)
+			dn=c.compute_dn()   # to return dN    
+			ds=c.compute_ds()   # to return dS
 			dnds_file.write("%d\t%s\t%s\n" % (i+1, dn, ds))
 				
 	if var=="dN_dS": 	
 		codon_index = {'A': [37, 38, 39, 40], 'C': [55, 57], 'E': [33, 35], 'D': [34, 36], 'G': [41, 42, 43, 44], 'F': [59, 61], 'I': [13, 14, 16], 'H': [18, 20], 'K': [1, 3], 'M': [15], 'L': [29, 30, 31, 32, 58, 60], 'N': [2, 4], 'Q': [17, 19], 'P': [21, 22, 23, 24], 'S': [10, 12, 51, 52, 53, 54], 'R': [9, 11, 25, 26, 27, 28], 'T': [5, 6, 7, 8], 'W': [56], 'V': [45, 46, 47, 48], 'Y': [49, 50]}
 		index_list = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
 		
-		mu = 1.
-		kappa = 1.
-		mu_dict = {'AT': mu, 'CG': mu, 'AC': mu, 'GT':mu, 'AG': kappa*mu,'GA': kappa*mu, 'TA': mu, 'GC': mu, 'CA': mu, 'TG':mu, 'GA': kappa*mu,'CT': kappa*mu, 'TC': kappa*mu}
-
 		for i in range(length):
 			'''
 			step 1
@@ -93,17 +104,16 @@ def make_ms_model(var, tree_file, aln_file, rate_file, rate_info_file, length, i
 					codon_freq[codon_index[aa][j]-1] = norm_freq_cod[j] #for codon index starts from 1
 				codon_bias[aa] = np.var(norm_freq_cod)/np.mean(norm_freq_cod)  # codon bias in coefficient of variance
 			
-			freq_dict = dict(zip(codons, codon_freq))
-
 			model = Model("mutsel", {"state_freqs": codon_freq})
 			p = Partition(models = model, size = 1)
 			parts.append(p)
-		 
-			try:
-				dn,ds = dnds_functions.derive_dnds(freq_dict, mu_dict)
-			except:
-				dn = None
-				ds = None
+			
+			freq_dict = dict(zip(codons, model.params["state_freqs"]))
+			mu_dict = model.params["mu"]
+			
+			c = compute_dnds_from_mutsel.dNdS_from_MutSel(freq_dict, mu_dict)
+			ds=c.compute_ds()   # to return dS
+			dn=c.compute_dn()   # to return dN    
 			dnds_file.write("%d\t%f\t%f\n" % (i+1, dn, ds))
 				
 	##Evolving sequences

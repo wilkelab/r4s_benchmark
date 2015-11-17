@@ -4,6 +4,7 @@ taxa_num_arr=(32 64 128 256)
 br_len_arr1=(0.001 0.0033 0.01 0.033 0.1)
 br_len_arr2=(0.001 0.0033 0.01 0.033 0.1 0.33 1.0 3.3)
 sim_num=30
+scaling=true
 
 if [ -f "./src/run_sim_aln.sh" ]; then
 	rm ./src/run_sim_aln.sh 

@@ -3,9 +3,10 @@ library(ggplot2)
 library(dplyr)
 library(cowplot)
 
-args <- commandArgs(trailingOnly = TRUE)
-#model <- as.character(args[1]) 
-t1 <- list.files(paste0(model,"/r4s_site_rates"),full.names=T)
+model_lst = c("mech_codon_dN","mech_codon_dN_dS","mut_sel_dN","mut_sel_dN_dS")
+
+##for (model in model_lst) {
+t1 <- list.files(paste0(model,"/r4s_site_rates/norm_rates"),full.names=T)
 info = file.info(t1)
 t1 <- t1[info$size != 0]
 
@@ -86,11 +87,11 @@ if (model == "mech_codon_dN") {
   p1 <- ggplot(a,aes(dN,r4s_score)) + 
     geom_point(size=1,alpha=0.7) + 
     geom_smooth(method=lm) +
-    xlab("simulated rate (dN)") +
+    xlab(expression(bold("simulated rate (dN/dS)"))) +
     ylab("rate4site score") +
     theme(axis.text=element_text(size=8),legend.position="none") +
     geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=4)) +
-    scale_x_continuous(breaks=seq(0,1.5,0.5), labels=c("0","0.5","1","1.5"), limits = c(0.0,1.5)) + 
+    scale_x_continuous(breaks=seq(0,1,0.5), labels=c("0","0.5","1"), limits = c(0,1)) + 
     scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
     facet_grid(num_taxa ~ branch_len) +
     background_grid(major = 'xy', minor = "none") + 
@@ -105,6 +106,83 @@ if ( model == "mech_codon_dN_dS") {
 		ylab("rate4site score") +
 		theme(axis.text=element_text(size=8),legend.position="none") +
 		geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=4)) +
+		scale_x_continuous(breaks=seq(0,1.5,0.5), labels=c("0","0.5","1","1.5"), limits = c(0,1.5)) + 
+		scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
+		facet_grid(num_taxa ~ branch_len) +
+		background_grid(major = 'xy', minor = "none") + 
+		panel_border()
+	ggsave(paste0("plots/",model,"_r4s_rates_v_sim_rates.png"))
+}
+
+b1 <- filter(a,branch_len==0.33,num_taxa==32)
+index <- a$branch_len==0.1 & a$num_taxa==32 | a$branch_len==0.33 & a$num_taxa==64 | a$branch_len==0.1 & a$num_taxa==64
+b2a <- a[index,]
+b2 <- rbind(b1,b2a)
+if (model == "mut_sel_dN") {
+  p1 <- ggplot(a,aes(dN,r4s_score)) + 
+  geom_point(size=1,alpha=0.7) + 
+  geom_smooth(method=lm) +
+  xlab(expression(bold("predicted rate (dN/dS)"))) +
+  ylab("rate4site score") +
+  theme(axis.text=element_text(size=8),legend.position="none") +
+  geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=4)) +
+  scale_x_continuous(breaks=seq(0,1,0.5), labels=c("0","0.5","1.0"), limits = c(0.0,1.0)) + 
+  scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
+  facet_grid(num_taxa ~ branch_len) +
+  background_grid(major = 'xy', minor = "none") + 
+  panel_border()
+  ggsave(paste0("plots/",model,"_r4s_rates_v_sim_rates.png"))
+  
+  p1a <- ggplot(b1,aes(dN.dS,r4s_score)) + 
+    geom_point(size=3,alpha=0.7) + 
+    geom_smooth(method=lm) +
+    xlab(expression(bold("predicted rate (dN/dS)"))) +
+    ylab("rate4site score") +
+    theme(axis.text=element_text(size=8),legend.position="none") +
+    geom_text(aes(x=0.1,y=5,label=paste0(round(cor,2),sig)),size=6) +
+    scale_x_continuous(breaks=seq(0,1,0.1), 
+                       #labels=c("0","0.1","1.0"), 
+                       limits = c(0.0,1.0)) + 
+    scale_y_continuous(breaks=seq(-2,6,1), limits = c(-2,6)) +
+    facet_grid(num_taxa ~ branch_len) +
+    background_grid(major = 'xy', minor = "none") + 
+    panel_border()+
+   theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 17),
+        legend.text = element_text(size = 16),
+        legend.title = element_text(size = 16))
+  ggsave(paste0("plots/",model,"_one_var_r4s_rates_v_sim_rates.png"))
+  
+  p1b <- ggplot(b2,aes(dN.dS,r4s_score)) + 
+    geom_point(size=3,alpha=0.7) + 
+    geom_smooth(method=lm) +
+    xlab(expression(bold("predicted rate (dN/dS)"))) +
+    ylab("rate4site score") +
+    theme(axis.text=element_text(size=8),legend.position="none") +
+    geom_text(aes(x=0.1,y=5,label=paste0(round(cor,2),sig)),size=6) +
+    scale_x_continuous(breaks=seq(0,1,0.2), 
+                       #labels=c("0","0.1","1.0"), 
+                       limits = c(0.0,1.0)) + 
+    scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
+    facet_grid(num_taxa ~ branch_len) +
+    background_grid(major = 'xy', minor = "none") + 
+    panel_border() +
+    theme(axis.title = element_text(size = 18),
+          axis.text = element_text(size = 17),
+          legend.text = element_text(size = 16),
+          legend.title = element_text(size = 16))
+  ggsave(paste0("plots/",model,"_two_var_r4s_rates_v_sim_rates.png"))
+
+  }
+
+if (model == "mut_sel_dN_dS") {
+	p1 <- ggplot(a,aes(dN.dS,r4s_score)) + 
+		geom_point(size=1,alpha=0.7) + 
+		geom_smooth(method=lm) +
+	  xlab(expression(bold("predicted rate (dN/dS)"))) +
+		ylab("rate4site score") +
+		theme(axis.text=element_text(size=8),legend.position="none") +
+		geom_text(aes(x=0.4,y=5,label=paste0(round(cor,2),sig),size=4)) +
 		scale_x_continuous(breaks=seq(0,1.5,0.5), labels=c("0","0.5","1","1.5"), limits = c(0.0,1.5)) + 
 		scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
 		facet_grid(num_taxa ~ branch_len) +
@@ -113,64 +191,46 @@ if ( model == "mech_codon_dN_dS") {
 	ggsave(paste0("plots/",model,"_r4s_rates_v_sim_rates.png"))
 }
 
-if (model == "mut_sel_dN") {
-  p1 <- ggplot(a,aes(dN,r4s_score)) + 
-  geom_point(size=1,alpha=0.7) + 
-  geom_smooth(method=lm) +
-  xlab("simulated rate (dN)") +
-  ylab("rate4site score") +
-  theme(axis.text=element_text(size=8),legend.position="none") +
-  geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=4)) +
-  scale_x_continuous(breaks=seq(0,1.0,0.5), labels=c("0","0.5","1.0"), limits = c(0.0,1.0)) + 
-  scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
-  facet_grid(num_taxa ~ branch_len) +
-  background_grid(major = 'xy', minor = "none") + 
-  panel_border()
-  ggsave(paste0("plots/",model,"_r4s_rates_v_sim_rates.png"))
-}
-
-if (model == "mut_sel_dN_dS") {
-	p1 <- ggplot(a,aes(dN.dS,r4s_score)) + 
-		geom_point(size=1,alpha=0.7) + 
-		geom_smooth(method=lm) +
-	  xlab(expression(bold("simulated rate (dN/dS)"))) +
-		ylab("rate4site score") +
-		theme(axis.text=element_text(size=8),legend.position="none") +
-		geom_text(aes(x=0.3,y=5,label=paste0(round(cor,2),sig),size=4)) +
-		scale_x_continuous(breaks=seq(0,1.0,0.5), labels=c("0","0.5","1"), limits = c(0.0,1.0)) + 
-		scale_y_continuous(breaks=seq(-2,6,2), limits = c(-2,6)) +
-		facet_grid(num_taxa ~ branch_len) +
-		background_grid(major = 'xy', minor = "none") + 
-		panel_border()
-	ggsave(paste0("plots/",model,"_r4s_rates_v_sim_rates.png"))
-}
-
-p2 <- ggplot(d,aes(num_taxa,cor,colour=factor(branch_len),group=branch_len)) + 
+colfunc <- colorRampPalette(c("orange","red","darkred"))
+p2 <- ggplot(d,aes(num_taxa,cor,color=factor(branch_len),group=branch_len)) + 
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x), 
                fun.ymax = function(x) mean(x) + sd(x), 
-               geom = "pointrange") +
-  scale_colour_discrete(name="Branch length") +
-  stat_summary(fun.y = mean,geom = "line",aes(color=factor(branch_len)))+
+               geom = "pointrange",
+               size=0.8) +
+  scale_colour_manual(values=colfunc(8)) +
+  guides(col = guide_legend(title="Branch Length",reverse = TRUE)) +
+  stat_summary(fun.y = mean,geom = "line",size=0.8,aes(color=factor(branch_len)))+
   xlab("Number of Taxa") +
   ylab("Correlation (spearman)") +
   scale_x_continuous(breaks=seq(0,300,50), labels=c("0"," ","100"," ","200"," ","300"), limits = c(0,300)) + 
-	scale_y_continuous(breaks=seq(-0.4,1,0.2), limits = c(-0.4,1)) 
+	scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1)) +
+  theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 17),
+        legend.text = element_text(size = 16),
+        legend.title = element_text(size = 16))
 ggsave(paste0("plots/",model,"_cor_v_num_taxa.png"))
 
+colfunc <- colorRampPalette(c("cyan2","dodgerblue2","navyblue"))
 if (model=="mech_codon_dN" | model=="mech_codon_dN_dS") {
   p3 <- ggplot(d,aes(branch_len,cor,colour=factor(num_taxa),group=num_taxa)) + 
     stat_summary(fun.y = mean,
                  fun.ymin = function(x) mean(x) - sd(x), 
                  fun.ymax = function(x) mean(x) + sd(x), 
-                 geom = "pointrange") +
-    stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)))+
-    scale_colour_discrete(name="Number of taxa") +
+                 geom = "pointrange",
+                 size=0.8) +
+    scale_colour_manual(values=colfunc(4)) +
+    guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
+    stat_summary(fun.y = mean,geom = "line",size=0.8,aes(color=factor(num_taxa)))+
     xlab("Branch Length") +
     ylab("Correlation (spearman)") +
     scale_x_log10(breaks=round(c(0.001,0.0033,0.01,0.033,0.1),3),
                   limits=c(0.001,0.1)) + 
-    scale_y_continuous(breaks=seq(-0.4,1,0.2), limits = c(-0.4,1))  
+    scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1))+ 
+    theme(axis.title = element_text(size = 18),
+        axis.text = element_text(size = 17),
+        legend.text = element_text(size = 16),
+        legend.title = element_text(size = 16))
   ggsave(paste0("plots/",model,"_cor_v_branch_len.png"))
 }
 
@@ -179,13 +239,22 @@ if (model=="mut_sel_dN" | model=="mut_sel_dN_dS") {
     stat_summary(fun.y = mean,
                  fun.ymin = function(x) mean(x) - sd(x), 
                  fun.ymax = function(x) mean(x) + sd(x), 
-                 geom = "pointrange") +
-    stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)))+
-    scale_colour_discrete(name="Number of taxa") +
+                 geom = "pointrange",
+                 size=0.8) +
+    scale_colour_manual(values=colfunc(4)) +
+    guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
+    stat_summary(fun.y = mean,geom = "line",size=0.8,aes(color=factor(num_taxa)))+
     xlab("Branch Length") +
     ylab("Correlation (spearman)") +
     scale_x_log10(breaks=round(c(0.001,0.0033,0.01,0.033,0.1,0.33,1.0,3.3),3),
+                  #labels=c(0.001,0.003,0.01,0.033,0.1,0.33,1.0,3.3),
                   limits=c(0.001,3.3)) + 
-    scale_y_continuous(breaks=seq(-0.4,1,0.2), limits = c(-0.4,1))  
+    scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1)) +
+    theme(axis.title = element_text(size = 18),
+          axis.text = element_text(size = 17),
+          legend.text = element_text(size = 16),
+          legend.title = element_text(size = 16))
   ggsave(paste0("plots/",model,"_cor_v_branch_len.png"))
 }
+}
+
