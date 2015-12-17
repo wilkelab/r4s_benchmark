@@ -1,1 +1,0 @@
-#Rates were calculated using the expectation of the posterior rate distribution

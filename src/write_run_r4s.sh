@@ -1,31 +1,27 @@
 #!/bin/bash
-sim_num=30
-sim_model_arr=("mech_codon_dN" "mech_codon_dN_dS" "mut_sel_dN" "mut_sel_dN_dS")
-taxa_num_arr=(32 64 128 256)
-br_len_arr1=(0.001 0.0033 0.01 0.033 0.1)
-br_len_arr2=(0.001 0.0033 0.01 0.033 0.1 0.33 1.0 3.3)
+rep_num=50
+bias_arr=("bias" "nobias")
+taxa_num=11
+br_len_arr=(0.0025 0.01 0.04 0.16 0.64)
 
-for model in ${sim_model_arr[*]}
+for br_len in ${br_len_arr[*]} 
 do	
-	if [ $model = "mech_codon_dN" -o $model = "mech_codon_dN_dS" ]; then 
-		br_len_arr=("${br_len_arr1[*]}")
-	else 
-		br_len_arr=("${br_len_arr2[*]}")
-	fi
-	
-	rm ./src/run_${model}_r4s.sh 
-	 
-	for num_taxa in ${taxa_num_arr[*]}
-	do	
-		for br_len in ${br_len_arr[*]} 
-		do	 
-			for i in $(seq 1 $sim_num) 
+	rm ./src/run_bl${br_len}_r4s.sh
+done
+
+for bias in ${bias_arr[*]}
+do	 
+	for br_len in ${br_len_arr[*]} 
+	do	 
+		for i in $(seq 7 $taxa_num) 
+		do
+			for j in $(seq 1 $rep_num) 
 			do
-				r4s_norm_rates=r4s_norm_rates_t${num_taxa}_b${br_len}_${i}.txt ##rate4site output file name for norm rates
-    			echo "$HOME/r4s_benchmark/src/r4s_pipeline.sh $model $num_taxa $br_len $i" >> ./src/run_${model}_r4s.sh
+			echo "$SCRATCH/ev_rate_method_comparison/src/r4s_pipeline.sh $bias $br_len $i $j" >> ./src/run_bl${br_len}_r4s.sh
 			done
 		done
 	done
-	
-	chmod +x ./src/run_${model}_r4s.sh
+	chmod +x ./src/run_bl${br_len}_r4s.sh
 done
+
+
