@@ -14,7 +14,7 @@
 #         <------ Setup Parameters ------>
 #
 #$ -N sim 
-#$ -pe 12way 48
+#$ -pe 12way 96
 #$ -q normal
 #$ -o sim.o$JOB_ID
 #$ -l h_rt=24:00:00
@@ -35,8 +35,9 @@
 #	   NOTE: The env variable $JOB_ID contains the job id. 
 #
 module load launcher
+module load python
 setenv EXECUTABLE     $TACC_LAUNCHER_DIR/init_launcher 
-setenv CONTROL_FILE   ../../../home1/02159/ds29583/r4s_benchmark/src/run_mut_sel_dN_dS_r4s.sh
+setenv CONTROL_FILE   ../../../home1/02159/ds29583/r4s_benchmark/src/run_sim_aln.sh
 setenv WORKDIR        /scratch/02159/ds29583/
 # 
 # Variable description:
