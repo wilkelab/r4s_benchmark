@@ -9,26 +9,17 @@ tree=n${taxa_num}_bl${br_len}.tre
 r4s_norm_rates=r4s_norm_rates_rep${rep_num}_n${taxa_num}_bl${br_len}_${bias}.txt
 r4s_orig_rates=r4s_orig_rates_rep${rep_num}_n${taxa_num}_bl${br_len}_${bias}.txt
 
-if [ ! -d "$SCRATCH/ev_rate_method_comparison/aln/aa/" ]; then
-	mkdir $SCRATCH/ev_rate_method_comparison/aln/aa/
-fi
-
 ##convert an alignment from nuc to aa 
-python $SCRATCH/ev_rate_method_comparison/src/translate_aln.py $SCRATCH/ev_rate_method_comparison/aln/nuc/${aln} $SCRATCH/ev_rate_method_comparison/aln/aa/${aln}
-
-if [ ! -d "$SCRATCH/ev_rate_method_comparison/r4s_site_rates/" ]; then
-	mkdir $SCRATCH/ev_rate_method_comparison/r4s_site_rates/
-	mkdir $SCRATCH/ev_rate_method_comparison/r4s_site_rates/${bias}
-fi
+python ../../../home1/02159/ds29583/r4s_benchmark/src/translate_aln.py ./r4s_benchmark_data/aln/mech_codon/nuc/${aln} ./r4s_benchmark_data/aln/mech_codon/aa/${aln}
 
 ##run rate4site 
-rate4site.3.2.source/sourceMar09/rate4site -s $SCRATCH/ev_rate_method_comparison/aln/aa/${aln} -t $SCRATCH/ev_rate_method_comparison/trees/${tree} -o $SCRATCH/ev_rate_method_comparison/r4s_site_rates/${r4s_norm_rates} 
+../../../home1/02159/ds29583/rate4site.3.2.source/sourceMar09/rate4site -s ./r4s_benchmark_data/aln/mech_codon/aa/${aln} -t ./r4s_benchmark_data/trees/${tree} -o ../../../home1/02159/ds29583/r4s_benchmark/mech_codon/r4s_rates/raw_rates/${r4s_norm_rates}
 if [ -f r4s.res ]; then
 	rm r4s.res 
 fi 
 
 if [ -f r4sOrig.res ]; then
-	mv r4sOrig.res $SCRATCH/ev_rate_method_comparison/r4s_site_rates/${r4s_orig_rates} 
+	mv r4sOrig.res ../../../home1/02159/ds29583/r4s_benchmark/mech_codon/r4s_rates/raw_rates/${r4s_orig_rates} 
 fi 
 
 if [ -f TheTree.txt ]; then
