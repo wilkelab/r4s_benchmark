@@ -4,9 +4,10 @@ library(dplyr)
 library(cowplot)
 
 file_names = c("r4s_norm_rates","r4s_orig_rates")
+model = "mech_codon"
 
 for (name in file_names) {
-  t1 <- list.files("mech_codon/r4s_rates/raw_rates",pattern=name,full.names=T)
+  t1 <- list.files(paste0(model,"/r4s_rates/raw_rates"),pattern=name,full.names=T)
   info = file.info(t1)
   t1 <- t1[info$size != 0]
   
@@ -57,6 +58,6 @@ for (name in file_names) {
   }  
   bias_r <- filter(d,type=="bias")
   nobias_r <- filter(d,type=="nobias")
-  write.csv(bias_r,file=paste0("mech_codon/r4s_rates/processed_rates/all_",name,"_bias.csv"),quote=F)
-  write.csv(nobias_r,file=paste0("mech_codon/r4s_rates/processed_rates/all_",name,"_nobias.csv"),quote=F)
+  write.csv(bias_r,file=paste0(model,"/r4s_rates/processed_rates/all_",name,"_bias.csv"),quote=F)
+  write.csv(nobias_r,file=paste0(model,"/r4s_rates/processed_rates/all_",name,"_nobias.csv"),quote=F)
 }
