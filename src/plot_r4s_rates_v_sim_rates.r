@@ -38,9 +38,9 @@ p2 <- ggplot(r_bias,aes(num_taxa,cor,color=factor(bl),group=bl)) +
   scale_x_log10(breaks=c(128,256,512,1024,2048)) +
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
-        legend.text = element_text(size = 10),
+        legend.text = element_text(size = 11),
         legend.title = element_text(size = 12))
-##ggsave(paste0("plots/",model,"_bias_cor_v_num_taxa.png"))
+ggsave(paste0("plots/",model,"_bias_cor_v_num_taxa.png"))
 
 colfunc <- colorRampPalette(c("cyan2","navyblue"))
 p3 <- ggplot(r_bias,aes(bl,cor,colour=factor(num_taxa),group=num_taxa)) + 
@@ -58,9 +58,9 @@ p3 <- ggplot(r_bias,aes(bl,cor,colour=factor(num_taxa),group=num_taxa)) +
   scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1))+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
-        legend.text = element_text(size = 10),
+        legend.text = element_text(size = 11),
         legend.title = element_text(size = 12))
-##ggsave(paste0("plots/",model,"_bias_cor_v_branch_len.png"))
+ggsave(paste0("plots/",model,"_bias_cor_v_branch_len.png"))
 
 pg <- plot_grid(p2, p3, labels = c("A", "B"),ncol=2,nrow=1)
 save_plot(paste0("plots/",model,"_bias_combined.png"), pg,
@@ -86,9 +86,9 @@ p2 <- ggplot(r_nobias,aes(num_taxa,cor,color=factor(bl),group=bl)) +
   scale_x_log10(breaks=c(128,256,512,1024,2048)) +
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
-        legend.text = element_text(size = 10),
+        legend.text = element_text(size = 11),
         legend.title = element_text(size = 12))
-##ggsave(paste0("plots/",model,"_nobias_cor_v_num_taxa.png"))
+ggsave(paste0("plots/",model,"_nobias_cor_v_num_taxa.png"))
 
 colfunc <- colorRampPalette(c("cyan2","navyblue"))
 p3 <- ggplot(r_nobias,aes(bl,cor,colour=factor(num_taxa),group=num_taxa)) + 
@@ -106,9 +106,9 @@ p3 <- ggplot(r_nobias,aes(bl,cor,colour=factor(num_taxa),group=num_taxa)) +
   scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1))+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
-        legend.text = element_text(size = 10),
+        legend.text = element_text(size = 11),
         legend.title = element_text(size = 12))
-##ggsave(paste0("plots/",model,"_nobias_cor_v_branch_len.png"))
+ggsave(paste0("plots/",model,"_nobias_cor_v_branch_len.png"))
 
 pg <- plot_grid(p2, p3, labels = c("A", "B"),ncol=2,nrow=1)
 save_plot(paste0("plots/",model,"_nobias_combined.png"), pg,
