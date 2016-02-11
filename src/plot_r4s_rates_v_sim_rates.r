@@ -4,8 +4,8 @@ library(dplyr)
 library(cowplot)
 
 model="mech_codon"
-r_bias <- read.csv(paste0(model,"/r4s_rates/processed_rates/all_r4s_orig_rates_bias.csv"),row.names=1)
-r_nobias <- read.csv(paste0(model,"/r4s_rates/processed_rates/all_r4s_orig_rates_nobias.csv"),row.names=1)
+r_bias <- read.csv(paste0(model,"/r4s_rates/processed_rates/all_r4s_norm_rates_bias.csv"),row.names=1)
+r_nobias <- read.csv(paste0(model,"/r4s_rates/processed_rates/all_r4s_norm_rates_nobias.csv"),row.names=1)
 
 # p1 <- ggplot(a,aes(dN,r4s_score)) + 
 #   geom_point(size=1,alpha=0.7) + 
@@ -25,10 +25,10 @@ r_nobias <- read.csv(paste0(model,"/r4s_rates/processed_rates/all_r4s_orig_rates
 colfunc <- colorRampPalette(c("orange","darkred"))
 p2 <- ggplot(r_bias,aes(num_taxa,cor,color=factor(bl),group=bl)) + 
   stat_summary(fun.y = mean,
-               fun.ymin = function(x) mean(x) - sd(x), 
-               fun.ymax = function(x) mean(x) + sd(x), 
-               geom = "pointrange",
-               size=0.6) +
+              fun.ymin = function(x) mean(x) - sd(x), 
+             fun.ymax = function(x) mean(x) + sd(x), 
+              geom = "pointrange",
+             size=0.6) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Branch Length",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",size=0.6,aes(color=factor(bl)))+
