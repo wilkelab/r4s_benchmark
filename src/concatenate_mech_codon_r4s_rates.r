@@ -35,21 +35,34 @@ for (name in file_names) {
     rep <- as.numeric(substr(t1[i],str+3,end-1))
     r$rep <- rep(rep,length(r$num_taxa))
     
+    str <- regexpr("n\\d+",t1[i])[1]
+    end <- regexpr("_bl\\d+",t1[i])[1]
+    n <- as.numeric(substr(t1[i],str+1,end-1))
+    
     if (name=="r4s_norm_rates") {
       f_type="r4s_norm"
     } else {
       f_type="r4s_orig"
     }
-    true_rates_file_name <- paste0(model,"/true_rates/sim",substr(t1[i],40,1000))
-    true_r <- read.table(true_rates_file_name,header=T)
-    ##get true dN/dS by solving for (ns_changes/ns_sites) / (s_changes/s_sites)
-    true_r$dn.ds <- (true_r$ns_changes/true_r$ns_sites) / (true_r$s_changes/true_r$s_sites)
-    r$true <- true_r$dn.ds
-    r$score <- as.numeric(r$score)
-    
-    c <- cor.test(r$true,r$score,method = c("spearman"))
 
-    r$cor <- rep(c$estimate,100)
+    true_rates_file_name <- paste0(model,"/sim_rates/true_rates/true_rates_rep",rep,"_n",n,"_bl",bl,"_",bias,".txt")
+    true_r <- read.table(true_rates_file_name,header=T)
+     ##get true dN/dS by solving for (ns_changes/ns_sites) / (s_changes/s_sites)
+     true_r$dn.ds <- (true_r$ns_changes/true_r$ns_sites) / (true_r$s_changes/true_r$s_sites)
+     r$true <- true_r$dn.ds
+     r$score <- as.numeric(r$score)
+    
+    assigned_rates_file_name <- paste0(model,"/sim_rates/assigned_rates/processed_rates/sim_rates_combined_rep",rep,"_n",n,"_bl",bl,"_",bias,".txt")
+    assigned_r <- read.table(assigned_rates_file_name,header=T)
+    ##get assigned dN/dS by solving for dN/dS
+    assigned_r$dn.ds <- assigned_r$dN/assigned_r$dS
+    r$assigned <- assigned_r$dn.ds
+
+    c_true <- cor.test(r$true,r$score,method = c("spearman"))
+    c_assigned <- cor.test(r$assigned,r$score,method = c("spearman"))
+    
+    r$cor_true <- rep(c_true$estimate,100)
+    r$cor_assigned <- rep(c_assigned$estimate,100)
     
     if (i==1) {
       d <- r
@@ -59,5 +72,4 @@ for (name in file_names) {
   nobias_r <- filter(d,type=="nobias")
   write.csv(bias_r,file=paste0(model,"/r4s_rates/processed_rates/all_",name,"_bias.csv"),quote=F)
   write.csv(nobias_r,file=paste0(model,"/r4s_rates/processed_rates/all_",name,"_nobias.csv"),quote=F)
-  
   }
