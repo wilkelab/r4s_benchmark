@@ -181,7 +181,7 @@ p_nobias_bl_cor_assigned <- ggplot(r_nobias,aes(bl,cor_assigned,colour=factor(nu
 ggsave(paste0("plots/",model,"_nobias_cor_assigned_v_branch_len.png"))
 
 ##############################################################
-### Plotting combined plots                                ###
+###              Plotting combined plots                   ###
 ##############################################################
 
 pg_bias <- plot_grid(p_bias_num_taxa_cor_true,
@@ -190,7 +190,7 @@ pg_bias <- plot_grid(p_bias_num_taxa_cor_true,
                  p_bias_bl_cor_assigned,
                  labels = c("True rate (bias)", "Assigned rate (bias)"),
                  ncol=2,nrow=2)
-save_plot(paste0("plots/",model,"_bias_combined.png"), pg,
+save_plot(paste0("plots/",model,"_bias_combined.png"), pg_bias,
            ncol = 2, # we're saving a grid plot of 2 columns
            nrow = 2, # and 2 rows
            # each individual subplot should have an aspect ratio of 1.3
@@ -202,7 +202,7 @@ pg_nobias <- plot_grid(p_nobias_num_taxa_cor_true,
                 p_nobias_bl_cor_assigned,
                 labels = c("True rate (no bias)", "Assigned rate (no bias)"),
                 ncol=2,nrow=2)
-save_plot(paste0("plots/",model,"_nobias_combined.png"), pg,
+save_plot(paste0("plots/",model,"_nobias_combined.png"), pg_nobias,
           ncol = 2, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
