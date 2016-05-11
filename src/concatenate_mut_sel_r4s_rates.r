@@ -64,8 +64,15 @@ for (name in file_names) {
     r$score <- as.numeric(r$score)
     c <- cor.test(r$true,r$score,method = c("spearman"))
     
-    r$cor <- rep(c$estimate,length(r$num_taxa))
+    r$cor_true <- rep(c$estimate,length(r$num_taxa))
     
+    if (name=="r4s_orig_rates") {
+      r$true_norm <- r$true/mean(r$true)
+      r$score_norm <- r$score/mean(r$score)
+      r$rmsd <- sqrt(sum((r$score_norm-r$true_norm)^2)/length(r$score_norm))
+      r$bias <- r$score_norm-r$true_norm
+    }
+   
     if (i==1) {
       d <- r
     } else d <- rbind(d, r)
