@@ -53,18 +53,22 @@ for (name in file_names) {
                           rep==r$rep[1],
                           ntaxa==r$num_taxa[1])
       r$true <- as.numeric(t_rate$true1)
+      r$inferred <- as.numeric(t_rate$dnds)
     } else {
         t_rate <- filter(t_nobias_filtered,
                          bl==r$bl[1],
                          rep==r$rep[1],
                          ntaxa==r$num_taxa[1])
         r$true <- as.numeric(t_rate$true1)
+        r$inferred <- as.numeric(t_rate$dnds)
     }
     
     r$score <- as.numeric(r$score)
-    c <- cor.test(r$true,r$score,method = c("spearman"))
+    c_true <- cor.test(r$true,r$score,method = c("spearman"))
+    r$cor_true <- rep(c_true$estimate,length(r$num_taxa))
     
-    r$cor_true <- rep(c$estimate,length(r$num_taxa))
+    c_inferred <- cor.test(r$inferred,r$score,method = c("spearman"))
+    r$cor_inferred <- rep(c_inferred$estimate,length(r$num_taxa))
     
     if (name=="r4s_orig_rates") {
       r$true_norm <- r$true/mean(r$true)
