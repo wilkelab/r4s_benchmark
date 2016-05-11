@@ -73,8 +73,12 @@ for (name in file_names) {
     if (name=="r4s_orig_rates") {
       r$true_norm <- r$true/mean(r$true)
       r$score_norm <- r$score/mean(r$score)
-      r$rmsd <- sqrt(sum((r$score_norm-r$true_norm)^2)/length(r$score_norm))
-      r$bias <- r$score_norm-r$true_norm
+      r$rmsd_true <- sqrt(sum((r$score_norm-r$true_norm)^2)/length(r$score_norm))
+      r$bias_true <- r$score_norm-r$true_norm
+      
+      r$inferred_norm <- r$inferred/mean(na.omit(r$inferred))
+      r$rmsd_inferred <- sqrt(sum((r$score_norm-r$inferred_norm)^2)/length(r$score_norm))
+      r$bias_inferred <- r$score_norm-r$inferred_norm
     }
    
     if (i==1) {

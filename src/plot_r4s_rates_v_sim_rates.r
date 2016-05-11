@@ -56,7 +56,7 @@ MutSel_p_nobias_bl_cor_true <- ggplot(r_nobias_MutSel,aes(bl,cor_true,colour=fac
         legend.title = element_text(size = 12))  
 
 ################### RMSD ###################
-dNdS_p_nobias_bl_rmsd_true <- ggplot(r_nobias_dNdS,aes(bl,rmsd,colour=factor(num_taxa),group=num_taxa)) + 
+dNdS_p_nobias_bl_rmsd_true <- ggplot(r_nobias_dNdS,aes(bl,rmsd_true,colour=factor(num_taxa),group=num_taxa)) + 
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
@@ -74,7 +74,7 @@ dNdS_p_nobias_bl_rmsd_true <- ggplot(r_nobias_dNdS,aes(bl,rmsd,colour=factor(num
         legend.text = element_text(size = 11),
         legend.title = element_text(size = 12))
 
-MutSel_p_nobias_bl_rmsd_true <- ggplot(r_nobias_MutSel,aes(bl,rmsd,colour=factor(num_taxa),group=num_taxa)) + 
+MutSel_p_nobias_bl_rmsd_true <- ggplot(r_nobias_MutSel,aes(bl,rmsd_true,colour=factor(num_taxa),group=num_taxa)) + 
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
@@ -93,7 +93,7 @@ MutSel_p_nobias_bl_rmsd_true <- ggplot(r_nobias_MutSel,aes(bl,rmsd,colour=factor
         legend.title = element_text(size = 12))
 
 ################### bias ###################
-dNdS_p_nobias_bl_bias_true <- ggplot(r_nobias_dNdS,aes(bl,bias,colour=factor(num_taxa),group=num_taxa)) + 
+dNdS_p_nobias_bl_bias_true <- ggplot(r_nobias_dNdS,aes(bl,bias_true,colour=factor(num_taxa),group=num_taxa)) + 
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
@@ -111,7 +111,7 @@ dNdS_p_nobias_bl_bias_true <- ggplot(r_nobias_dNdS,aes(bl,bias,colour=factor(num
         legend.text = element_text(size = 11),
         legend.title = element_text(size = 12))
 
-MutSel_p_nobias_bl_bias_true <- ggplot(r_nobias_MutSel,aes(bl,bias,colour=factor(num_taxa),group=num_taxa)) + 
+MutSel_p_nobias_bl_bias_true <- ggplot(r_nobias_MutSel,aes(bl,bias_true,colour=factor(num_taxa),group=num_taxa)) + 
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
@@ -199,7 +199,7 @@ MutSel_p_bias_bl_cor_true <- ggplot(r_bias_MutSel,aes(bl,cor_true,colour=factor(
         legend.title = element_text(size = 12))  
 
 ################### RMSD ###################
-dNdS_p_bias_bl_rmsd_true <- ggplot(r_bias_dNdS,aes(bl,rmsd,colour=factor(num_taxa),group=num_taxa)) + 
+dNdS_p_bias_bl_rmsd_true <- ggplot(r_bias_dNdS,aes(bl,rmsd_true,colour=factor(num_taxa),group=num_taxa)) + 
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
@@ -217,7 +217,7 @@ dNdS_p_bias_bl_rmsd_true <- ggplot(r_bias_dNdS,aes(bl,rmsd,colour=factor(num_tax
         legend.text = element_text(size = 11),
         legend.title = element_text(size = 12))
 
-MutSel_p_bias_bl_rmsd_true <- ggplot(r_bias_MutSel,aes(bl,rmsd,colour=factor(num_taxa),group=num_taxa)) + 
+MutSel_p_bias_bl_rmsd_true <- ggplot(r_bias_MutSel,aes(bl,rmsd_true,colour=factor(num_taxa),group=num_taxa)) + 
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
@@ -236,7 +236,7 @@ MutSel_p_bias_bl_rmsd_true <- ggplot(r_bias_MutSel,aes(bl,rmsd,colour=factor(num
         legend.title = element_text(size = 12))
 
 ################### bias ###################
-dNdS_p_bias_bl_bias_true <- ggplot(r_bias_dNdS,aes(bl,bias,colour=factor(num_taxa),group=num_taxa)) + 
+dNdS_p_bias_bl_bias_true <- ggplot(r_bias_dNdS,aes(bl,bias_true,colour=factor(num_taxa),group=num_taxa)) + 
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
@@ -255,7 +255,7 @@ dNdS_p_bias_bl_bias_true <- ggplot(r_bias_dNdS,aes(bl,bias,colour=factor(num_tax
         legend.text = element_text(size = 11),
         legend.title = element_text(size = 12))
 
-MutSel_p_bias_bl_bias_true <- ggplot(r_bias_MutSel,aes(bl,bias,colour=factor(num_taxa),group=num_taxa)) + 
+MutSel_p_bias_bl_bias_true <- ggplot(r_bias_MutSel,aes(bl,bias_true,colour=factor(num_taxa),group=num_taxa)) + 
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
@@ -307,7 +307,7 @@ save_plot("plots/fig2_r4s_v_dNdS_MutSel_bias.png", p_bias,
 
 ################### Correlations ###################
 colfunc <- colorRampPalette(c("cyan2","navyblue"))
-dNdS_p_bias_bl_cor_true <- ggplot(r_bias_dNdS,aes(bl,cor_true,colour=factor(num_taxa),group=num_taxa)) + 
+dNdS_p_bias_bl_cor_true <- ggplot(r_bias_dNdS,aes(bl,cor_inferred,colour=factor(num_taxa),group=num_taxa)) + 
   ggtitle("dN/dS") +
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
@@ -326,7 +326,7 @@ dNdS_p_bias_bl_cor_true <- ggplot(r_bias_dNdS,aes(bl,cor_true,colour=factor(num_
         legend.text = element_text(size = 11),
         legend.title = element_text(size = 12))
 
-MutSel_p_bias_bl_cor_true <- ggplot(r_bias_MutSel,aes(bl,cor_true,colour=factor(num_taxa),group=num_taxa)) + 
+MutSel_p_bias_bl_cor_true <- ggplot(r_bias_MutSel,aes(bl,cor_inferred,colour=factor(num_taxa),group=num_taxa)) + 
   ggtitle("MutSel") +
   stat_summary(fun.y = mean,
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
