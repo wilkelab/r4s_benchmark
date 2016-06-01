@@ -47,20 +47,16 @@ for (name in file_names) {
     
     true_rates_file_name <- paste0(model,"/sim_rates/assigned_rates/processed_rates/sim_rates_combined_rep",rep,"_n",n,"_bl",bl,"_",bias,".txt")
     true_r <- read.table(true_rates_file_name,header=T)
+    
     ##get assigned dN/dS by solving for dN/dS
     true_r$dn.ds <-  as.numeric(true_r$dN)/as.numeric(true_r$dS)
     r$true <-  true_r$dn.ds
 
     r$score <- as.numeric(r$score)
-    c_true <- cor.test(r$true,r$score,method = c("spearman"))
-
-    r$cor_true <- rep(c_true$estimate,length(r$num_taxa))
 
     if (name=="r4s_orig_rates") {
       r$true_norm <- r$true/mean(r$true)
       r$score_norm <- r$score/mean(r$score)
-      r$rmsd <- sqrt(sum((r$score_norm-r$true_norm)^2)/length(r$score_norm))
-      r$bias <- r$score_norm-r$true_norm
     }
     if (i==1) {
       d <- r

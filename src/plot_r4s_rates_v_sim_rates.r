@@ -2,11 +2,43 @@ library(tidyr)
 library(ggplot2)
 library(dplyr)
 library(cowplot)
+library(scales)
 
-r_bias_dNdS <- read.csv("mech_codon/r4s_rates/processed_rates/all_r4s_orig_rates_bias.csv",row.names=1)
-r_nobias_dNdS <- read.csv("mech_codon/r4s_rates/processed_rates/all_r4s_orig_rates_nobias.csv",row.names=1)
-r_bias_MutSel <- read.csv("mut_sel/r4s_rates/processed_rates/all_r4s_orig_rates_bias.csv",row.names=1)
-r_nobias_MutSel <- read.csv("mut_sel/r4s_rates/processed_rates/all_r4s_orig_rates_nobias.csv",row.names=1)
+setwd("r4s_benchmark/")
+r_bias_dNdS_raw <- read.csv("mech_codon/r4s_rates/processed_rates/all_r4s_orig_rates_bias.csv",row.names=1)
+r_nobias_dNdS_raw <- read.csv("mech_codon/r4s_rates/processed_rates/all_r4s_orig_rates_nobias.csv",row.names=1)
+r_bias_MutSel_raw <- read.csv("mut_sel/r4s_rates/processed_rates/all_r4s_orig_rates_bias.csv",row.names=1)
+r_nobias_MutSel_raw <- read.csv("mut_sel/r4s_rates/processed_rates/all_r4s_orig_rates_nobias.csv",row.names=1)
+
+#####################################################################
+### Calculating correlations, RMSD, and bias                      ###
+#####################################################################
+
+sim1 <- r_bias_dNdS_raw %>% group_by(bl,num_taxa,rep)
+sim1 %>% summarise(cor_true=cor.test(score,true)$estimate,
+                          rmsd_true=sqrt(sum((score_norm - true_norm)^2)),
+                          bias_true=sum(score_norm - true_norm),
+                          cor_inferred=cor.test(score,true)$estimate,
+                          rmsd_inferred=sqrt(sum((score_norm - true_norm)^2)),
+                          bias_inferred=sum(score_norm - true_norm)) -> r_bias_dNdS
+
+sim2 <- r_nobias_dNdS_raw %>% group_by(bl,num_taxa,rep)
+sim2 %>% summarise(cor_true=cor.test(score,true)$estimate,
+                          rmsd_true=sqrt(sum((score_norm - true_norm)^2)),
+                          bias_true=sum(score_norm - true_norm),
+                          cor_inferred=cor.test(score,true)$estimate,
+                          rmsd_inferred=sqrt(sum((score_norm - true_norm)^2)),
+                          bias_inferred=sum(score_norm - true_norm)) -> r_nobias_dNdS
+
+sim3 <- r_bias_MutSel_raw %>% group_by(bl,num_taxa,rep)
+sim3 %>% summarise(cor_true=cor.test(score,true)$estimate,
+                   rmsd_true=sqrt(sum((score_norm - true_norm)^2)),
+                   bias_true=sum(score_norm - true_norm)) -> r_bias_MutSel
+
+sim4 <- r_nobias_MutSel_raw %>% group_by(bl,num_taxa,rep)
+sim4 %>% summarise(cor_true=cor.test(score,true)$estimate,
+                   rmsd_true=sqrt(sum((score_norm - true_norm)^2)),
+                   bias_true=sum(score_norm - true_norm)) -> r_nobias_MutSel
 
 #####################################################################
 ### Plotting Figure 2:                                            ###
@@ -23,7 +55,7 @@ dNdS_p_nobias_bl_cor_true <- ggplot(r_nobias_dNdS,aes(bl,cor_true,colour=factor(
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
@@ -42,7 +74,7 @@ MutSel_p_nobias_bl_cor_true <- ggplot(r_nobias_MutSel,aes(bl,cor_true,colour=fac
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
@@ -61,14 +93,14 @@ dNdS_p_nobias_bl_rmsd_true <- ggplot(r_nobias_dNdS,aes(bl,rmsd_true,colour=facto
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  scale_y_continuous(breaks=seq(0,0.6,0.1), limits = c(0,0.6))+ 
+  scale_y_continuous(breaks=seq(0,6,1), limits = c(0,6))+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -79,14 +111,14 @@ MutSel_p_nobias_bl_rmsd_true <- ggplot(r_nobias_MutSel,aes(bl,rmsd_true,colour=f
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  scale_y_continuous(breaks=seq(0,0.6,0.1), limits = c(0,0.6))+ 
+  scale_y_continuous(breaks=seq(0,6,1), limits = c(0,6))+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -98,14 +130,14 @@ dNdS_p_nobias_bl_bias_true <- ggplot(r_nobias_dNdS,aes(bl,bias_true,colour=facto
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Bias") +
-  scale_y_continuous(breaks=seq(-0.0008,0.0008,0.0002),labels=c("-0.0008","-0.0006","-0.0004","-0.0002","0","0.0002","0.0004","0.0006","0.0008"),limits = c(-0.0008,0.0008))+ 
+  scale_y_continuous(breaks=c(-1*10^(-14),0,1*10^(-14)),labels=scientific_10,limits = c(-1*10^(-14),1*10^(-14)))+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -116,14 +148,14 @@ MutSel_p_nobias_bl_bias_true <- ggplot(r_nobias_MutSel,aes(bl,bias_true,colour=f
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Bias") +
-  scale_y_continuous(breaks=seq(-0.0008,0.0008,0.0002),labels=c("-0.0008","-0.0006","-0.0004","-0.0002","0","0.0002","0.0004","0.0006","0.0008"),limits = c(-0.0008,0.0008))+ 
+  scale_y_continuous(breaks=c(-1*10^(-14),0,1*10^(-14)),labels=scientific_10,limits = c(-1*10^(-14),1*10^(-14)))+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -166,7 +198,7 @@ dNdS_p_bias_bl_cor_true <- ggplot(r_bias_dNdS,aes(bl,cor_true,colour=factor(num_
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
@@ -185,7 +217,7 @@ MutSel_p_bias_bl_cor_true <- ggplot(r_bias_MutSel,aes(bl,cor_true,colour=factor(
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
@@ -204,7 +236,7 @@ dNdS_p_bias_bl_rmsd_true <- ggplot(r_bias_dNdS,aes(bl,rmsd_true,colour=factor(nu
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
@@ -222,7 +254,7 @@ MutSel_p_bias_bl_rmsd_true <- ggplot(r_bias_MutSel,aes(bl,rmsd_true,colour=facto
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
@@ -241,7 +273,7 @@ dNdS_p_bias_bl_bias_true <- ggplot(r_bias_dNdS,aes(bl,bias_true,colour=factor(nu
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
@@ -260,7 +292,7 @@ MutSel_p_bias_bl_bias_true <- ggplot(r_bias_MutSel,aes(bl,bias_true,colour=facto
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +

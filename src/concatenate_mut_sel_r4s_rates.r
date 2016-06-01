@@ -64,21 +64,10 @@ for (name in file_names) {
     }
     
     r$score <- as.numeric(r$score)
-    c_true <- cor.test(r$true,r$score,method = c("spearman"))
-    r$cor_true <- rep(c_true$estimate,length(r$num_taxa))
-    
-    c_inferred <- cor.test(r$inferred,r$score,method = c("spearman"))
-    r$cor_inferred <- rep(c_inferred$estimate,length(r$num_taxa))
-    
     if (name=="r4s_orig_rates") {
       r$true_norm <- r$true/mean(r$true)
       r$score_norm <- r$score/mean(r$score)
-      r$rmsd_true <- sqrt(sum((r$score_norm-r$true_norm)^2)/length(r$score_norm))
-      r$bias_true <- r$score_norm-r$true_norm
-      
       r$inferred_norm <- r$inferred/mean(na.omit(r$inferred))
-      r$rmsd_inferred <- sqrt(sum((r$score_norm-r$inferred_norm)^2)/length(r$score_norm))
-      r$bias_inferred <- r$score_norm-r$inferred_norm
     }
    
     if (i==1) {
