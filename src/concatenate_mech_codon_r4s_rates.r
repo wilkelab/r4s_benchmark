@@ -6,6 +6,7 @@ library(cowplot)
 file_names = c("r4s_norm_rates","r4s_orig_rates")
 model = "mech_codon"
 
+setwd("r4s_benchmark/")
 for (name in file_names) {
   t1 <- list.files(paste0(model,"/r4s_rates/raw_rates"),pattern=name,full.names=T)
   info = file.info(t1)
@@ -52,11 +53,16 @@ for (name in file_names) {
     true_r$dn.ds <-  as.numeric(true_r$dN)/as.numeric(true_r$dS)
     r$true <-  true_r$dn.ds
 
+    inferred_rates_file_name <- paste0(model,"/inferred_rates/rep",rep,"_n",n,"_bl",bl,"_",bias,"_FEL1.txt")
+    inferred_r <- read.csv(inferred_rates_file_name)
+    
+    r$inferred <- inferred_r$dN.dS
     r$score <- as.numeric(r$score)
 
     if (name=="r4s_orig_rates") {
       r$true_norm <- r$true/mean(r$true)
       r$score_norm <- r$score/mean(r$score)
+      r$inferred_norm <- r$inferred/mean(na.omit(r$inferred))
     }
     if (i==1) {
       d <- r
@@ -64,6 +70,6 @@ for (name in file_names) {
   }  
   bias_r <- filter(d,type=="bias")
   nobias_r <- filter(d,type=="nobias")
-  write.csv(bias_r,file=paste0(model,"/r4s_rates/processed_rates/all_",name,"_bias.csv"),quote=F)
-  write.csv(nobias_r,file=paste0(model,"/r4s_rates/processed_rates/all_",name,"_nobias.csv"),quote=F)
+  write.csv(bias_r,file=paste0(model,"/processed_rates/all_",name,"_bias.csv"),quote=F)
+  write.csv(nobias_r,file=paste0(model,"/processed_rates/all_",name,"_nobias.csv"),quote=F)
   }
