@@ -45,7 +45,7 @@ for (name in file_names) {
       f_type="r4s_orig"
     }
     
-    true_rates_file_name <- paste0(model,"/sim_rates/assigned_rates/processed_rates/sim_rates_combined_rep",rep,"_n",n,"_bl",bl,"_",bias,".txt")
+    true_rates_file_name <- paste0(model,"/assigned_rates/processed_rates/sim_rates_combined_rep",rep,"_n",n,"_bl",bl,"_",bias,".txt")
     true_r <- read.table(true_rates_file_name,header=T)
     
     ##get assigned dN/dS by solving for dN/dS

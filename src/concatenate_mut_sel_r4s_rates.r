@@ -6,11 +6,7 @@ library(cowplot)
 file_names = c("r4s_norm_rates","r4s_orig_rates")
 model="mut_sel"
 
-t_bias <- read.csv("../sitewise_dnds_mutsel/results/processed_results/full_results_bias_dataset.csv")
-t_nobias <- read.csv("../sitewise_dnds_mutsel/results/processed_results/full_results_nobias_dataset.csv")
-t_bias_filtered <- filter(t_bias,method=="FEL1")
-t_nobias_filtered <- filter(t_nobias,method=="FEL1")
-
+setwd("r4s_benchmark/")
 for (name in file_names) {
   t1 <- list.files(paste0(model,"/r4s_rates/raw_rates"),pattern=name,full.names=T)
   info = file.info(t1)
@@ -41,31 +37,31 @@ for (name in file_names) {
     rep <- as.numeric(substr(t1[i],str+3,end-1))
     r$rep <- rep(rep,length(r$num_taxa))
     
+    str <- regexpr("n\\d+",t1[i])[1]
+    end <- regexpr("_bl\\d+",t1[i])[1]
+    num <- as.numeric(substr(t1[i],str+1,end-1))
+    fel1_file <- paste0("../dnds_1rate_2rate/results/balancedtrees_results/rep",rep,"_n",num,"_bl",bl,"_equalpi_nobias_FEL1.txt")
+
+    t2 <- read.csv(fel1_file)
+    r$inferred <- t2$dN.dS
+
+    counted_file <- paste0("../../../Dropbox/Research/dnds1rate2rate_data_results/counted_substitutions/rep",rep,"_n",num,"_bl",bl,"_unequalpi_nobias_counted.txt")
+    t3 <- read.table(counted_file,sep="\t",header=T)
+    dS <- (t3$s_changes/t3$s_sites)
+    dN <- (t3$ns_changes/t3$ns_sites)
+    dS[dS==0] <- NA
+    r$true <- dN / dS 
+    
     if (name=="r4s_norm_rates") {
       f_type="r4s_norm"
     } else {
       f_type="r4s_orig"
     }
     
-    if (bias=="bias") { 
-      t_rate <- filter(t_bias_filtered,
-                          bl==r$bl[1],
-                          rep==r$rep[1],
-                          ntaxa==r$num_taxa[1])
-      r$true <- as.numeric(t_rate$true1)
-      r$inferred <- as.numeric(t_rate$dnds)
-    } else {
-        t_rate <- filter(t_nobias_filtered,
-                         bl==r$bl[1],
-                         rep==r$rep[1],
-                         ntaxa==r$num_taxa[1])
-        r$true <- as.numeric(t_rate$true1)
-        r$inferred <- as.numeric(t_rate$dnds)
-    }
-    
     r$score <- as.numeric(r$score)
+    
     if (name=="r4s_orig_rates") {
-      r$true_norm <- r$true/mean(r$true)
+      r$true_norm <- r$true/mean(na.omit(r$true))
       r$score_norm <- r$score/mean(r$score)
       r$inferred_norm <- r$inferred/mean(na.omit(r$inferred))
     }
