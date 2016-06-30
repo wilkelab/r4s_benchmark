@@ -3,49 +3,62 @@ library(ggplot2)
 library(dplyr)
 library(cowplot)
 library(scales)
+library(readr)
 
 setwd("r4s_benchmark/")
-r_bias_dNdS_raw <- read.csv("mech_codon/processed_rates/all_r4s_orig_rates_bias.csv",row.names=1)
-r_nobias_dNdS_raw <- read.csv("mech_codon/processed_rates/all_r4s_orig_rates_nobias.csv",row.names=1)
-r_bias_MutSel_raw <- read.csv("mut_sel/processed_rates/all_r4s_orig_rates_bias.csv",row.names=1)
-r_nobias_MutSel_raw <- read.csv("mut_sel/processed_rates/all_r4s_orig_rates_nobias.csv",row.names=1)
+r_bias_dNdS_raw <- read_csv("mech_codon/processed_rates/all_r4s_orig_rates_bias.csv")
+r_nobias_dNdS_raw <- read_csv("mech_codon/processed_rates/all_r4s_orig_rates_nobias.csv")
+r_bias_MutSel_raw <- read_csv("mut_sel/processed_rates/all_r4s_orig_rates_bias.csv")
+r_nobias_MutSel_raw <- read_csv("mut_sel/processed_rates/all_r4s_orig_rates_nobias.csv")
 
 #####################################################################
 ### Calculating correlations, RMSD, and bias                      ###
 #####################################################################
 
 sim1 <- r_bias_dNdS_raw %>% group_by(bl,num_taxa,rep)
-sim1 %>% summarise(cor_true=cor(score,true,method="spearman",use="pairwise.complete.obs"),
-                          rmsd_true=sqrt(sum((score_norm - true_norm)^2)),
-                          bias_true=sum(score_norm - true_norm),
-                          cor_inferred=cor(score,inferred,method="spearman",use="pairwise.complete.obs"),
-                          rmsd_inferred=sqrt(sum((score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])^2)),
-                          bias_inferred=sum(score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])) -> r_bias_dNdS
+sim1 %>% summarise(cor_true=cor(score_norm,true_norm,method="spearman",use="pairwise.complete.obs"),
+                          rmsd_true=sqrt(mean((score_norm - true_norm)^2)),
+                          bias_true=mean(score_norm - true_norm),
+                          cor_inferred=cor(score_norm,inferred_norm,method="spearman",use="pairwise.complete.obs"),
+                          rmsd_inferred=sqrt(mean((score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])^2)),
+                          bias_inferred=mean(score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])) -> r_bias_dNdS
 
 sim2 <- r_nobias_dNdS_raw %>% group_by(bl,num_taxa,rep)
-sim2 %>% summarise(cor_true=cor(score,true,method="spearman",use="pairwise.complete.obs"),
-                   rmsd_true=sqrt(sum((score_norm - true_norm)^2)),
-                   bias_true=sum(score_norm - true_norm),
-                   cor_inferred=cor(score,inferred,method="spearman",use="pairwise.complete.obs"),
-                   rmsd_inferred=sqrt(sum((score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])^2)),
-                   bias_inferred=sum(score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])) -> r_nobias_dNdS
+sim2 %>% summarise(cor_true=cor(score_norm,true_norm,method="spearman",use="pairwise.complete.obs"),
+                   rmsd_true=sqrt(mean((score_norm - true_norm)^2)),
+                   bias_true=mean(score_norm - true_norm),
+                   cor_inferred=cor(score_norm,inferred_norm,method="spearman",use="pairwise.complete.obs"),
+                   rmsd_inferred=sqrt(mean((score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])^2)),
+                   bias_inferred=mean(score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])) -> r_nobias_dNdS
 
 
 sim3 <- r_bias_MutSel_raw %>% group_by(bl,num_taxa,rep)
-sim3 %>% summarise(cor_true=cor(score,true,method="spearman",use="pairwise.complete.obs"),
-                   rmsd_true=sqrt(sum((score_norm[!is.na(true_norm)] - true_norm[!is.na(true_norm)])^2)),
-                   bias_true=sum(score_norm[!is.na(true_norm)] - true_norm[!is.na(true_norm)]),
-                   cor_inferred=cor(score,inferred,method="spearman",use="pairwise.complete.obs"),
-                   rmsd_inferred=sqrt(sum((score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])^2)),
-                   bias_inferred=sum(score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])) -> r_bias_MutSel
+sim3 %>% summarise(cor_true=cor(score_norm,true_norm,method="spearman",use="pairwise.complete.obs"),
+                   rmsd_true=sqrt(mean((score_norm[!is.na(true_norm)] - true_norm[!is.na(true_norm)])^2)),
+                   bias_true=mean(score_norm[!is.na(true_norm)] - true_norm[!is.na(true_norm)]),
+                   cor_inferred=cor(score_norm,inferred_norm,method="spearman",use="pairwise.complete.obs"),
+                   rmsd_inferred=sqrt(mean((score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])^2)),
+                   bias_inferred=mean(score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])) -> r_bias_MutSel
 
 sim4 <- r_nobias_MutSel_raw %>% group_by(bl,num_taxa,rep)
-sim4 %>% summarise(cor_true=cor(score,true,method="spearman",use="pairwise.complete.obs"),
-                   rmsd_true=sqrt(sum((score_norm[!is.na(true_norm)] - true_norm[!is.na(true_norm)])^2)),
-                   bias_true=sum(score_norm[!is.na(true_norm)] - true_norm[!is.na(true_norm)]),
-                   cor_inferred=cor(score,inferred,method="spearman",use="pairwise.complete.obs"),
-                   rmsd_inferred=sqrt(sum((score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])^2)),
-                   bias_inferred=sum(score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])) -> r_nobias_MutSel
+sim4 %>% summarise(cor_true=cor(score_norm,true_norm,method="spearman",use="pairwise.complete.obs"),
+                   rmsd_true=sqrt(mean((score_norm[!is.na(true_norm)] - true_norm[!is.na(true_norm)])^2)),
+                   bias_true=mean(score_norm[!is.na(true_norm)] - true_norm[!is.na(true_norm)]),
+                   cor_inferred=cor(score_norm,inferred_norm,method="spearman",use="pairwise.complete.obs"),
+                   rmsd_inferred=sqrt(mean((score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])^2)),
+                   bias_inferred=mean(score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])) -> r_nobias_MutSel
+
+fancy_scientific <- function(l) {
+  # turn in to character string in scientific notation
+  l <- format(l, scientific = TRUE)
+  l <- gsub("0e\\+00","0",l)
+  # quote the part before the exponent to keep all the digits
+  l <- gsub("^(.*)e", "'\\1'e", l)
+  # turn the 'e+' into plotmath format
+  l <- gsub("e", "%*%10^", l)
+  # return this as an expression
+  parse(text=l)
+}
 
 #####################################################################
 ### Plotting Figure 2:                                            ###
@@ -69,7 +82,8 @@ dNdS_p_nobias_bl_cor_true <- ggplot(r_nobias_dNdS,aes(bl,cor_true,colour=factor(
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Correlation (spearman)") +
-  scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1))+ 
+  coord_cartesian(ylim=c(0, 1),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1,0.2))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -88,7 +102,8 @@ MutSel_p_nobias_bl_cor_true <- ggplot(r_nobias_MutSel,aes(bl,cor_true,colour=fac
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Correlation (spearman)") +
-  scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1))+ 
+  coord_cartesian(ylim=c(0, 1),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1,0.2))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -107,7 +122,8 @@ dNdS_p_nobias_bl_rmsd_true <- ggplot(r_nobias_dNdS,aes(bl,rmsd_true,colour=facto
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  scale_y_continuous(breaks=seq(0,16,2), limits = c(0,16))+ 
+  coord_cartesian(ylim=c(0,0.8),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,0.8,0.2))+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -118,14 +134,15 @@ MutSel_p_nobias_bl_rmsd_true <- ggplot(r_nobias_MutSel,aes(bl,rmsd_true,colour=f
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.4,pseudocount=0.0001)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  scale_y_continuous(breaks=seq(0,16,2), limits = c(0,16))+ 
+  coord_cartesian(ylim=c(0,0.8),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,0.8,0.2))+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -144,7 +161,9 @@ dNdS_p_nobias_bl_bias_true <- ggplot(r_nobias_dNdS,aes(bl,bias_true,colour=facto
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Bias") +
-  scale_y_continuous(breaks=c(-3:0),limits = c(-3,0.25))+ 
+  geom_hline(yintercept=0,color="grey")+
+  coord_cartesian(ylim=c(-2e-16,5e-16),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(-2e-16,5e-16,1e-16),labels=fancy_scientific)+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -162,7 +181,9 @@ MutSel_p_nobias_bl_bias_true <- ggplot(r_nobias_MutSel,aes(bl,bias_true,colour=f
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Bias") +
-  scale_y_continuous(breaks=c(-3:0),limits = c(-4,1))+ 
+  geom_hline(yintercept=0,color="grey")+
+  coord_cartesian(ylim=c(-2e-16,5e-16),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(-2e-16,5e-16,1e-16),labels=fancy_scientific)+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -211,7 +232,8 @@ dNdS_p_bias_bl_cor_true <- ggplot(r_bias_dNdS,aes(bl,cor_true,colour=factor(num_
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Correlation (spearman)") +
-  scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1))+ 
+  coord_cartesian(ylim=c(0, 1),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1,0.2))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -230,7 +252,8 @@ MutSel_p_bias_bl_cor_true <- ggplot(r_bias_MutSel,aes(bl,cor_true,colour=factor(
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Correlation (spearman)") +
-  scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1))+ 
+  coord_cartesian(ylim=c(0, 1),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1,0.2))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -249,7 +272,8 @@ dNdS_p_bias_bl_rmsd_true <- ggplot(r_bias_dNdS,aes(bl,rmsd_true,colour=factor(nu
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  #scale_y_continuous(breaks=seq(0,1.5,0.25), limits = c(0,1.5))+ 
+  coord_cartesian(ylim=c(0,1.5),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1.5,0.25))+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -267,7 +291,8 @@ MutSel_p_bias_bl_rmsd_true <- ggplot(r_bias_MutSel,aes(bl,rmsd_true,colour=facto
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  #scale_y_continuous(breaks=seq(0,1.5,0.25), limits = c(0,1.5))+ 
+  coord_cartesian(ylim=c(0,1.5),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1.5,0.25))+  
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -286,8 +311,9 @@ dNdS_p_bias_bl_bias_true <- ggplot(r_bias_dNdS,aes(bl,bias_true,colour=factor(nu
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Bias") +
-  #scale_y_continuous(breaks=seq(-0.0010,0.0010,0.0002),
-   #                  labels=c("-0.0010","-0.0008","-0.0006","-0.0004","-0.0002","0","0.0002","0.0004","0.0006","0.0008","0.0010"),limits = c(-0.0010,0.0010))+ 
+  geom_hline(yintercept=0,color="grey")+
+  coord_cartesian(ylim=c(-3e-16,2e-16),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(-3e-16,2e-16,1e-16),labels=fancy_scientific)+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -305,6 +331,9 @@ MutSel_p_bias_bl_bias_true <- ggplot(r_bias_MutSel,aes(bl,bias_true,colour=facto
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Bias") +
+  geom_hline(yintercept=0,color="grey")+
+  coord_cartesian(ylim=c(-3e-16,2e-16),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(-3e-16,2e-16,1e-16),labels=fancy_scientific)+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -349,14 +378,15 @@ dNdS_p_nobias_bl_cor_inferred <- ggplot(r_nobias_dNdS,aes(bl,cor_inferred,colour
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Correlation (spearman)") +
-  scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1))+ 
+  coord_cartesian(ylim=c(0, 1),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1,0.2))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -368,14 +398,15 @@ MutSel_p_nobias_bl_cor_inferred <- ggplot(r_nobias_MutSel,aes(bl,cor_inferred,co
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Correlation (spearman)") +
-  scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1))+ 
+  coord_cartesian(ylim=c(0, 1),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1,0.2))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -387,14 +418,15 @@ dNdS_p_nobias_bl_rmsd_inferred <- ggplot(r_nobias_dNdS,aes(bl,rmsd_inferred,colo
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  #scale_y_continuous(breaks=seq(0,1.5,0.25), limits = c(0,1.5))+ 
+  coord_cartesian(ylim=c(0, 1),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1,0.2))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -405,14 +437,15 @@ MutSel_p_nobias_bl_rmsd_inferred <- ggplot(r_nobias_MutSel,aes(bl,rmsd_inferred,
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  #scale_y_continuous(breaks=seq(0,1.5,0.25), limits = c(0,1.5))+ 
+  coord_cartesian(ylim=c(0, 1),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1,0.2))+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -424,15 +457,16 @@ dNdS_p_nobias_bl_bias_inferred <- ggplot(r_nobias_dNdS,aes(bl,bias_inferred,colo
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Bias") +
-  #scale_y_continuous(breaks=seq(-0.0010,0.0010,0.0002),
-   #                  labels=c("-0.0010","-0.0008","-0.0006","-0.0004","-0.0002","0","0.0002","0.0004","0.0006","0.0008","0.0010"),limits = c(-0.0010,0.0010))+ 
+  geom_hline(yintercept=0,color="grey")+
+  coord_cartesian(ylim=c(-3e-16,1e-16),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(-3e-16,1e-16,1e-16),labels=fancy_scientific)+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -443,15 +477,16 @@ MutSel_p_nobias_bl_bias_inferred <- ggplot(r_nobias_MutSel,aes(bl,bias_inferred,
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Bias") +
-  #scale_y_continuous(breaks=seq(-0.0010,0.0010,0.0002),
-   #                  labels=c("-0.0010","-0.0008","-0.0006","-0.0004","-0.0002","0","0.0002","0.0004","0.0006","0.0008","0.0010"),limits = c(-0.0010,0.0010))+ 
+  geom_hline(yintercept=0,color="grey")+
+  coord_cartesian(ylim=c(0,0.6),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,0.6,0.1))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -496,14 +531,15 @@ dNdS_p_bias_bl_cor_inferred <- ggplot(r_bias_dNdS,aes(bl,cor_inferred,colour=fac
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Correlation (spearman)") +
-  scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1))+ 
+  coord_cartesian(ylim=c(0, 1),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1,0.2))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -515,14 +551,15 @@ MutSel_p_bias_bl_cor_inferred <- ggplot(r_bias_MutSel,aes(bl,cor_inferred,colour
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Correlation (spearman)") +
-  scale_y_continuous(breaks=seq(0,1,0.2), limits = c(0,1))+ 
+  coord_cartesian(ylim=c(0, 1),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1,0.2))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -534,14 +571,15 @@ dNdS_p_bias_bl_rmsd_inferred <- ggplot(r_bias_dNdS,aes(bl,rmsd_inferred,colour=f
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  #scale_y_continuous(breaks=seq(0,1.5,0.25), limits = c(0,1.5))+ 
+  coord_cartesian(ylim=c(0,1.25),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1.25,0.25))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -552,14 +590,15 @@ MutSel_p_bias_bl_rmsd_inferred <- ggplot(r_bias_MutSel,aes(bl,rmsd_inferred,colo
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  #scale_y_continuous(breaks=seq(0,1.5,0.25), limits = c(0,1.5))+ 
+  coord_cartesian(ylim=c(0,1.25),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1.25,0.25))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -571,15 +610,16 @@ dNdS_p_bias_bl_bias_inferred <- ggplot(r_bias_dNdS,aes(bl,bias_inferred,colour=f
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Bias") +
-  #scale_y_continuous(breaks=seq(-0.0010,0.0010,0.0002),
-  #                  labels=c("-0.0010","-0.0008","-0.0006","-0.0004","-0.0002","0","0.0002","0.0004","0.0006","0.0008","0.0010"),limits = c(-0.0010,0.0010))+ 
+  geom_hline(yintercept=0,color="grey")+
+  coord_cartesian(ylim=c(-3e-16,2e-16),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(-3e-16,2e-16,1e-16),labels=fancy_scientific)+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -590,15 +630,16 @@ MutSel_p_bias_bl_bias_inferred <- ggplot(r_bias_MutSel,aes(bl,bias_inferred,colo
                fun.ymin = function(x) mean(x) - sd(x)/sqrt(length(x)), 
                fun.ymax = function(x) mean(x) + sd(x)/sqrt(length(x)), 
                geom = "pointrange",
-               size=0.6)+
+               size=0.4)+
   scale_x_log10(breaks=c(0.0025,0.01,0.04,0.16,0.64),labels=c("0.0025","0.01","0.04","0.16","0.64")) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("Bias") +
-  #scale_y_continuous(breaks=seq(-0.0010,0.0010,0.0002),
-  #                  labels=c("-0.0010","-0.0008","-0.0006","-0.0004","-0.0002","0","0.0002","0.0004","0.0006","0.0008","0.0010"),limits = c(-0.0010,0.0010))+ 
+  geom_hline(yintercept=0,color="grey")+
+  coord_cartesian(ylim=c(0,0.8),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,0.8,0.2))+ 
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -640,7 +681,7 @@ p_nobias_num_taxa_cor_true <- ggplot(r_nobias,aes(num_taxa,cor_true,color=factor
                fun.ymin = function(x) mean(x) - sd(x), 
                fun.ymax = function(x) mean(x) + sd(x), 
                geom = "pointrange",
-               size=0.6) +
+               size=0.4) +
   scale_colour_manual(values=colfunc(5)) +
   guides(col = guide_legend(title="Branch Length",reverse = TRUE)) +
   stat_summary(fun.y = mean,geom = "line",size=0.6,aes(color=factor(bl)))+

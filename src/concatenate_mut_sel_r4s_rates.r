@@ -2,9 +2,15 @@ library(tidyr)
 library(ggplot2)
 library(dplyr)
 library(cowplot)
+library(readr)
 
 file_names = c("r4s_norm_rates","r4s_orig_rates")
 model="mut_sel"
+t1_fel1 <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/full_results_equalpi_bias.csv") 
+t2_fel1 <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/full_results_equalpi_nobias.csv") 
+fel1_bias <- filter(t1_fel1,method=="FEL1")
+fel1_nobias <- filter(t2_fel1,method=="FEL1")
+fel1_t <- rbind(fel1_bias,fel1_nobias)
 
 setwd("r4s_benchmark/")
 for (name in file_names) {
@@ -24,33 +30,28 @@ for (name in file_names) {
     
     str <- regexpr("_\\w+.txt",t1[i])[1]
     end <- regexpr(".txt",t1[i])[1]
-    bias <- substr(t1[i],str+1,end-1)
-    r$type <- rep(bias,length(r$num_taxa))
+    type1 <- substr(t1[i],str+1,end-1)
+    r$type <- rep(type1,length(r$num_taxa))
     
     str <- regexpr("bl\\d+",t1[i])[1]
     end <- regexpr("_\\w+.txt",t1[i])[1]
-    bl <- as.numeric(substr(t1[i],str+2,end-1))
-    r$bl <- rep(bl,length(r$num_taxa))
+    bl1 <- as.numeric(substr(t1[i],str+2,end-1))
+    r$bl <- rep(bl1,length(r$num_taxa))
     
     str <- regexpr("rep\\d+",t1[i])[1]
     end <- regexpr("_n\\d+",t1[i])[1]
-    rep <- as.numeric(substr(t1[i],str+3,end-1))
-    r$rep <- rep(rep,length(r$num_taxa))
+    rep1 <- as.numeric(substr(t1[i],str+3,end-1))
+    r$rep <- rep(rep1,length(r$num_taxa))
     
     str <- regexpr("n\\d+",t1[i])[1]
     end <- regexpr("_bl\\d+",t1[i])[1]
-    num <- as.numeric(substr(t1[i],str+1,end-1))
-    fel1_file <- paste0("../dnds_1rate_2rate/results/balancedtrees_results/rep",rep,"_n",num,"_bl",bl,"_equalpi_nobias_FEL1.txt")
-
-    t2 <- read.csv(fel1_file)
-    r$inferred <- t2$dN.dS
-
-    counted_file <- paste0("../../../Dropbox/Research/dnds1rate2rate_data_results/counted_substitutions/rep",rep,"_n",num,"_bl",bl,"_unequalpi_nobias_counted.txt")
-    t3 <- read.table(counted_file,sep="\t",header=T)
-    dS <- (t3$s_changes/t3$s_sites)
-    dN <- (t3$ns_changes/t3$ns_sites)
-    dS[dS==0] <- NA
-    r$true <- dN / dS 
+    num1 <- as.numeric(substr(t1[i],str+1,end-1))
+    
+    num_taxa1 <- r$num_taxa[1]
+   
+    fel1_r <- filter(fel1_t,rep==rep1,bl==bl1,ntaxa==num_taxa1,type==type1)
+    r$inferred <- fel1_r$dnds
+    r$true <- fel1_r$true
     
     if (name=="r4s_norm_rates") {
       f_type="r4s_norm"
