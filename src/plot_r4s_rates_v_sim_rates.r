@@ -193,12 +193,13 @@ MutSel_p_nobias_bl_bias_true <- ggplot(r_nobias_MutSel,aes(bl,bias_true,colour=f
 grobs <- ggplotGrob(MutSel_p_nobias_bl_bias_true)$grobs
 legend <- grobs[[which(sapply(grobs, function(x) x$name) == "guide-box")]]
 
-prow_nobias <- plot_grid(dNdS_p_nobias_bl_cor_true+theme(legend.position="none",axis.title.x = element_blank()),
-                MutSel_p_nobias_bl_cor_true+theme(legend.position="none",axis.title.x = element_blank(),axis.title.y = element_blank()),
-                dNdS_p_nobias_bl_rmsd_true+theme(legend.position="none",axis.title.x = element_blank()),
-                MutSel_p_nobias_bl_rmsd_true+theme(legend.position="none",axis.title.x = element_blank(),axis.title.y = element_blank()),
+prow_nobias <- plot_grid(dNdS_p_nobias_bl_cor_true+theme(legend.position="none"),
+                MutSel_p_nobias_bl_cor_true+theme(legend.position="none",axis.title.y = element_blank()),
+                dNdS_p_nobias_bl_rmsd_true+theme(legend.position="none"),
+                MutSel_p_nobias_bl_rmsd_true+theme(legend.position="none",axis.title.y = element_blank()),
                 dNdS_p_nobias_bl_bias_true+theme(legend.position="none"),
                 MutSel_p_nobias_bl_bias_true+theme(legend.position="none",axis.title.y = element_blank()),
+                labels=c("A","B","C","D","E","F"),
                 align = 'vh',
                 hjust = -1,
                 ncol=2,
@@ -343,12 +344,13 @@ MutSel_p_bias_bl_bias_true <- ggplot(r_bias_MutSel,aes(bl,bias_true,colour=facto
 grobs <- ggplotGrob(MutSel_p_bias_bl_bias_true)$grobs
 legend <- grobs[[which(sapply(grobs, function(x) x$name) == "guide-box")]]
 
-prow_bias <- plot_grid(dNdS_p_bias_bl_cor_true+theme(legend.position="none",axis.title.x = element_blank()),
-                  MutSel_p_bias_bl_cor_true+theme(legend.position="none",axis.title.x = element_blank(),axis.title.y = element_blank()),
-                  dNdS_p_bias_bl_rmsd_true+theme(legend.position="none",axis.title.x = element_blank()),
-                  MutSel_p_bias_bl_rmsd_true+theme(legend.position="none",axis.title.x = element_blank(),axis.title.y = element_blank()),
+prow_bias <- plot_grid(dNdS_p_bias_bl_cor_true+theme(legend.position="none"),
+                  MutSel_p_bias_bl_cor_true+theme(legend.position="none",axis.title.y = element_blank()),
+                  dNdS_p_bias_bl_rmsd_true+theme(legend.position="none"),
+                  MutSel_p_bias_bl_rmsd_true+theme(legend.position="none",axis.title.y = element_blank()),
                   dNdS_p_bias_bl_bias_true+theme(legend.position="none"),
                   MutSel_p_bias_bl_bias_true+theme(legend.position="none",axis.title.y = element_blank()),
+                  labels=c("A","B","C","D","E","F"),
                   align = 'vh',
                   hjust = -1,
                   ncol=2,
@@ -496,12 +498,13 @@ MutSel_p_nobias_bl_bias_inferred <- ggplot(r_nobias_MutSel,aes(bl,bias_inferred,
 grobs <- ggplotGrob(MutSel_p_nobias_bl_bias_inferred)$grobs
 legend <- grobs[[which(sapply(grobs, function(x) x$name) == "guide-box")]]
 
-prow_bias <- plot_grid(dNdS_p_nobias_bl_cor_inferred+theme(legend.position="none",axis.title.x = element_blank()),
-                       MutSel_p_nobias_bl_cor_inferred+theme(legend.position="none",axis.title.x = element_blank(),axis.title.y = element_blank()),
-                       dNdS_p_nobias_bl_rmsd_inferred+theme(legend.position="none",axis.title.x = element_blank()),
-                       MutSel_p_nobias_bl_rmsd_inferred+theme(legend.position="none",axis.title.x = element_blank(),axis.title.y = element_blank()),
+prow_bias <- plot_grid(dNdS_p_nobias_bl_cor_inferred+theme(legend.position="none"),
+                       MutSel_p_nobias_bl_cor_inferred+theme(legend.position="none",axis.title.y = element_blank()),
+                       dNdS_p_nobias_bl_rmsd_inferred+theme(legend.position="none"),
+                       MutSel_p_nobias_bl_rmsd_inferred+theme(legend.position="none",axis.title.y = element_blank()),
                        dNdS_p_nobias_bl_bias_inferred+theme(legend.position="none"),
                        MutSel_p_nobias_bl_bias_inferred+theme(legend.position="none",axis.title.y = element_blank()),
+                       labels=c("A","B","C","D","E","F"),
                        align = 'vh',
                        hjust = -1,
                        ncol=2,
@@ -649,12 +652,13 @@ MutSel_p_bias_bl_bias_inferred <- ggplot(r_bias_MutSel,aes(bl,bias_inferred,colo
 grobs <- ggplotGrob(MutSel_p_nobias_bl_bias_inferred)$grobs
 legend <- grobs[[which(sapply(grobs, function(x) x$name) == "guide-box")]]
 
-prow_bias <- plot_grid(dNdS_p_bias_bl_cor_inferred+theme(legend.position="none",axis.title.x = element_blank()),
-                       MutSel_p_bias_bl_cor_inferred+theme(legend.position="none",axis.title.x = element_blank(),axis.title.y = element_blank()),
-                       dNdS_p_bias_bl_rmsd_inferred+theme(legend.position="none",axis.title.x = element_blank()),
-                       MutSel_p_bias_bl_rmsd_inferred+theme(legend.position="none",axis.title.x = element_blank(),axis.title.y = element_blank()),
+prow_bias <- plot_grid(dNdS_p_bias_bl_cor_inferred+theme(legend.position="none"),
+                       MutSel_p_bias_bl_cor_inferred+theme(legend.position="none",axis.title.y = element_blank()),
+                       dNdS_p_bias_bl_rmsd_inferred+theme(legend.position="none"),
+                       MutSel_p_bias_bl_rmsd_inferred+theme(legend.position="none",axis.title.y = element_blank()),
                        dNdS_p_bias_bl_bias_inferred+theme(legend.position="none"),
                        MutSel_p_bias_bl_bias_inferred+theme(legend.position="none",axis.title.y = element_blank()),
+                       labels=c("A","B","C","D","E","F"),
                        align = 'vh',
                        hjust = -1,
                        ncol=2,
