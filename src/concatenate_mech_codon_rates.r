@@ -59,11 +59,6 @@ for (name in file_names) {
     r$inferred <- inferred_r$dN.dS
     r$score <- as.numeric(r$score)
 
-    if (name=="r4s_orig_rates") {
-      r$true_norm <- r$true/mean(r$true)
-      r$score_norm <- r$score/mean(r$score)
-      r$inferred_norm <- r$inferred/mean(na.omit(r$inferred))
-    }
     if (i==1) {
       d <- r
     } else d <- rbind(d, r)

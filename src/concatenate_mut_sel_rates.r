@@ -6,11 +6,13 @@ library(readr)
 
 file_names = c("r4s_norm_rates","r4s_orig_rates")
 model="mut_sel"
-t1_fel1 <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/full_results_equalpi_bias.csv") 
-t2_fel1 <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/full_results_equalpi_nobias.csv") 
+t1_fel1 <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_bias_equalpi.csv") 
+t2_fel1 <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_nobias_equalpi.csv") 
 fel1_bias <- filter(t1_fel1,method=="FEL1")
 fel1_nobias <- filter(t2_fel1,method=="FEL1")
 fel1_t <- rbind(fel1_bias,fel1_nobias)
+
+t_true_rates <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/substitution_counts.csv")
 
 setwd("r4s_benchmark/")
 for (name in file_names) {
@@ -49,23 +51,18 @@ for (name in file_names) {
     
     num_taxa1 <- r$num_taxa[1]
    
-    fel1_r <- filter(fel1_t,rep==rep1,bl==bl1,ntaxa==num_taxa1,type==type1)
+    fel1_r <- filter(fel1_t,rep==rep1,bl==bl1,ntaxa==num_taxa1,biastype==type1)
     r$inferred <- fel1_r$dnds
-    r$true <- fel1_r$true
+    
+    true_r <- filter(t_true_rates,rep==rep1,bl==bl1,ntaxa==num_taxa1,biastype==type1,pitype=="equalpi")
+    r$true <- true_r$truednds
     
     if (name=="r4s_norm_rates") {
       f_type="r4s_norm"
     } else {
       f_type="r4s_orig"
     }
-    
     r$score <- as.numeric(r$score)
-    
-    if (name=="r4s_orig_rates") {
-      r$true_norm <- r$true/mean(na.omit(r$true))
-      r$score_norm <- r$score/mean(r$score)
-      r$inferred_norm <- r$inferred/mean(na.omit(r$inferred))
-    }
    
     if (i==1) {
       d <- r

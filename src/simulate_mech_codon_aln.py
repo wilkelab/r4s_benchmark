@@ -13,16 +13,14 @@ def make_mc_model(bias, tree_file, aln_file, ancestral_aln_file, sim_rates_file,
 	tree=read_tree(file = tree_file)
 	kappa=4.5
 	length=100
-
-	if bias=="nobias": ##varying dN 
-		parameters = {"kappa":4.5, "omega": np.arange(0.1, 1.6, 0.1) } # dN values ranging from 0.1 - 1.5
-	elif bias=="bias": ##varying dN and dS
-		##make every combination of rates 0.1-1.5 of dN to 0.1-1.5 of dS, i.e. 0.1 to 0.1, 0.1 to 0.2, etc.
-		r = np.arange(0.1, 1.6, 0.1)
-		n = len(r)
-		l1 = np.repeat(r,n)
-		l2 = np.tile(r,n)
-		parameters = {"kappa":4.5, "alpha": l1, "beta": l2 }
+	
+	dNdS_lst = np.random.uniform(0.1,1.6,10000)
+	if bias=="nobias": ##simulate varying dN 
+		parameters = {"kappa":4.5, "omega": dNdS_lst} #set dN value range 0.1 - 1.6
+	elif bias=="bias": ##simulate varying dN and dS
+		##set dS value range 0.5 - 2
+		dS_lst = np.random.uniform(0.5,2,10000)
+		parameters = {"kappa":4.5, "alpha": dS_lst, "beta": dNdS_lst*dS_lst }
 	else:
 		print """
 		Incorrect model name!
@@ -43,9 +41,9 @@ def make_mc_model(bias, tree_file, aln_file, ancestral_aln_file, sim_rates_file,
 	msa = MultipleSeqAlignment(aln_list) # create an MSA object
 	AlignIO.write(msa, ancestral_aln_file, "fasta") 
 		
-	# Mutation rate dictionary - FYI you can also grab this from pyvolve directly, just use the next line:
+	# Mutation rate dictionary 
 	mu = 1
-	mu_dict = {'AT': mu, 'CG': mu, 'AC': mu, 'GT':mu, 'AG': kappa*mu,'GA': kappa*mu, 'TA': mu, 'GC': mu, 'CA': mu, 'TG':mu, 'GA': kappa*mu,'CT': kappa*mu, 'TC': kappa*mu}
+	mu_dict = {'AT': mu, 'CG': mu, 'AC': mu, 'GT':mu, 'AG': kappa*mu,'GA': kappa*mu, 'TA': mu, 'GC': mu, 'CA': mu, 'TG':mu, 'CT': kappa*mu, 'TC': kappa*mu}
 	
 	# Count dN/dS
 	c = count_simulated_dnds.dNdS_Counter(ancestral_aln_file, tree_file, mu_dict)
