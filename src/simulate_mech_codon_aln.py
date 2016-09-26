@@ -45,7 +45,6 @@ simulate_aln.py <bias> <tree_file> <aln_file> <sim_rates_file> <sim_rates_info_f
 	aln_file=argv[3]
 	sim_rates_file=argv[4]
 	sim_rates_info_file=argv[5]
-	true_rates_file=argv[6]
 	
 	make_mc_model(bias, tree_file, aln_file, sim_rates_file, sim_rates_info_file)
 		
