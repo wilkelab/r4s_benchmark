@@ -4,17 +4,18 @@ library(dplyr)
 library(cowplot)
 library(readr)
 
+setwd("r4s_benchmark/")
 file_names = c("r4s_norm_rates","r4s_orig_rates")
 model="mut_sel"
-t1_fel1 <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_bias_equalpi.csv") 
-t2_fel1 <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_nobias_equalpi.csv") 
+t1_fel1 <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_bias_unequalpi.csv") 
+t2_fel1 <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_nobias_unequalpi.csv") 
 fel1_bias <- filter(t1_fel1,method=="FEL1")
 fel1_nobias <- filter(t2_fel1,method=="FEL1")
 fel1_t <- rbind(fel1_bias,fel1_nobias)
 
-t_true_rates <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/substitution_counts.csv")
+t1_true_rates <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/substitution_counts.csv")
+t_true_rates <- t1_true_rates %>% filter(pitype=="unequalpi")
 
-setwd("r4s_benchmark/")
 for (name in file_names) {
   t1 <- list.files(paste0(model,"/r4s_rates/raw_rates"),pattern=name,full.names=T)
   info = file.info(t1)
@@ -54,7 +55,7 @@ for (name in file_names) {
     fel1_r <- filter(fel1_t,rep==rep1,bl==bl1,ntaxa==num_taxa1,biastype==type1)
     r$inferred <- fel1_r$dnds
     
-    true_r <- filter(t_true_rates,rep==rep1,bl==bl1,ntaxa==num_taxa1,biastype==type1,pitype=="equalpi")
+    true_r <- filter(t_true_rates,rep==rep1,bl==bl1,ntaxa==num_taxa1,biastype==type1)
     r$true <- true_r$truednds
     
     if (name=="r4s_norm_rates") {
