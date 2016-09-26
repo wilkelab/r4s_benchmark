@@ -6,7 +6,7 @@ rep_num=$4
 model=$5
 
 if [ $model = 'mut_sel' ]; then
-	aln=rep${rep_num}_n${taxa_num}_bl${br_len}_equalpi_${bias}.fasta
+	aln=rep${rep_num}_n${taxa_num}_bl${br_len}_unequalpi_${bias}.fasta
 else
 	aln=rep${rep_num}_n${taxa_num}_bl${br_len}_${bias}.fasta
 fi
