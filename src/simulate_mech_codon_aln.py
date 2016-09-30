@@ -30,7 +30,7 @@ def make_mc_model(bias, tree_file, aln_file, sim_rates_file, sim_rates_info_file
 	parts = Partition(models = model, size = length)
 
 	evolve = Evolver(partitions = parts, tree = tree)
-	evolve(ratefile = sim_rates_file, infofile = sim_rates_info_file, seqfile = aln_file)
+	evolve(ratefile = sim_rates_file, infofile = sim_rates_info_file, seqfile = aln_file, seqfmt = "fasta")
 	
 def main(argv):
 
