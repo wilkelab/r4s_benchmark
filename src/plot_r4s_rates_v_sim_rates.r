@@ -18,35 +18,35 @@ r_nobias_MutSel_raw <- read_csv("mut_sel/processed_rates/all_r4s_orig_rates_nobi
 
 r_bias_dNdS <- r_bias_dNdS_raw %>% 
   group_by(bl,num_taxa,rep) %>% 
-  mutate(score_norm=score/mean(score),true_norm=true/mean(true),inferred_norm=inferred/mean(inferred)) %>% 
-  summarise(cor_true=cor(score_norm,true_norm,method="spearman",use="pairwise.complete.obs"),
+  mutate(score_norm=score/mean(score),true_norm=true/mean(true),inferred_norm=inferred/mean(inferred[!is.na(inferred)])) %>% 
+  summarise(cor_true=cor(score,true,method="spearman",use="pairwise.complete.obs"),
                           rmsd_true=sqrt(mean((score_norm - true_norm)^2)),
-                          cor_inferred=cor(score_norm,inferred_norm,method="spearman",use="pairwise.complete.obs"),
+                          cor_inferred=cor(score,inferred,method="spearman",use="pairwise.complete.obs"),
                           rmsd_inferred=sqrt(mean((score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])^2))) 
 
 r_nobias_dNdS <- r_nobias_dNdS_raw %>% 
   group_by(bl,num_taxa,rep) %>% 
   mutate(score_norm=score/mean(score),true_norm=true/mean(true),inferred_norm=inferred/mean(inferred)) %>% 
-  summarise(cor_true=cor(score_norm,true_norm,method="spearman",use="pairwise.complete.obs"),
+  summarise(cor_true=cor(score,true,method="spearman",use="pairwise.complete.obs"),
                    rmsd_true=sqrt(mean((score_norm - true_norm)^2)),
-                   cor_inferred=cor(score_norm,inferred_norm,method="spearman",use="pairwise.complete.obs"),
+                   cor_inferred=cor(score,inferred,method="spearman",use="pairwise.complete.obs"),
                    rmsd_inferred=sqrt(mean((score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])^2)))
 
 r_bias_MutSel <- r_bias_MutSel_raw %>% 
   group_by(bl,num_taxa,rep) %>% 
   mutate(score_norm=score/mean(score),true_norm=true/mean(true),inferred_norm=inferred/mean(inferred)) %>% 
-  summarise(cor_true=cor(score_norm,true_norm,method="spearman",use="pairwise.complete.obs"),
+  summarise(cor_true=cor(score,true,method="spearman",use="pairwise.complete.obs"),
                    rmsd_true=sqrt(mean((score_norm[!is.na(true_norm)] - true_norm[!is.na(true_norm)])^2)),
-                   cor_inferred=cor(score_norm,inferred_norm,method="spearman",use="pairwise.complete.obs"),
-                   rmsd_inferred=sqrt(mean((score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])^2)))
+                   cor_inferred=cor(score,inferred,method="spearman",use="pairwise.complete.obs"),
+                   rmsd_inferred=sqrt(mean((score_norm-inferred_norm)^2)))
 
 r_nobias_MutSel <- r_nobias_MutSel_raw %>% 
   group_by(bl,num_taxa,rep) %>% 
   mutate(score_norm=score/mean(score),true_norm=true/mean(true),inferred_norm=inferred/mean(inferred)) %>% 
-  summarise(cor_true=cor(score_norm,true_norm,method="spearman",use="pairwise.complete.obs"),
+  summarise(cor_true=cor(score,true,method="spearman",use="pairwise.complete.obs"),
                    rmsd_true=sqrt(mean((score_norm[!is.na(true_norm)] - true_norm[!is.na(true_norm)])^2)),
-                   cor_inferred=cor(score_norm,inferred_norm,method="spearman",use="pairwise.complete.obs"),
-                   rmsd_inferred=sqrt(mean((score_norm[!is.na(inferred_norm)] - inferred_norm[!is.na(inferred_norm)])^2)))
+                   cor_inferred=cor(score,inferred,method="spearman",use="pairwise.complete.obs"),
+                   rmsd_inferred=sqrt(mean((score_norm-inferred_norm)^2)))
 
 fancy_scientific <- function(l) {
   # turn in to character string in scientific notation
@@ -447,8 +447,8 @@ MutSel_p_nobias_bl_rmsd_inferred <- ggplot(r_nobias_MutSel,aes(bl,rmsd_inferred,
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  coord_cartesian(ylim=c(0,1.25),xlim=c(0.0023,0.66))+
-  scale_y_continuous(breaks=seq(0,1.25,0.25))+
+  coord_cartesian(ylim=c(0,0.8),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,0.8,0.2))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -466,8 +466,8 @@ MutSel_p_bias_bl_rmsd_inferred <- ggplot(r_bias_MutSel,aes(bl,rmsd_inferred,colo
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  coord_cartesian(ylim=c(0,1.25),xlim=c(0.0023,0.66))+
-  scale_y_continuous(breaks=seq(0,1.25,0.25))+
+  coord_cartesian(ylim=c(0,0.8),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,0.8,0.2))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
