@@ -7,14 +7,15 @@ library(readr)
 setwd("r4s_benchmark/")
 file_names = c("r4s_norm_rates","r4s_orig_rates")
 model="mut_sel"
-t1_fel1 <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_bias_unequalpi.csv") 
-t2_fel1 <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_nobias_unequalpi.csv") 
-fel1_bias <- filter(t1_fel1,method=="FEL1")
-fel1_nobias <- filter(t2_fel1,method=="FEL1")
-fel1_t <- rbind(fel1_bias,fel1_nobias)
 
-t1_true_rates <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/substitution_counts.csv")
+t1_true_rates <- read.csv("../dnds_1rate_2rate/postprocessing/dataframes/substitution_counts.csv")
 t_true_rates <- t1_true_rates %>% filter(pitype=="unequalpi")
+
+inf_rates_nobias <- read.csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_nobias_unequalpi.csv")
+inf_rates_bias <- read.csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_bias_unequalpi.csv")
+fel1_nobias <- inf_rates_nobias %>% filter(method=="FEL1")
+fel1_bias <- inf_rates_bias %>% filter(method=="FEL1")
+fel1_r <- rbind(fel1_nobias,fel1_bias)
 
 for (name in file_names) {
   t1 <- list.files(paste0(model,"/r4s_rates/raw_rates"),pattern=name,full.names=T)
@@ -30,32 +31,36 @@ for (name in file_names) {
       separate(c8,into=c("c8","c9"),sep="\\/") %>% 
       select(-c(c1,c9))
     colnames(r) <- c("pos","seq","score","qq_int_lower","qq_int_upper","stdev","num_taxa")
-    
+
     str <- regexpr("_\\w+.txt",t1[i])[1]
     end <- regexpr(".txt",t1[i])[1]
-    type1 <- substr(t1[i],str+1,end-1)
-    r$type <- rep(type1,length(r$num_taxa))
-    
+    biastype_str <- substr(t1[i],str+1,end-1)
+    r$biastype <- rep(biastype_str,length(r$num_taxa))
+
     str <- regexpr("bl\\d+",t1[i])[1]
     end <- regexpr("_\\w+.txt",t1[i])[1]
-    bl1 <- as.numeric(substr(t1[i],str+2,end-1))
-    r$bl <- rep(bl1,length(r$num_taxa))
-    
+    bl_num <- as.numeric(substr(t1[i],str+2,end-1))
+    r$bl <- rep(bl_num,length(r$num_taxa))
+
     str <- regexpr("rep\\d+",t1[i])[1]
     end <- regexpr("_n\\d+",t1[i])[1]
-    rep1 <- as.numeric(substr(t1[i],str+3,end-1))
-    r$rep <- rep(rep1,length(r$num_taxa))
-    
+    rep_num <- as.numeric(substr(t1[i],str+3,end-1))
+    r$rep <- rep(rep_num,length(r$num_taxa))
+
     str <- regexpr("n\\d+",t1[i])[1]
     end <- regexpr("_bl\\d+",t1[i])[1]
-    num1 <- as.numeric(substr(t1[i],str+1,end-1))
+    n <- as.numeric(substr(t1[i],str+1,end-1))
     
-    num_taxa1 <- r$num_taxa[1]
-   
-    fel1_r <- filter(fel1_t,rep==rep1,bl==bl1,ntaxa==num_taxa1,biastype==type1)
-    r$inferred <- fel1_r$dnds
+    num_taxa <- r$num_taxa[1]
+    #fel1_file_name <- paste0("rep",rep_num,"_n",n,"_bl",bl_num,"_unequalpi_",biastype_str,"_FEL1.txt")
+    #fel1_r <- read.csv(paste0("../dnds_1rate_2rate/results/balancedtrees_results/",fel1_file_name))
+    #r$inferred <- fel1_r$dN.dS
     
-    true_r <- filter(t_true_rates,rep==rep1,bl==bl1,ntaxa==num_taxa1,biastype==type1)
+    inf_r <- fel1_r %>% filter(rep==rep_num,bl==bl_num,ntaxa==num_taxa,biastype==biastype_str)
+    r$inferred_dnds <- inf_r$dnds
+    r$inferred_dn <- inf_r$dn
+    
+    true_r <- t_true_rates %>% filter(rep==rep_num,bl==bl_num,ntaxa==num_taxa,biastype==biastype_str)
     r$true <- true_r$truednds
     
     if (name=="r4s_norm_rates") {
@@ -63,14 +68,13 @@ for (name in file_names) {
     } else {
       f_type="r4s_orig"
     }
-    r$score <- as.numeric(r$score)
-   
+
     if (i==1) {
       d <- r
     } else d <- rbind(d, r)
   }  
-  bias_r <- filter(d,type=="bias")
-  nobias_r <- filter(d,type=="nobias")
+  bias_r <- filter(d,biastype=="bias")
+  nobias_r <- filter(d,biastype=="nobias")
   write.csv(bias_r,file=paste0(model,"/processed_rates/all_",name,"_bias.csv"),quote=F)
   write.csv(nobias_r,file=paste0(model,"/processed_rates/all_",name,"_nobias.csv"),quote=F)
 }
