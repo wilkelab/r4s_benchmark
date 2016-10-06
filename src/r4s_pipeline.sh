@@ -14,9 +14,6 @@ tree=n${taxa_num}_bl${br_len}.tre
 r4s_norm_rates=r4s_norm_rates_rep${rep_num}_n${taxa_num}_bl${br_len}_${bias}.txt
 r4s_orig_rates=r4s_orig_rates_rep${rep_num}_n${taxa_num}_bl${br_len}_${bias}.txt
 
-##convert an alignment from nuc to aa 
-python ../../../home1/02159/ds29583/r4s_benchmark/src/translate_aln.py ./r4s_benchmark_data/aln/${model}/nuc/${aln} ./r4s_benchmark_data/aln/${model}/aa/${aln}
-
 ##run rate4site 
 ../../../home1/02159/ds29583/rate4site.3.2.source/sourceMar09/rate4site -s ./r4s_benchmark_data/aln/${model}/aa/${aln} -t ./r4s_benchmark_data/trees/${tree} -o ../../../home1/02159/ds29583/r4s_benchmark/${model}/r4s_rates/raw_rates/${r4s_norm_rates} -y ../../../home1/02159/ds29583/r4s_benchmark/${model}/r4s_rates/raw_rates/${r4s_orig_rates}
 if [ -f r4s.res ]; then
