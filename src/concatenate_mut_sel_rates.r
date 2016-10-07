@@ -28,8 +28,8 @@ for (name in file_names) {
     
     #reformat rate4site output
     r <- r1 %>% separate(V1,into=c("c1","c2","c3","c4","c5","c6","c7","c8"),sep="\\][:blank:]*|[:blank:]*\\[[:blank:]*|\\,[:blank:]*|[:blank:]+",extra="drop") %>%
-      separate(c8,into=c("c8","c9"),sep="\\/") %>% 
-      select(-c(c1,c9))
+    separate(c8,into=c("c8","c9"),sep="\\/") %>%
+    select(-c(c1,c9))
     colnames(r) <- c("pos","seq","score","qq_int_lower","qq_int_upper","stdev","num_taxa")
 
     str <- regexpr("_\\w+.txt",t1[i])[1]
@@ -57,8 +57,7 @@ for (name in file_names) {
     #r$inferred <- fel1_r$dN.dS
     
     inf_r <- fel1_r %>% filter(rep==rep_num,bl==bl_num,ntaxa==num_taxa,biastype==biastype_str)
-    r$inferred_dnds <- inf_r$dnds
-    r$inferred_dn <- inf_r$dn
+    r$inferred <- inf_r$dnds
     
     true_r <- t_true_rates %>% filter(rep==rep_num,bl==bl_num,ntaxa==num_taxa,biastype==biastype_str)
     r$true <- true_r$truednds

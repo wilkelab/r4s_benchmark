@@ -50,11 +50,12 @@ for (name in file_names) {
     true_r <- read.table(true_rates_file_name,header=T)
     
     ##get assigned dN/dS by solving for dN/dS
-    true_r$dn.ds <-  as.numeric(true_r$dN)/as.numeric(true_r$dS)
-    r$true <-  true_r$dn.ds
+    true_r$dNdS <-  as.numeric(true_r$dN)/as.numeric(true_r$dS)
+    r$true <-  true_r$dNdS
 
     inferred_rates_file_name <- paste0(model,"/inferred_rates/rep",rep,"_n",n,"_bl",bl,"_",bias,"_FEL1.txt")
     inferred_r <- read.csv(inferred_rates_file_name)
+    inferred_r$dN.dS[which(inferred_r$dN.dS==1)] = rep(NA,length(which(inferred_r$dN.dS==1)))
     
     r$inferred <- inferred_r$dN.dS
     r$score <- as.numeric(r$score)
