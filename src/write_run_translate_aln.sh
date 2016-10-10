@@ -3,7 +3,7 @@ rep_num=50
 bias_arr=("bias" "nobias")
 taxa_num=11
 br_len_arr=(0.0025 0.01 0.04 0.16 0.64)
-model='mech_codon'
+model='mut_sel'
 
 if [ -f ./src/run_translate.sh ]; then
 	rm ./src/run_translate.sh  
