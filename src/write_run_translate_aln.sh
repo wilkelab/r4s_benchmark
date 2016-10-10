@@ -9,8 +9,6 @@ if [ -f ./src/run_translate.sh ]; then
 	rm ./src/run_translate.sh  
 fi
 
-
-
 for bias in ${bias_arr[*]}
 do	 
 	for br_len in ${br_len_arr[*]} 
@@ -20,9 +18,9 @@ do
 			for j in $(seq 1 $rep_num) 
 			do
 				if [ $model = 'mut_sel' ]; then
-					aln=rep${rep_num}_n${taxa_num}_bl${br_len}_unequalpi_${bias}.fasta
+					aln=rep${j}_n${i}_bl${br_len}_unequalpi_${bias}.fasta
 				else
-					aln=rep${rep_num}_n${taxa_num}_bl${br_len}_${bias}.fasta
+					aln=rep${j}_n${i}_bl${br_len}_${bias}.fasta
 				fi
 				
 				echo "python ../../../home1/02159/ds29583/r4s_benchmark/src/translate_aln.py ./r4s_benchmark_data/aln/${model}/nuc/${aln} ./r4s_benchmark_data/aln/${model}/aa/${aln}" >> ./src/run_translate.sh 
