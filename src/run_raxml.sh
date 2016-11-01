@@ -1,0 +1,11 @@
+../standard-RAxML/raxmlHPC-SSE3 -s natural_prot/aln/hiv1/hiv1_capsid_clean_dna.fasta -w /Users/dariyasydykova/Desktop/projects/r4s_benchmark/natural_prot/trees/ -n hiv1_capsid.tre -m GTRGAMMA -p 1
+../standard-RAxML/raxmlHPC-SSE3 -s natural_prot/aln/hiv1/hiv1_gp120_clean_dna.fasta -w /Users/dariyasydykova/Desktop/projects/r4s_benchmark/natural_prot/trees/ -n hiv1_gp120.tre -m GTRGAMMA -p 1
+../standard-RAxML/raxmlHPC-SSE3 -s natural_prot/aln/hiv1/hiv1_integrase_clean_dna.fasta -w /Users/dariyasydykova/Desktop/projects/r4s_benchmark/natural_prot/trees/ -n hiv1_integrase.tre -m GTRGAMMA -p 1
+../standard-RAxML/raxmlHPC-SSE3 -s natural_prot/aln/hiv1/hiv1_matrix_clean_dna.fasta -w /Users/dariyasydykova/Desktop/projects/r4s_benchmark/natural_prot/trees/ -n hiv1_matrix.tre -m GTRGAMMA -p 1
+../standard-RAxML/raxmlHPC-SSE3 -s natural_prot/aln/hiv1/hiv1_protease_clean_dna.fasta -w /Users/dariyasydykova/Desktop/projects/r4s_benchmark/natural_prot/trees/ -n hiv1_protease.tre -m GTRGAMMA -p 1
+../standard-RAxML/raxmlHPC-SSE3 -s natural_prot/aln/hiv1/hiv1_rt_clean_dna.fasta -w /Users/dariyasydykova/Desktop/projects/r4s_benchmark/natural_prot/trees/ -n hiv1_rt.tre -m GTRGAMMA -p 1
+../standard-RAxML/raxmlHPC-SSE3 -s natural_prot/aln/gpcr/ENST00000000412_n_aligned.fasta -w /Users/dariyasydykova/Desktop/projects/r4s_benchmark/natural_prot/trees/ -n ENST00000000412.tre -m GTRGAMMA -p 1
+../standard-RAxML/raxmlHPC-SSE3 -s natural_prot/aln/gpcr/ENST00000009530_n_aligned.fasta -w /Users/dariyasydykova/Desktop/projects/r4s_benchmark/natural_prot/trees/ -n ENST00000009530.tre -m GTRGAMMA -p 1
+../standard-RAxML/raxmlHPC-SSE3 -s natural_prot/aln/gpcr/ENST00000011653_n_aligned.fasta -w /Users/dariyasydykova/Desktop/projects/r4s_benchmark/natural_prot/trees/ -n ENST00000011653.tre -m GTRGAMMA -p 1
+../standard-RAxML/raxmlHPC-SSE3 -s natural_prot/aln/gpcr/ENST00000014914_n_aligned.fasta -w /Users/dariyasydykova/Desktop/projects/r4s_benchmark/natural_prot/trees/ -n ENST00000014914.tre -m GTRGAMMA -p 1
+../standard-RAxML/raxmlHPC-SSE3 -s natural_prot/aln/gpcr/ENST00000023897_n_aligned.fasta -w /Users/dariyasydykova/Desktop/projects/r4s_benchmark/natural_prot/trees/ -n ENST00000023897.tre -m GTRGAMMA -p 1
