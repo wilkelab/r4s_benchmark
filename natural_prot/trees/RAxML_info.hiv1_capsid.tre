@@ -72,7 +72,7 @@ Found 42 columns that contain only undetermined values which will be treated as 
 Normally these columns should be excluded from the analysis.
 
 An alignment file with undetermined columns and sequence duplicates removed has already
-been printed to file natural_prot/aln/hiv1/hiv1_capsid_clean_dna.fasta.reduced
+been printed to file /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_capsid_clean_dna.fasta.reduced
 
 
 Using BFGS method to optimize GTR rate parameters, to disable this specify "--no-bfgs" 
@@ -124,9 +124,27 @@ Substitution Matrix: GTR
 
 RAxML was called as follows:
 
-../standard-RAxML/raxmlHPC-SSE3 -s natural_prot/aln/hiv1/hiv1_capsid_clean_dna.fasta -w /Users/dariyasydykova/Desktop/projects/r4s_benchmark/natural_prot/trees/ -n hiv1_capsid.tre -m GTRGAMMA -p 1 
+/home1/02159/ds29583/standard-RAxML/raxmlHPC-PTHREADS-SSE3 -T 48 -s /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_capsid_clean_dna.fasta -w /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/ -n hiv1_capsid.tre -m GTRGAMMA -p 1 
 
 
 Partition: 0 with name: No Name Provided
 Base frequencies: 0.364 0.193 0.239 0.204 
+
+Inference[0]: Time 5680.772957 GAMMA-based likelihood -191484.118292, best rearrangement setting 25
+alpha[0]: 0.510975 rates[0] ac ag at cg ct gt: 1.444191 6.126572 0.983467 1.069108 9.361329 1.000000 
+
+
+Conducting final model optimizations on all 1 trees under GAMMA-based models ....
+
+Inference[0] final GAMMA-based Likelihood: -191483.476062 tree written to file /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_result.hiv1_capsid.tre
+
+
+Starting final GAMMA-based thorough Optimization on tree 0 likelihood -191483.476062 .... 
+
+Final GAMMA-based Score of best tree -191483.340640
+
+Program execution info written to /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_info.hiv1_capsid.tre
+Best-scoring ML tree written to: /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_bestTree.hiv1_capsid.tre
+
+Overall execution time: 5860.003956 secs or 1.627779 hours or 0.067824 days
 
