@@ -1,0 +1,150 @@
+IMPORTANT WARNING: Alignment column 91 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 92 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 93 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 103 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 104 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 105 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 124 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 125 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 126 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 160 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 161 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 162 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 226 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 227 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 228 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 244 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 245 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 246 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 259 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 260 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 261 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 262 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 263 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 264 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 277 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 278 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 279 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 490 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 491 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 492 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 583 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 584 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 585 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 619 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 620 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 621 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 673 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 674 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 675 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 736 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 737 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 738 contains only undetermined values which will be treated as missing data
+
+
+IMPORTANT WARNING: Sequences B_US_11_CP10_3A_KF384798 and B_US_11_VC3_14_KF384812 are exactly identical
+
+
+IMPORTANT WARNING: Sequences C_ZM_02_02ZM114_AB254146 and C_ZM_02_02ZMDB_AB254153 are exactly identical
+
+
+IMPORTANT WARNING: Sequences 01_AE_CN_05_FJ053_DQ859179 and 01_AE_CN_06_Fj064_EF036533 are exactly identical
+
+
+IMPORTANT WARNING: Sequences 02_AG_GH_03_03GH197AG_AB286863 and 0206_GH_03_03GH195AG_06_AB286853 are exactly identical
+
+
+IMPORTANT WARNING: Sequences CPZ_CM_05_SIVcpzEK505_c2_JN835460 and CPZ_CM_05_SIVcpzEK505_DQ373065 are exactly identical
+
+
+IMPORTANT WARNING: Sequences CPZ_CM_05_SIVcpzMB897_c2_JN835461 and CPZ_CM_05_SIVcpzMB897_EF535994 are exactly identical
+
+
+IMPORTANT WARNING: Sequences CPZ_CM_05_SIVcpzMT145_c2_JN835462 and CPZ_CM_05_SIVcpzMT145_DQ373066 are exactly identical
+
+IMPORTANT WARNING
+Found 7 sequences that are exactly identical to other sequences in the alignment.
+Normally they should be excluded from the analysis.
+
+
+IMPORTANT WARNING
+Found 42 columns that contain only undetermined values which will be treated as missing data.
+Normally these columns should be excluded from the analysis.
+
+Just in case you might need it, an alignment file with 
+sequence duplicates and undetermined columns removed is printed to file /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_capsid_clean_dna_aligned.fasta.reduced
+
+
+Using BFGS method to optimize GTR rate parameters, to disable this specify "--no-bfgs" 
+
+
+Alignment has 42 completely undetermined sites that will be automatically removed from the input data
+
+
+
+This is RAxML version 8.2.9 released by Alexandros Stamatakis on July 20 2016.
+
+With greatly appreciated code contributions by:
+Andre Aberer      (HITS)
+Simon Berger      (HITS)
+Alexey Kozlov     (HITS)
+Kassian Kobert    (HITS)
+David Dao         (KIT and HITS)
+Sarah Lutteropp   (KIT and HITS)
+Nick Pattengale   (Sandia)
+Wayne Pfeiffer    (SDSC)
+Akifumi S. Tanabe (NRIFS)
+Charlie Taylor    (UF)
+
+
+Alignment has 668 distinct alignment patterns
+
+Proportion of gaps and completely undetermined characters in this alignment: 7.60%
+
+RAxML rapid hill-climbing mode
+
+Using 1 distinct models/data partitions with joint branch length optimization
+
+
+Executing 1 inferences on the original alignment using 1 distinct randomized MP trees
+
+All free model parameters will be estimated by RAxML
+GAMMA model of rate heteorgeneity, ML estimate of alpha-parameter
+
+GAMMA Model parameters will be estimated up to an accuracy of 0.1000000000 Log Likelihood units
+
+Partition: 0
+Alignment Patterns: 668
+Name: No Name Provided
+DataType: DNA
+Substitution Matrix: GTR
+
+
+
+
+RAxML was called as follows:
+
+/home1/02159/ds29583/standard-RAxML/raxmlHPC-PTHREADS-SSE3 -T 48 -s /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_capsid_clean_dna_aligned.fasta -w /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/ -n hiv1_capsid_n.tre -m GTRGAMMA -p 1 
+
+
+Partition: 0 with name: No Name Provided
+Base frequencies: 0.364 0.193 0.239 0.204 
+
+Inference[0]: Time 5407.330694 GAMMA-based likelihood -191484.118292, best rearrangement setting 25
+alpha[0]: 0.510975 rates[0] ac ag at cg ct gt: 1.444191 6.126572 0.983467 1.069108 9.361329 1.000000 
+
+
+Conducting final model optimizations on all 1 trees under GAMMA-based models ....
+
+Inference[0] final GAMMA-based Likelihood: -191483.476062 tree written to file /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_result.hiv1_capsid_n.tre
+
+
+Starting final GAMMA-based thorough Optimization on tree 0 likelihood -191483.476062 .... 
+
+Final GAMMA-based Score of best tree -191483.340640
+
+Program execution info written to /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_info.hiv1_capsid_n.tre
+Best-scoring ML tree written to: /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_bestTree.hiv1_capsid_n.tre
+
+Overall execution time: 5577.304433 secs or 1.549251 hours or 0.064552 days
+

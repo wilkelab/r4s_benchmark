@@ -1,0 +1,117 @@
+IMPORTANT WARNING: Alignment column 13 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 23 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 27 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 70 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 168 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 169 contains only undetermined values which will be treated as missing data
+IMPORTANT WARNING: Alignment column 170 contains only undetermined values which will be treated as missing data
+
+
+IMPORTANT WARNING: Sequences B_FR_83_HXB2_LAI_IIIB_BRU_K03455 and B_CY_05_CY075_FJ388916 are exactly identical
+
+
+IMPORTANT WARNING: Sequences 01_AE_CN_05_FJ053_DQ859179 and 01_AE_CN_06_Fj064_EF036533 are exactly identical
+
+
+IMPORTANT WARNING: Sequences 01_AE_TH_00_OUR595I_AY358052 and 01_AE_TH_99_OUR422I_AY358051 are exactly identical
+
+
+IMPORTANT WARNING: Sequences 02_AG_CM_10_DE00210CM013_KF859739 and 0222_CM_10_DE00210CM013_2_KF859740 are exactly identical
+
+
+IMPORTANT WARNING: Sequences 42_BF_LU_03_luBF_01_03_EU170151 and 42_BF_LU_06_luBF_18_06_EU170139 are exactly identical
+
+
+IMPORTANT WARNING: Sequences BC_IN_08_MAN_146_HM598635 and BC_IN_08_Man_40_HM573466 are exactly identical
+
+
+IMPORTANT WARNING: Sequences CPZ_CM_05_SIVcpzEK505_c2_JN835460 and CPZ_CM_05_SIVcpzEK505_DQ373065 are exactly identical
+
+
+IMPORTANT WARNING: Sequences CPZ_TZ_02_TAN3_1_DQ374658 and CPZ_TZ_02_TAN3_EF394358 are exactly identical
+
+IMPORTANT WARNING
+Found 8 sequences that are exactly identical to other sequences in the alignment.
+Normally they should be excluded from the analysis.
+
+
+IMPORTANT WARNING
+Found 7 columns that contain only undetermined values which will be treated as missing data.
+Normally these columns should be excluded from the analysis.
+
+Just in case you might need it, an alignment file with 
+sequence duplicates and undetermined columns removed is printed to file /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_matrix_clean_protein.fasta.reduced
+
+Alignment has 7 completely undetermined sites that will be automatically removed from the input data
+
+
+
+This is RAxML version 8.2.9 released by Alexandros Stamatakis on July 20 2016.
+
+With greatly appreciated code contributions by:
+Andre Aberer      (HITS)
+Simon Berger      (HITS)
+Alexey Kozlov     (HITS)
+Kassian Kobert    (HITS)
+David Dao         (KIT and HITS)
+Sarah Lutteropp   (KIT and HITS)
+Nick Pattengale   (Sandia)
+Wayne Pfeiffer    (SDSC)
+Akifumi S. Tanabe (NRIFS)
+Charlie Taylor    (UF)
+
+
+Alignment has 164 distinct alignment patterns
+
+Proportion of gaps and completely undetermined characters in this alignment: 23.93%
+
+RAxML rapid hill-climbing mode
+
+Using 1 distinct models/data partitions with joint branch length optimization
+
+
+Executing 1 inferences on the original alignment using 1 distinct randomized MP trees
+
+All free model parameters will be estimated by RAxML
+ML estimate of 25 per site rate categories
+
+Likelihood of final tree will be evaluated and optimized under GAMMA
+
+GAMMA Model parameters will be estimated up to an accuracy of 0.1000000000 Log Likelihood units
+
+Partition: 0
+Alignment Patterns: 164
+Name: No Name Provided
+DataType: AA
+Substitution Matrix: LG
+Using fixed base frequencies
+
+
+
+
+RAxML was called as follows:
+
+/home1/02159/ds29583/standard-RAxML/raxmlHPC-PTHREADS-SSE3 -T 48 -s /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_matrix_clean_protein.fasta -w /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/ -n hiv1_matrix_p.tre -m PROTCATLG -p 1 
+
+
+Partition: 0 with name: No Name Provided
+Base frequencies: 0.079 0.056 0.042 0.053 0.013 0.041 0.072 0.057 0.022 0.062 0.099 0.065 0.023 0.042 0.044 0.061 0.053 0.012 0.034 0.069 
+
+Inference[0]: Time 19655.947980 CAT-based likelihood -95004.641603, best rearrangement setting 25
+alpha[0]: 1.000000 
+
+
+Conducting final model optimizations on all 1 trees under GAMMA-based models ....
+
+Inference[0] final GAMMA-based Likelihood: -94774.057935 tree written to file /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_result.hiv1_matrix_p.tre
+
+
+Starting final GAMMA-based thorough Optimization on tree 0 likelihood -94774.057935 .... 
+
+Final GAMMA-based Score of best tree -94751.750731
+
+Program execution info written to /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_info.hiv1_matrix_p.tre
+Best-scoring ML tree written to: /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_bestTree.hiv1_matrix_p.tre
+
+Overall execution time: 20248.319538 secs or 5.624533 hours or 0.234356 days
+
