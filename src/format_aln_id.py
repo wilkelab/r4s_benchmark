@@ -4,7 +4,7 @@ def main(argv):
 
 	if len(argv) != 3: # wrong number of arguments
 		print """Usage:
-format_hiv1_protein_aln.py <hiv1_fasta_file> <reformated_fasta_file>
+format_protein_aln_id.py <fasta_file> <reformated_fasta_file>
 """
 		sys.exit()
 
