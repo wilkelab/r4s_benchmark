@@ -4,7 +4,7 @@ def main(argv):
 
 	if len(argv) != 3: # wrong number of arguments
 		print """Usage:
-format_aln_id.py <fasta_file> <reformated_fasta_file>
+format_tree_id.py <tree_file> <reformated_tree_file>
 """
 		sys.exit()
 
@@ -14,15 +14,9 @@ format_aln_id.py <fasta_file> <reformated_fasta_file>
 	f=open(fasta_file,"r")
 	out=open(out_fasta_file,"w")
 	for line in f:
-		if line.startswith(">"):
-			if "." in line:
-				line=line.replace(".","_")
-			if "|" in line:
-				line=line.replace("|","_")
-			out.write(line)
-		else:
-			out.write(line)
-			continue
-
+		if "|" in line:
+			line=line.replace("|","_")
+		out.write(line)
+	
 if __name__ == "__main__":
 	main(sys.argv)
