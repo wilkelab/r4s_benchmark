@@ -46,13 +46,13 @@ Substitution Matrix: GTR
 
 RAxML was called as follows:
 
-/home1/02159/ds29583/standard-RAxML/raxmlHPC-PTHREADS-SSE3 -T 48 -s /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/gpcr/ENST00000000412_n_aligned.fasta -w /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/ -n ENST00000000412_n.tre -m GTRGAMMA -p 1 
+/home1/02159/ds29583/standard-RAxML/raxmlHPC-PTHREADS-SSE3 -T 48 -s /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/gpcr/ENST00000000412_clean_dna_reformatted.fasta -w /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/ -n ENST00000000412_n.tre -m GTRGAMMA -p 1 
 
 
 Partition: 0 with name: No Name Provided
 Base frequencies: 0.256 0.215 0.290 0.238 
 
-Inference[0]: Time 0.522159 GAMMA-based likelihood -4362.891059, best rearrangement setting 5
+Inference[0]: Time 0.550707 GAMMA-based likelihood -4362.891059, best rearrangement setting 5
 alpha[0]: 0.399913 rates[0] ac ag at cg ct gt: 3.570290 9.839150 1.774890 1.787279 15.186332 1.000000 
 
 
@@ -68,5 +68,5 @@ Final GAMMA-based Score of best tree -4362.890825
 Program execution info written to /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_info.ENST00000000412_n.tre
 Best-scoring ML tree written to: /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_bestTree.ENST00000000412_n.tre
 
-Overall execution time: 0.717063 secs or 0.000199 hours or 0.000008 days
+Overall execution time: 0.795307 secs or 0.000221 hours or 0.000009 days
 

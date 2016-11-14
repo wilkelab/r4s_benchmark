@@ -42,7 +42,7 @@ Found 21 columns that contain only undetermined values which will be treated as 
 Normally these columns should be excluded from the analysis.
 
 Just in case you might need it, an alignment file with 
-sequence duplicates and undetermined columns removed is printed to file /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_matrix_clean_dna_aligned.fasta.reduced
+sequence duplicates and undetermined columns removed is printed to file /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_matrix_clean_dna_reformatted.fasta.reduced
 
 
 Using BFGS method to optimize GTR rate parameters, to disable this specify "--no-bfgs" 
@@ -94,13 +94,13 @@ Substitution Matrix: GTR
 
 RAxML was called as follows:
 
-/home1/02159/ds29583/standard-RAxML/raxmlHPC-PTHREADS-SSE3 -T 48 -s /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_matrix_clean_dna_aligned.fasta -w /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/ -n hiv1_matrix_n.tre -m GTRGAMMA -p 1 
+/home1/02159/ds29583/standard-RAxML/raxmlHPC-PTHREADS-SSE3 -T 48 -s /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_matrix_clean_dna_reformatted.fasta -w /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/ -n hiv1_matrix_n.tre -m GTRGAMMA -p 1 
 
 
 Partition: 0 with name: No Name Provided
 Base frequencies: 0.405 0.169 0.245 0.181 
 
-Inference[0]: Time 5971.066980 GAMMA-based likelihood -173595.537520, best rearrangement setting 25
+Inference[0]: Time 6230.099519 GAMMA-based likelihood -173595.537520, best rearrangement setting 25
 alpha[0]: 0.683591 rates[0] ac ag at cg ct gt: 1.763928 3.502561 0.715496 0.784341 5.810552 1.000000 
 
 
@@ -116,5 +116,5 @@ Final GAMMA-based Score of best tree -173594.004680
 Program execution info written to /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_info.hiv1_matrix_n.tre
 Best-scoring ML tree written to: /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_bestTree.hiv1_matrix_n.tre
 
-Overall execution time: 6132.330858 secs or 1.703425 hours or 0.070976 days
+Overall execution time: 6388.129342 secs or 1.774480 hours or 0.073937 days
 

@@ -177,7 +177,7 @@ Found 165 columns that contain only undetermined values which will be treated as
 Normally these columns should be excluded from the analysis.
 
 Just in case you might need it, an alignment file with 
-sequence duplicates and undetermined columns removed is printed to file /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_rt_clean_dna_aligned.fasta.reduced
+sequence duplicates and undetermined columns removed is printed to file /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_rt_clean_dna_reformatted.fasta.reduced
 
 
 Using BFGS method to optimize GTR rate parameters, to disable this specify "--no-bfgs" 
@@ -229,13 +229,13 @@ Substitution Matrix: GTR
 
 RAxML was called as follows:
 
-/home1/02159/ds29583/standard-RAxML/raxmlHPC-PTHREADS-SSE3 -T 48 -s /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_rt_clean_dna_aligned.fasta -w /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/ -n hiv1_rt_n.tre -m GTRGAMMA -p 1 
+/home1/02159/ds29583/standard-RAxML/raxmlHPC-PTHREADS-SSE3 -T 48 -s /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_rt_clean_dna_reformatted.fasta -w /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/ -n hiv1_rt_n.tre -m GTRGAMMA -p 1 
 
 
 Partition: 0 with name: No Name Provided
 Base frequencies: 0.403 0.166 0.216 0.216 
 
-Inference[0]: Time 3007.072043 GAMMA-based likelihood -278128.769609, best rearrangement setting 25
+Inference[0]: Time 3051.657428 GAMMA-based likelihood -278128.769609, best rearrangement setting 25
 alpha[0]: 0.517700 rates[0] ac ag at cg ct gt: 1.662574 8.737338 0.866201 0.694336 10.735809 1.000000 
 
 
@@ -251,5 +251,5 @@ Final GAMMA-based Score of best tree -278128.301263
 Program execution info written to /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_info.hiv1_rt_n.tre
 Best-scoring ML tree written to: /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_bestTree.hiv1_rt_n.tre
 
-Overall execution time: 3115.495136 secs or 0.865415 hours or 0.036059 days
+Overall execution time: 3161.555298 secs or 0.878210 hours or 0.036592 days
 

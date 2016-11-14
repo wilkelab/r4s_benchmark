@@ -57,10 +57,10 @@ IMPORTANT WARNING: Alignment column 977 contains only undetermined values which 
 IMPORTANT WARNING: Alignment column 978 contains only undetermined values which will be treated as missing data
 
 
-IMPORTANT WARNING: Sequences B.US.11.CP10_3A.KF384798 and B.US.11.VC3_14.KF384812 are exactly identical
+IMPORTANT WARNING: Sequences B_US_11_CP10_3A_KF384798 and B_US_11_VC3_14_KF384812 are exactly identical
 
 
-IMPORTANT WARNING: Sequences C.ZM.02.02ZM114.AB254146 and C.ZM.02.02ZMDB.AB254153 are exactly identical
+IMPORTANT WARNING: Sequences C_ZM_02_02ZM114_AB254146 and C_ZM_02_02ZMDB_AB254153 are exactly identical
 
 IMPORTANT WARNING
 Found 2 sequences that are exactly identical to other sequences in the alignment.
@@ -72,7 +72,7 @@ Found 57 columns that contain only undetermined values which will be treated as 
 Normally these columns should be excluded from the analysis.
 
 Just in case you might need it, an alignment file with 
-sequence duplicates and undetermined columns removed is printed to file /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_integrase_clean_dna_aligned.fasta.reduced
+sequence duplicates and undetermined columns removed is printed to file /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_integrase_clean_dna_reformatted.fasta.reduced
 
 
 Using BFGS method to optimize GTR rate parameters, to disable this specify "--no-bfgs" 
@@ -124,13 +124,13 @@ Substitution Matrix: GTR
 
 RAxML was called as follows:
 
-/home1/02159/ds29583/standard-RAxML/raxmlHPC-PTHREADS-SSE3 -T 48 -s /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_integrase_clean_dna_aligned.fasta -w /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/ -n hiv1_integrase_n.tre -m GTRGAMMA -p 1 
+/home1/02159/ds29583/standard-RAxML/raxmlHPC-PTHREADS-SSE3 -T 48 -s /home1/02159/ds29583/r4s_benchmark/natural_prot/aln/hiv1/hiv1_integrase_clean_dna_reformatted.fasta -w /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/ -n hiv1_integrase_n.tre -m GTRGAMMA -p 1 
 
 
 Partition: 0 with name: No Name Provided
 Base frequencies: 0.390 0.153 0.247 0.210 
 
-Inference[0]: Time 3542.954606 GAMMA-based likelihood -116632.987377, best rearrangement setting 25
+Inference[0]: Time 3628.228944 GAMMA-based likelihood -116632.987377, best rearrangement setting 25
 alpha[0]: 0.539356 rates[0] ac ag at cg ct gt: 2.696643 9.853353 1.187583 1.220645 19.877974 1.000000 
 
 
@@ -146,5 +146,5 @@ Final GAMMA-based Score of best tree -116631.114038
 Program execution info written to /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_info.hiv1_integrase_n.tre
 Best-scoring ML tree written to: /home1/02159/ds29583/r4s_benchmark/natural_prot/trees/RAxML_bestTree.hiv1_integrase_n.tre
 
-Overall execution time: 3643.774223 secs or 1.012160 hours or 0.042173 days
+Overall execution time: 3724.073814 secs or 1.034465 hours or 0.043103 days
 
