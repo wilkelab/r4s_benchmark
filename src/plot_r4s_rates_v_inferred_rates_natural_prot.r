@@ -8,137 +8,99 @@ library(readr)
 setwd("r4s_benchmark/")
 r <- read_csv("natural_prot/processed_rates/all_orig_rates.csv")
 
-r1 <- r %>% group_by(prot_name) %>% mutate(inferred_norm=inferred/mean(inferred)) 
+name_df <- data.frame(prot_name=unique(r$prot_name),
+                      plot_prot_name=c("Mannose-6-phosphate\nreceptor",
+                                       "CD74",
+                                       "CD4",
+                                       "G protein-coupled\nreceptor class C",
+                                       "Gamma-aminobutyric\nacid type A receptor",
+                                       "Capsid",
+                                       "gp120",
+                                       "Integrase",
+                                       "Matrix",
+                                       "Protease",
+                                       "Reverse Transcriptase"))
+
+r1 <- r %>% 
+  na.omit() %>%
+  group_by(prot_name) %>%
+  mutate(cor=cor(inferred,score,method="spearman",use="pairwise.complete.obs"),
+         p_value=cor.test(inferred,score)$p.value) %>%
+  inner_join(name_df) %>%
+  filter(uninformative_site==FALSE)
 
 ##extract inferred rates and scores to be plotted in the geom_rug() 
-new_inf_lst <- rep(NA, length(r$inferred))
-new_inf_lst[which(r$inferred < log(1.001))] = r$inferred[r$inferred < log(1.001)]
-r$rug_inf <- new_inf_lst
-
-new_score_lst <- rep(NA, length(r$inferred))
-new_score_lst[which(r$inferred < log(1.001))] = r$score[r$inferred < log(1.001)]
-r$rug_score <- new_score_lst
-
-###############################################################################
-### Plot sub figure 6:                                                      ###
-### correlations between Rate4Site score vs inferred dN/dS for HIV 1 Capsid ###
-###############################################################################
-r_capsid <- filter(r1,prot_name=="hiv1_capsid")
-
-c <- cor.test(r_capsid$score, r_capsid$inferred, method='sp')
-label <- paste0("ρ = ", signif(c$estimate, 2))
-
-p_capsid <- ggplot(r_capsid,aes(score,inferred_norm))+ 
-  geom_point()+
-  ggtitle("Capsid")+
-  geom_abline(slope=1,intercept=0)+
-  #background_grid("xy")+
-  #geom_rug(mapping=aes(rug_score,rug_inf),sides="b",na.rm=TRUE)+
- # geom_smooth(aes(score,inferred),method="lm",se=FALSE)+
-  xlab("Rate4Site scores") +
-  ylab("Inferred dN/dS") +
-  guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
-  scale_x_log10(breaks=c(0.01,0.1,1,10),label=c("0.01","0.1","1","10"))+
-  scale_y_log10(breaks=c(0.001,0.01,0.1,1,10),label=c("0.001","0.01","0.1","1","10"))+
-  coord_cartesian(ylim=c(0.001, 13),xlim=c(0.003,10))+
-  theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 14),
-        axis.title.x=element_blank())
-p1 <- p_capsid + draw_text(label, 0.05, 0.3)
-
-###############################################################################
-### Plot sub figure 6:                                                      ###
-### correlations between Rate4Site score vs inferred dN/dS for HIV 1 gp120  ###
-###############################################################################
-r_gp120 <- filter(r1,prot_name=="hiv1_gp120")
-
-c <- cor.test(r_gp120$score, r_gp120$inferred, method='sp')
-label <- paste0("ρ = ", signif(c$estimate, 2))
-
-p_gp120 <- ggplot(r_gp120,aes(score,inferred_norm))+ 
-  geom_point()+
-  ggtitle("gp120")+
-  geom_abline(slope=1,intercept=0)+
-  #background_grid("xy")+
-  #geom_rug(mapping=aes(rug_score,rug_inf),sides="b",na.rm=TRUE)+
-  # geom_smooth(aes(score,inferred),method="lm",se=FALSE)+
-  xlab("Rate4Site scores") +
-  ylab("Inferred dN/dS") +
-  guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
-  scale_x_log10(breaks=c(0.01,0.1,1,10),label=c("0.01","0.1","1","10"))+
-  scale_y_log10(breaks=c(0.001,0.01,0.1,1,10),label=c("0.001","0.01","0.1","1","10"))+
-  coord_cartesian(ylim=c(0.001, 13),xlim=c(0.003,10))+
-  theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 14),
-        axis.title.x=element_blank(),
-        axis.title.y=element_blank())
-p2 <- p_gp120 + draw_text(label, 0.05, 0.3)
+ new_inf_lst <- rep(NA, length(r1$inferred))
+ new_inf_lst[which(r1$inferred < log(1.001))] = r1$inferred[r1$inferred < log(1.001)]
+ r1$rug_inf <- new_inf_lst
+ 
+ new_score_lst <- rep(NA, length(r1$inferred))
+ new_score_lst[which(r1$inferred < log(1.001))] = r1$score[r1$inferred < log(1.001)]
+ r1$rug_score <- new_score_lst
 
 ##################################################################################
-### Plot sub figure 6:                                                         ###
+### Plot figure 6:                                                             ###
 ### correlations between Rate4Site score vs inferred dN/dS for HIV 1 integrase ###
 ##################################################################################
-r_integrase <- filter(r1,prot_name=="hiv1_integrase")
+r1_gpcr <- r1 %>% filter(prot_name=="ENST00000000412" |
+                         prot_name=="ENST00000009530" | 
+                         prot_name=="ENST00000011653" |
+                         prot_name=="ENST00000014914" |
+                         prot_name=="ENST00000023897")
 
-c <- cor.test(r_integrase$score, r_integrase$inferred, method='sp')
-label <- paste0("ρ = ", signif(c$estimate, 2))
+r1_hiv <- r1 %>% filter(prot_name=="hiv1_capsid" |
+                        prot_name=="hiv1_gp120" |
+                        prot_name=="hiv1_integrase" |
+                        prot_name=="hiv1_matrix" |
+                        prot_name=="hiv1_protease" |
+                        prot_name=="hiv1_rt")
 
-p_gp120 <- ggplot(r_gp120,aes(score,inferred_norm))+ 
+p_gpcr <- ggplot(r1_gpcr,aes(score,inferred))+ 
   geom_point()+
-  ggtitle("Integrase")+
+  #geom_hline(yintercept=1)+
+  #ggtitle(prot_name)+
   geom_abline(slope=1,intercept=0)+
   #background_grid("xy")+
-  #geom_rug(mapping=aes(rug_score,rug_inf),sides="b",na.rm=TRUE)+
-  # geom_smooth(aes(score,inferred),method="lm",se=FALSE)+
+  geom_rug(mapping=aes(rug_score,rug_inf),sides="b",na.rm=TRUE)+
+  #geom_smooth(aes(score,inferred),method="lm",se=FALSE)+
   xlab("Rate4Site scores") +
   ylab("Inferred dN/dS") +
-  guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
-  scale_x_log10(breaks=c(0.01,0.1,1,10),label=c("0.01","0.1","1","10"))+
+  facet_wrap(~plot_prot_name)+
+  scale_x_log10(breaks=c(0.1,1,10),label=c("0.1","1","10"))+
   scale_y_log10(breaks=c(0.001,0.01,0.1,1,10),label=c("0.001","0.01","0.1","1","10"))+
-  coord_cartesian(ylim=c(0.001, 13),xlim=c(0.003,10))+
-  theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 14))
-p3 <- p_gp120 + draw_text(label, 0.05, 0.3)
+  coord_cartesian(ylim=c(0.001, 13),xlim=c(0.09,12))+
+  theme(axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10),
+        strip.text = element_text(size = 10))
 
-#################################################################################
-### Plot sub figure 6:                                                        ###
-### correlations between Rate4Site score vs inferred dN/dS for HIV 1 protease ###
-#################################################################################
-r_protease <- filter(r1,prot_name=="hiv1_protease")
-
-c <- cor.test(r_protease$score, r_protease$inferred, method='sp')
-label <- paste0("ρ = ", signif(c$estimate, 2))
-
-p_protease <- ggplot(r_protease,aes(score,inferred_norm))+ 
+p_hiv <- ggplot(r1_hiv,aes(score,inferred))+ 
   geom_point()+
-  ggtitle("Protease")+
+  #ggtitle(prot_name)+
   geom_abline(slope=1,intercept=0)+
   #background_grid("xy")+
-  #geom_rug(mapping=aes(rug_score,rug_inf),sides="b",na.rm=TRUE)+
-  # geom_smooth(aes(score,inferred),method="lm",se=FALSE)+
+  geom_rug(mapping=aes(rug_score,rug_inf),sides="b",na.rm=TRUE)+
+  #geom_smooth(aes(score,inferred),method="lm",se=FALSE)+
   xlab("Rate4Site scores") +
   ylab("Inferred dN/dS") +
-  guides(col = guide_legend(title="Number of Taxa",reverse = TRUE)) +
-  scale_x_log10(breaks=c(0.01,0.1,1,10),label=c("0.01","0.1","1","10"))+
+  facet_wrap(~plot_prot_name)+
+  scale_x_log10(breaks=c(0.001,0.01,0.1,1,10),label=c("0.001","0.01","0.1","1","10"))+
   scale_y_log10(breaks=c(0.001,0.01,0.1,1,10),label=c("0.001","0.01","0.1","1","10"))+
-  coord_cartesian(ylim=c(0.001, 13),xlim=c(0.003,10))+
-  theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 14),
-        axis.title.y=element_blank())
-p4 <- p_protease + draw_text(label, 0.05, 0.3)
+  coord_cartesian(ylim=c(0.0007, 13),xlim=c(0.0007,12))+
+  theme(axis.title = element_text(size = 12),
+        axis.text = element_text(size = 10),
+        strip.text = element_text(size = 10))
 
-p_final <- plot_grid(p1,
-                         p2,
-                         p3,
-                         p4,
-                         labels = "AUTO",
-                         align = 'vh',
-                         hjust = -1,
-                         ncol=2,
-                         nrow=2)
-save_plot("plots/fig6_r4s_v_inf_rates_natural_prot.png", p_final,
-          ncol = 2, # we're saving a grid plot of 2 columns
+prow <- plot_grid(p_gpcr+ggtitle("Membrane proteins"),
+                       p_hiv+ggtitle("HIV 1 proteins"),
+                       labels=c("A","B"),
+                       align = 'vh',
+                       hjust = -1,
+                       ncol=1,
+                       nrow=2)
+
+save_plot("plots/fig6_r4s_v_inf_rates_natural_prot.png", prow,
+          ncol = 1, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
-          base_aspect_ratio = 1.3)
-
+          base_height=4,
+          base_width=6)
