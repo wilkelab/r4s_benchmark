@@ -11,12 +11,6 @@ model="mut_sel"
 t1_true_rates <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/substitution_counts.csv")
 t_true_rates <- t1_true_rates %>% filter(pitype=="unequalpi")
 
-inf_rates_nobias <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_nobias_unequalpi.csv")
-inf_rates_bias <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_bias_unequalpi.csv")
-fel1_nobias <- inf_rates_nobias %>% filter(method=="FEL1")
-fel1_bias <- inf_rates_bias %>% filter(method=="FEL1")
-fel1_r <- rbind(fel1_nobias,fel1_bias)
-
 for (name in file_names) {
   t1 <- list.files(paste0(model,"/r4s_rates/raw_rates"),pattern=name,full.names=T)
   info = file.info(t1)
@@ -52,9 +46,18 @@ for (name in file_names) {
     n <- as.numeric(substr(t1[i],str+1,end-1))
     
     num_taxa <- r$num_taxa[1]
-  
-    inf_r <- fel1_r %>% filter(rep==rep_num,bl==bl_num,ntaxa==num_taxa,biastype==biastype_str)
-    r$inferred <- inf_r$dnds
+    
+    ##adding inferred FEL1 rates and fixing dN/dS=1 to be equal to 0 when sites have not changed
+    inferred_rates_file_name <- paste0("../dnds_1rate_2rate/results/balancedtrees_results/rep",rep_num,"_n",n,"_bl",bl,"_unequalpi_",bias,"_FEL1.txt")
+    inf_r <- read.csv(inferred_rates_file_name)
+    
+    unchanged_sites_file_name <- paste0(model,"/filtered_sites/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_unchanged_sites.txt")
+    sites_t <- read.table(unchanged_sites_file_name,header=T)
+    
+    bool_v <- inf_r$dN.dS==1 & sites_t$unchanged_site
+    filtered_inferred <- inf_r$dN.dS
+    filtered_inferred[bool_v]=rep(0,length(which(bool_v)))
+    r$inferred <- filtered_inferred
     
     true_r <- t_true_rates %>% filter(rep==rep_num,bl==bl_num,ntaxa==num_taxa,biastype==biastype_str)
     r$true <- true_r$truednds

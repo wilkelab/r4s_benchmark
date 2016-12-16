@@ -49,19 +49,20 @@ for (name in file_names) {
     true_rates_file_name <- paste0(model,"/assigned_rates/processed_rates/sim_rates_combined_rep",rep_num,"_n",n,"_bl",bl,"_",bias,".txt")
     true_r <- read.table(true_rates_file_name,header=T)
     
-    ##get assigned dN/dS by solving for dN/dS
+    ##get simulated dN/dS by solving for dN/dS
     true_r$dNdS <-  as.numeric(true_r$dN)/as.numeric(true_r$dS)
     r$true <-  true_r$dNdS
 
+    ##adding inferred FEL1 rates and fixing dN/dS=1 to be equal to 0 when sites have not changed
     inferred_rates_file_name <- paste0(model,"/inferred_rates/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_FEL1.txt")
     inf_r <- read.csv(inferred_rates_file_name)
     
-    unchanged_sites_file_name <- paste0(model,"/assigned_rates/processed_rates/sim_rates_combined_rep",rep_num,"_n",n,"_bl",bl,"_",bias,".txt")
-    un_sites <- read.table(unchanged_sites_file_name,header=T)
+    unchanged_sites_file_name <- paste0(model,"/filtered_sites/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_unchanged_sites.txt")
+    sites_t <- read.table(unchanged_sites_file_name,header=T)
     
-    bool_v <- inf_r$dN.dS==1 & un_sites
-    
-    filtered_inferred <- inf_r[bool_v]==rep(0,length(which(bool_v)))
+    bool_v <- inf_r$dN.dS==1 & sites_t$unchanged_site
+    filtered_inferred <- inf_r$dN.dS
+    filtered_inferred[bool_v]=rep(0,length(which(bool_v)))
     r$inferred <- filtered_inferred
     r$score <- as.numeric(r$score)
 
