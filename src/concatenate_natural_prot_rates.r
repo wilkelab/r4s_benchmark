@@ -39,18 +39,16 @@ for (name in file_names) {
     f <- read.fasta(aln_file)
     
     inferred_rates_file_name <- paste0("natural_prot/inferred_rates/",protein_name,"_FEL1_reformatted.txt")
-    inferred_r <- read.csv(inferred_rates_file_name)
+    inf_r <- read.csv(inferred_rates_file_name)
 
-    unchanged_sites_file_name <- paste0(model,"/filtered_sites/rep",rep_num,"_n",n,"_bl",bl_num,"_",biastype_str,"_unchanged_sites.txt")
+    unchanged_sites_file_name <- paste0("natural_prot/filtered_sites/",protein_name,"_unchanged_sites.txt")
     sites_t <- read.table(unchanged_sites_file_name,header=T)
     
     bool_v <- inf_r$dN.dS==1 & sites_t$unchanged_site
     filtered_inferred <- inf_r$dN.dS
     filtered_inferred[bool_v]=rep(0,length(which(bool_v)))
-    r$inferred <- filtered_inferred
-    
-    r$inferred <- inferred_r$dN.dS[which(!is.gap(f$ali[1,]))]
-    r$uninformative_site <- inferred_r$uninformative_site[which(!is.gap(f$ali[1,]))]
+
+    r$inferred <- filtered_inferred[which(!is.gap(f$ali[1,]))]
     r$score <- as.numeric(r$score)
      
     if (i==1) {
