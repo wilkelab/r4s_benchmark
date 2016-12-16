@@ -48,10 +48,10 @@ for (name in file_names) {
     num_taxa <- r$num_taxa[1]
     
     ##adding inferred FEL1 rates and fixing dN/dS=1 to be equal to 0 when sites have not changed
-    inferred_rates_file_name <- paste0("../dnds_1rate_2rate/results/balancedtrees_results/rep",rep_num,"_n",n,"_bl",bl,"_unequalpi_",bias,"_FEL1.txt")
+    inferred_rates_file_name <- paste0("../dnds_1rate_2rate/results/balancedtrees_results/rep",rep_num,"_n",n,"_bl",bl_num,"_unequalpi_",biastype_str,"_FEL1.txt")
     inf_r <- read.csv(inferred_rates_file_name)
     
-    unchanged_sites_file_name <- paste0(model,"/filtered_sites/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_unchanged_sites.txt")
+    unchanged_sites_file_name <- paste0(model,"/filtered_sites/rep",rep_num,"_n",n,"_bl",bl_num,"_",biastype_str,"_unchanged_sites.txt")
     sites_t <- read.table(unchanged_sites_file_name,header=T)
     
     bool_v <- inf_r$dN.dS==1 & sites_t$unchanged_site
@@ -72,8 +72,8 @@ for (name in file_names) {
       d <- r
     } else d <- rbind(d, r)
   }  
-  #bias_r <- filter(d,biastype=="bias")
-  #nobias_r <- filter(d,biastype=="nobias")
-  #write.csv(bias_r,file=paste0(model,"/processed_rates/all_",name,"_bias.csv"),quote=F)
-  #write.csv(nobias_r,file=paste0(model,"/processed_rates/all_",name,"_nobias.csv"),quote=F)
+  bias_r <- filter(d,biastype=="bias")
+  nobias_r <- filter(d,biastype=="nobias")
+  write.csv(bias_r,file=paste0(model,"/processed_rates/all_",name,"_bias.csv"),quote=F)
+  write.csv(nobias_r,file=paste0(model,"/processed_rates/all_",name,"_nobias.csv"),quote=F)
 }

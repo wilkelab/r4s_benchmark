@@ -40,7 +40,14 @@ for (name in file_names) {
     
     inferred_rates_file_name <- paste0("natural_prot/inferred_rates/",protein_name,"_FEL1_reformatted.txt")
     inferred_r <- read.csv(inferred_rates_file_name)
-    #inferred_r$dN.dS[which(inferred_r$dN.dS==1)] = rep(NA,length(which(inferred_r$dN.dS==1)))
+
+    unchanged_sites_file_name <- paste0(model,"/filtered_sites/rep",rep_num,"_n",n,"_bl",bl_num,"_",biastype_str,"_unchanged_sites.txt")
+    sites_t <- read.table(unchanged_sites_file_name,header=T)
+    
+    bool_v <- inf_r$dN.dS==1 & sites_t$unchanged_site
+    filtered_inferred <- inf_r$dN.dS
+    filtered_inferred[bool_v]=rep(0,length(which(bool_v)))
+    r$inferred <- filtered_inferred
     
     r$inferred <- inferred_r$dN.dS[which(!is.gap(f$ali[1,]))]
     r$uninformative_site <- inferred_r$uninformative_site[which(!is.gap(f$ali[1,]))]
