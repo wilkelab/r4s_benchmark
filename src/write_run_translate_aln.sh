@@ -3,7 +3,7 @@ rep_num=50
 bias_arr=("bias" "nobias")
 taxa_num=11
 br_len_arr=(0.0025 0.01 0.04 0.16 0.64)
-model='mut_sel'
+model='mech_codon'
 
 if [ -f ./src/run_translate.sh ]; then
 	rm ./src/run_translate.sh  
@@ -23,7 +23,7 @@ do
 					aln=rep${j}_n${i}_bl${br_len}_${bias}.fasta
 				fi
 				
-				echo "python ../../../home1/02159/ds29583/r4s_benchmark/src/translate_aln.py ./r4s_benchmark_data/aln/${model}/nuc/${aln} ./r4s_benchmark_data/aln/${model}/aa/${aln}" >> ./src/run_translate.sh 
+				echo "python ./src/translate_aln.py ../r4s_benchmark_data/aln/${model}/nuc/${aln} ../r4s_benchmark_data/aln/${model}/aa/${aln}" >> ./src/run_translate.sh 
 			done
 		done
 	done

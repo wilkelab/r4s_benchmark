@@ -21,17 +21,18 @@ name_df <- data.frame(prot_name=unique(r$prot_name),
                                        "Protease",
                                        "Reverse Transcriptase"))
 
-r1 <- r %>% 
+r1 <- r %>% inner_join(name_df)
+  
+r_cor <- r1 %>% 
   na.omit() %>%
-  group_by(prot_name) %>%
-  mutate(cor=cor(inferred,score,method="spearman",use="pairwise.complete.obs"),
-         p_value=cor.test(inferred,score)$p.value) %>%
-  inner_join(name_df) %>%
-  filter(uninformative_site==FALSE)
+  group_by(plot_prot_name) %>%
+  summarize(cor=cor(inferred,score,method="spearman",use="pairwise.complete.obs"),
+         p_value=cor.test(inferred,score)$p.value,
+         label=paste("ρ =", round(cor, 2))) 
 
 ##extract inferred rates and scores to be plotted in the geom_rug() 
  new_inf_lst <- rep(NA, length(r1$inferred))
- new_inf_lst[which(r1$inferred < log(1.001))] = r1$inferred[r1$inferred < log(1.001)]
+ new_inf_lst[which(r1$inferred < .001)] = r1$inferred[r1$inferred < log(1.001)]
  r1$rug_inf <- new_inf_lst
  
  new_score_lst <- rep(NA, length(r1$inferred))
@@ -71,7 +72,8 @@ p_gpcr <- ggplot(r1_gpcr,aes(score,inferred))+
   coord_cartesian(ylim=c(0.001, 13),xlim=c(0.09,12))+
   theme(axis.title = element_text(size = 12),
         axis.text = element_text(size = 10),
-        strip.text = element_text(size = 10))
+        strip.text = element_text(size = 10))+
+  geom_text(data=r_cor,aes(x,y,label=cor), inherit.aes=FALSE)
 
 p_hiv <- ggplot(r1_hiv,aes(score,inferred))+ 
   geom_point()+
@@ -98,9 +100,9 @@ prow <- plot_grid(p_gpcr+ggtitle("Membrane proteins"),
                        ncol=1,
                        nrow=2)
 
-save_plot("plots/fig6_r4s_v_inf_rates_natural_prot.png", prow,
-          ncol = 1, # we're saving a grid plot of 2 columns
-          nrow = 2, # and 2 rows
-          # each individual subplot should have an aspect ratio of 1.3
-          base_height=4,
-          base_width=6)
+#save_plot("plots/fig6_r4s_v_inf_rates_natural_prot.png", prow,
+#          ncol = 1, # we're saving a grid plot of 2 columns
+#          nrow = 2, # and 2 rows
+#          # each individual subplot should have an aspect ratio of 1.3
+#          base_height=4,
+#         base_width=6)

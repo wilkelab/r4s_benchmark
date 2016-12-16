@@ -8,11 +8,11 @@ setwd("r4s_benchmark/")
 file_names = c("r4s_norm_rates","r4s_orig_rates")
 model="mut_sel"
 
-t1_true_rates <- read.csv("../dnds_1rate_2rate/postprocessing/dataframes/substitution_counts.csv")
+t1_true_rates <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/substitution_counts.csv")
 t_true_rates <- t1_true_rates %>% filter(pitype=="unequalpi")
 
-inf_rates_nobias <- read.csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_nobias_unequalpi.csv")
-inf_rates_bias <- read.csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_bias_unequalpi.csv")
+inf_rates_nobias <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_nobias_unequalpi.csv")
+inf_rates_bias <- read_csv("../dnds_1rate_2rate/postprocessing/dataframes/results_balancedtrees_bias_unequalpi.csv")
 fel1_nobias <- inf_rates_nobias %>% filter(method=="FEL1")
 fel1_bias <- inf_rates_bias %>% filter(method=="FEL1")
 fel1_r <- rbind(fel1_nobias,fel1_bias)
@@ -52,10 +52,7 @@ for (name in file_names) {
     n <- as.numeric(substr(t1[i],str+1,end-1))
     
     num_taxa <- r$num_taxa[1]
-    #fel1_file_name <- paste0("rep",rep_num,"_n",n,"_bl",bl_num,"_unequalpi_",biastype_str,"_FEL1.txt")
-    #fel1_r <- read.csv(paste0("../dnds_1rate_2rate/results/balancedtrees_results/",fel1_file_name))
-    #r$inferred <- fel1_r$dN.dS
-    
+  
     inf_r <- fel1_r %>% filter(rep==rep_num,bl==bl_num,ntaxa==num_taxa,biastype==biastype_str)
     r$inferred <- inf_r$dnds
     
@@ -72,8 +69,8 @@ for (name in file_names) {
       d <- r
     } else d <- rbind(d, r)
   }  
-  bias_r <- filter(d,biastype=="bias")
-  nobias_r <- filter(d,biastype=="nobias")
-  write.csv(bias_r,file=paste0(model,"/processed_rates/all_",name,"_bias.csv"),quote=F)
-  write.csv(nobias_r,file=paste0(model,"/processed_rates/all_",name,"_nobias.csv"),quote=F)
+  #bias_r <- filter(d,biastype=="bias")
+  #nobias_r <- filter(d,biastype=="nobias")
+  #write.csv(bias_r,file=paste0(model,"/processed_rates/all_",name,"_bias.csv"),quote=F)
+  #write.csv(nobias_r,file=paste0(model,"/processed_rates/all_",name,"_nobias.csv"),quote=F)
 }

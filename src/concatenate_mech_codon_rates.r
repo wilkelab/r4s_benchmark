@@ -33,8 +33,8 @@ for (name in file_names) {
 
     str <- regexpr("rep\\d+",t1[i])[1]
     end <- regexpr("_n\\d+",t1[i])[1]
-    rep <- as.numeric(substr(t1[i],str+3,end-1))
-    r$rep <- rep(rep,length(r$num_taxa))
+    rep_num <- as.numeric(substr(t1[i],str+3,end-1))
+    r$rep <- rep(rep_num,length(r$num_taxa))
     
     str <- regexpr("n\\d+",t1[i])[1]
     end <- regexpr("_bl\\d+",t1[i])[1]
@@ -46,18 +46,23 @@ for (name in file_names) {
       f_type="r4s_orig"
     }
     
-    true_rates_file_name <- paste0(model,"/assigned_rates/processed_rates/sim_rates_combined_rep",rep,"_n",n,"_bl",bl,"_",bias,".txt")
+    true_rates_file_name <- paste0(model,"/assigned_rates/processed_rates/sim_rates_combined_rep",rep_num,"_n",n,"_bl",bl,"_",bias,".txt")
     true_r <- read.table(true_rates_file_name,header=T)
     
     ##get assigned dN/dS by solving for dN/dS
     true_r$dNdS <-  as.numeric(true_r$dN)/as.numeric(true_r$dS)
     r$true <-  true_r$dNdS
 
-    inferred_rates_file_name <- paste0(model,"/inferred_rates/rep",rep,"_n",n,"_bl",bl,"_",bias,"_FEL1.txt")
-    inferred_r <- read.csv(inferred_rates_file_name)
-    inferred_r$dN.dS[which(inferred_r$dN.dS==1)] = rep(NA,length(which(inferred_r$dN.dS==1)))
+    inferred_rates_file_name <- paste0(model,"/inferred_rates/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_FEL1.txt")
+    inf_r <- read.csv(inferred_rates_file_name)
     
-    r$inferred <- inferred_r$dN.dS
+    unchanged_sites_file_name <- paste0(model,"/assigned_rates/processed_rates/sim_rates_combined_rep",rep_num,"_n",n,"_bl",bl,"_",bias,".txt")
+    un_sites <- read.table(unchanged_sites_file_name,header=T)
+    
+    bool_v <- inf_r$dN.dS==1 & un_sites
+    
+    filtered_inferred <- inf_r[bool_v]==rep(0,length(which(bool_v)))
+    r$inferred <- filtered_inferred
     r$score <- as.numeric(r$score)
 
     if (i==1) {
