@@ -233,8 +233,8 @@ MutSel_p_nobias_bl_rmsd_true <- ggplot(r_nobias_MutSel,aes(bl,rmsd_true,colour=f
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  coord_cartesian(ylim=c(0,0.8),xlim=c(0.0023,0.66))+
-  scale_y_continuous(breaks=seq(0,0.8,0.2))+
+  coord_cartesian(ylim=c(0,1),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1,0.2))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -253,8 +253,8 @@ MutSel_p_bias_bl_rmsd_true <- ggplot(r_bias_MutSel,aes(bl,rmsd_true,colour=facto
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  coord_cartesian(ylim=c(0,0.8),xlim=c(0.0023,0.66))+
-  scale_y_continuous(breaks=seq(0,0.8,0.2))+
+  coord_cartesian(ylim=c(0,1),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1,0.2))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -343,8 +343,8 @@ dNdS_p_nobias_bl_rmsd_inferred <- ggplot(r_nobias_dNdS,aes(bl,rmsd_inferred,colo
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  coord_cartesian(ylim=c(0,0.8),xlim=c(0.0023,0.66))+
-  scale_y_continuous(breaks=seq(0,0.8,0.2))+
+  coord_cartesian(ylim=c(0,1.5),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1.5,0.25))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -362,8 +362,8 @@ dNdS_p_bias_bl_rmsd_inferred <- ggplot(r_bias_dNdS,aes(bl,rmsd_inferred,colour=f
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  coord_cartesian(ylim=c(0,0.8),xlim=c(0.0023,0.66))+
-  scale_y_continuous(breaks=seq(0,0.8,0.2))+
+  coord_cartesian(ylim=c(0,1.5),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,1.5,0.25))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -451,8 +451,8 @@ MutSel_p_nobias_bl_rmsd_inferred <- ggplot(r_nobias_MutSel,aes(bl,rmsd_inferred,
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  coord_cartesian(ylim=c(0,0.8),xlim=c(0.0023,0.66))+
-  scale_y_continuous(breaks=seq(0,0.8,0.2))+
+  coord_cartesian(ylim=c(0,2),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,2,0.5))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),
@@ -470,8 +470,8 @@ MutSel_p_bias_bl_rmsd_inferred <- ggplot(r_bias_MutSel,aes(bl,rmsd_inferred,colo
   stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
   xlab("Branch Length") +
   ylab("RMSD") +
-  coord_cartesian(ylim=c(0,0.8),xlim=c(0.0023,0.66))+
-  scale_y_continuous(breaks=seq(0,0.8,0.2))+
+  coord_cartesian(ylim=c(0,2),xlim=c(0.0023,0.66))+
+  scale_y_continuous(breaks=seq(0,2,0.5))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12),
         legend.text = element_text(size = 11),

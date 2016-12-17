@@ -54,9 +54,8 @@ for (name in file_names) {
     unchanged_sites_file_name <- paste0(model,"/filtered_sites/rep",rep_num,"_n",n,"_bl",bl_num,"_",biastype_str,"_unchanged_sites.txt")
     sites_t <- read.table(unchanged_sites_file_name,header=T)
     
-    bool_v <- inf_r$dN.dS==1 & sites_t$unchanged_site
     filtered_inferred <- inf_r$dN.dS
-    filtered_inferred[bool_v]=rep(0,length(which(bool_v)))
+    filtered_inferred[sites_t$unchanged_site]=rep(0,length(which(sites_t$unchanged_site)))
     r$inferred <- filtered_inferred
     
     true_r <- t_true_rates %>% filter(rep==rep_num,bl==bl_num,ntaxa==num_taxa,biastype==biastype_str)

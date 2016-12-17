@@ -60,11 +60,9 @@ for (name in file_names) {
     unchanged_sites_file_name <- paste0(model,"/filtered_sites/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_unchanged_sites.txt")
     sites_t <- read.table(unchanged_sites_file_name,header=T)
     
-    bool_v <- inf_r$dN.dS==1 & sites_t$unchanged_site
     filtered_inferred <- inf_r$dN.dS
-    filtered_inferred[bool_v]=rep(0,length(which(bool_v)))
+    filtered_inferred[sites_t$unchanged_site]=rep(0,length(which(sites_t$unchanged_site)))
     r$inferred <- filtered_inferred
-    r$score <- as.numeric(r$score)
 
     if (i==1) {
       d <- r
