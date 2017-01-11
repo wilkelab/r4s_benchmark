@@ -9,7 +9,12 @@ do
 	prot_name=`echo $aln | grep -oP 'hiv1_[a-zA-Z0-9]+|ENST[0-9]+'`
 	out_tree=${prot_name}_n.tre
 	out_dir=~/r4s_benchmark/natural_prot/trees/
-	echo $HOME/standard-RAxML/raxmlHPC-PTHREADS-SSE3 -T 48 -s $aln -w $out_dir -n $out_tree -m GTRGAMMA -p 1 >> ./src/run_raxml.sh
+	
+	if [ -f {$out_dir}/${out_tree} ]; then
+		continue 
+	else
+		echo $HOME/standard-RAxML/raxmlHPC-PTHREADS-SSE3 -T 48 -s $aln -w $out_dir -n $out_tree -m GTRGAMMA -p 1 >> ./src/run_raxml.sh
+	fi
 done
 
 # hiv_aln_files=$HOME/r4s_benchmark/natural_prot/aln/hiv1/*_clean_protein.fasta
