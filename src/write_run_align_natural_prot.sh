@@ -1,28 +1,16 @@
 #!/bin/bash
-prot_arr=("ENST00000000412" "ENST00000009530" "ENST00000011653" "ENST00000014914" "ENST00000023897" "ENST00000053243")
-nuc_aln_files=$HOME/r4s_benchmark/natural_prot/aln/*/*_clean_dna_reformatted.fasta
+gpcr_aln_files=./natural_prot/aln/r4s_benchmark/natural_prot/aln/raw_aln/*_p.fasta
 
 if [ -f ./src/align_natural_prot.sh ]; then
 	rm ./src/align_natural_prot.sh  
 fi
 
-for prot in ${prot_arr[*]}
+for aln in ${aln_files[*]}
 do
-	aligned_p_file=natural_prot/aln/gpcr/${prot}_p_aligned.fasta
-	aligned_n_file=natural_prot/aln/gpcr/${prot}_n_aligned.fasta
-	
-	if [ -f $aligned_p_file ]; then
-		continue 
-	else
-		echo mafft natural_prot/aln/gpcr/${prot}_p.fasta \> $aligned_p_file >> ./src/align_natural_prot.sh
-	fi
-	
-	if [ -f $aligned_n_file ]; then
-		continue 
-	else
-		echo mafft natural_prot/aln/gpcr/${prot}_n.fasta \> $aligned_n_file >> ./src/align_natural_prot.sh
-	fi
-	
+	out_dir=aligned_seqs
+	out_file="${aln/raw_aln/$out_dir}"
+	echo $out_file
+	#echo mafft $aln \> $aligned_n_file >> ./src/align_natural_prot.sh
 done
 
 chmod +x ./src/align_natural_prot.sh
