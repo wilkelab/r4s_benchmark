@@ -1,4 +1,4 @@
->ENSG00000048462|ENST00000053243|ENSP00000053243
+>ENSG00000048462_ENST00000053243_ENSP00000053243
 atgttgcagatggctgggcagtgctcccaaaatgaatattttgacagtttgttgcatgct
 tgcataccttgtcaacttcgatgttcttctaatactcctcctctaacatgtcagcgttat
 tgtaatgcaa------gtgtgaccaattcagtgaaaggaacgaatgcgattctctggacc
@@ -10,7 +10,7 @@ gaagactgcatcaagagcaaaccgaaggtcgactctgaccattgctttccactcccagct
 atggaggaaggcgcaaccattcttgtcaccacgaaaacgaatgactattgcaag---agc
 ctgccagctgcttt------gagtgctacgga-------gatagagaaatcaatttctgc
 taggtaa
->ENSOGAG00000011406|ENSOGAT00000011409|ENSOGAP00000010215
+>ENSOGAG00000011406_ENSOGAT00000011409_ENSOGAP00000010215
 atgttccagatggctcagcagtgtttccaaaatgaatattttgacagcttgctgcaagct
 tgcaaaccttgtcaccttcgatg---ttctaatgctcctcc---aatttgtcagcgttat
 tgtaatgcaa------gtgtgaccaattcagtgaaaggagcgaatgtgattctctggact
@@ -22,7 +22,7 @@ gaggactgtgtcaagagcaaaccaaaagtcgattctgaccatttctttccactcccagcc
 atggaggaaggcgccaccattcttgtcaccacgaaaacaaatgactattgtaat---agc
 ctgtcagctgcttt------gggtgttataga-------gatagagaaatcaatttctac
 cagataa
->ENSPTRG00000007782|ENSPTRT00000014324|ENSPTRP00000013275
+>ENSPTRG00000007782_ENSPTRT00000014324_ENSPTRP00000013275
 atgttgcagatggctgggcagtgctcccaaaatgaatattttgacagtttgttgcatgct
 tgcataccttgtcaacttcgatgttcttctaatactcctcctctaacatgtcagcgttat
 tgtaatgcaa------gtgtgaccaattcagtgaaaggaacgaatgcgattctctggacc
@@ -34,7 +34,7 @@ gaagactgcatcaagagcaaaccgaaggtcgactctgaccattgctttccactcccagct
 atggaggaaggcgcaaccattcttgtcaccacgaaaacgaatgactattgcaag---agc
 ctgccagctgcttt------gagtgctacgga-------gatagagaaatcaatttctgc
 taggtaa
->ENSCAFG00000018852|ENSCAFT00000029924|ENSCAFP00000027811
+>ENSCAFG00000018852_ENSCAFT00000029924_ENSCAFP00000027811
 ---------atggctcagcagtgcttccaaaatgaatattttgacagattgcttaatgct
 tgcaaaccatgtcaccttcgatg---ctctaatacccctccggtaccatgtcagcattat
 tgtaatgcaa------attcttttaattcagtgaaaggaacaaatgcaattctctggacc
@@ -46,7 +46,7 @@ gaagactgtgtcaagagcaaatcaaaggtggattctgaccatttctttccactcccagct
 atggaggaaggtgcaaccattcttgtcaccacgaaaacaagtgactactgtaat---agc
 ctgctggcc------------agtgtcacaga-------gatggagaaatccatttttac
 cagatga
->ENSLAFG00000000068|ENSLAFT00000000068|ENSLAFP00000000056
+>ENSLAFG00000000068_ENSLAFT00000000068_ENSLAFP00000000056
 ---------atggctcggcagtgcttccaaaatgagtattttgatggtttgctttatgct
 tgcaaaccttgccacctgcgatg---ctctaacacccctcctctaagctgtcagcgttat
 tgtaatgcaa------gtatgactaactcagcgaaaggagcaaatgtgattctctggacc
@@ -58,7 +58,7 @@ gaagactgtgtcaagagcaaaccaaaggttgactctgatcatttcttccccctcccaacc
 atggaggaaggcgcaactattcttgtcaccacagaaacaactgaccacagcaat---agc
 ctgccagctgctgc------aagtgtcatccaccaccatcacgcacatatacatttcagg
 -------
->ENSNLEG00000010205|ENSNLET00000013046|ENSNLEP00000012439
+>ENSNLEG00000010205_ENSNLET00000013046_ENSNLEP00000012439
 atgttgcagatggctgggcagtgctcccaaaatgagtattttgacagtttgttgcatgct
 tgcataccttgtcaacttcgatgttcttctaatactcctcctctaacatgtcagcgttat
 tgtaatgcaa------gtgtgaccaattcagtgaaagaaatgaatgcgattctctggacc
@@ -70,7 +70,7 @@ gaagactgcatcaagagcaaaccaaaggtcgactcagaccattgctttccactcccagct
 atggaggaaggtgcaaccattctcgtcaccacgaaaacgaatgactattgcaag---agc
 ctgccagctgcttt------gagtgctacgga-------gatagagaaatcaatttctcc
 ctag---
->ENSGGOG00000022390|ENSGGOT00000030236|ENSGGOP00000025624
+>ENSGGOG00000022390_ENSGGOT00000030236_ENSGGOP00000025624
 atgttgcagatggctgggcagtgctcccaaaatgaatattttgacagtttgttgcatgct
 tgcataccttgtcaacttcgatgttcttctaatactcctcctctaacatgtcagcgttat
 tgtaatgcaa------gtgtgaccaattcagtgaaaggaacgaatgcgattctctggacc
@@ -82,7 +82,7 @@ gaagactgcatcaagagcaaacagaaggtcgactctgaccattgctttccactcccagct
 atggaggaaggcgcaaccattcttgtcaccacgaaaacgaatgactattgcaag---agc
 ctgccagctgcttt------gagtgctacgga-------gatagagaaatcaatttctgc
 taggtaa
->ENSCJAG00000016037|ENSCJAT00000031185|ENSCJAP00000029511
+>ENSCJAG00000016037_ENSCJAT00000031185_ENSCJAP00000029511
 atgttgcagatggctcagcagtgctcccaaaatgaatattttgatagtttgttgcatgct
 tgcaaaccttgtcaacttcgatg---ttctaatactcctcctctaacgtgtcagcgttat
 tgtaatgcaa------gtgggaccaattcagtgaaaggaacaaatgtgattctctggacc
@@ -94,7 +94,7 @@ gaagactgtgttaagaacaaaccaaaggttgattctgaccattgctttccactcccagcc
 atggaggaaggcgcaaccattctcgtcaccacgaaaacgaatgactattacaac---agc
 ctgccagctgcgtc------gagtgttacaga-------gatagagaaatcaatttctgc
 taggtaa
->ENSMICG00000013299|ENSMICT00000013286|ENSMICP00000012115
+>ENSMICG00000013299_ENSMICT00000013286_ENSMICP00000012115
 atgttccagatggctcggcagtgtttccaaaatgagtattttgacagtttgctgcatgct
 tgcaaaccttgtcacctgcgatg---tcctagtactcctcctgtaatttgtcagcgtttt
 tgtaatgcaa------gtgtgaccaattcagtgaaaggaacaaatgccatcctctggacc
@@ -106,7 +106,7 @@ gaagactgtgtcaagagcaaaccaaaggtcgattctgaccatttctttccactcccagcc
 atggaggaaggcgcaaccattcttgtcaccacaaaaacaaatgactattgtagt---agc
 ctgtcagctgcttt------gagtgttacagg-------gacagagaaatcaatttctac
 tagataa
->ENSMUSG00000022496|ENSMUST00000023140|ENSMUSP00000023140
+>ENSMUSG00000022496_ENSMUST00000023140_ENSMUSP00000023140
 ---------atggcgcaacagtgtttccacagtgaatattttgacagtctgctgcatgct
 tgcaaaccgtgtcacttgcgatg---ttccaa---ccctcctgcaacctgtcagccttac
 tgtgatccaa------gcgtgaccagttcagtgaaagggacgtacacggtgctctggatc
@@ -118,7 +118,7 @@ gaggactgtgtcaagagcaaacccaagggggattctgaccatttcttcccgcttccagcc
 atggaggagggggcaaccattcttgtcaccacaaaaacgggtgactacggcaagtcaagt
 gtgccaactgctttg---caaagtgtcatggg-------gatggagaagccaactcacac
 tagataa
->ENSPPYG00000007115|ENSPPYT00000008378|ENSPPYP00000008044
+>ENSPPYG00000007115_ENSPPYT00000008378_ENSPPYP00000008044
 atgttgcagatggctaggcagtgctcccaaaatgaatattttgacagtttgttgcatgct
 tgcataccttgtcaacttcgatgttcttctaatactcctcctctaacatgtcagcgttat
 tgcaatgcaa------gtgtgaccaattcagtgaaaggaacgaatgcgattctctggacc
@@ -130,7 +130,7 @@ gaagactgcatcaagagcaaaccgaaggtcgactctgaccattgctttccactcccagct
 atggaggaaggcgcaaccattcttgtcaccacgaaaacgaatgactattgcaag---agc
 ctgccagctgcttt------gagtgctacgga-------gatagagaaatcaatttctgc
 tagggaa
->ENSOANG00000013810|ENSOANT00000021782|ENSOANP00000021779
+>ENSOANG00000013810_ENSOANT00000021782_ENSOANP00000021779
 atgatccagatggtacagcaatgcttcaaaaatgagtatttcgacaacttgctacaagct
 tgcaaaccttgtcaccttcgatg---tcctaagtcacctcccttggtgtgtcagagttac
 tgtgctgcaa--------------------------------------------------
@@ -142,7 +142,7 @@ gaagaatgcaactcggggaacccgaaggaggcctcccaaacttcgttcccgctcccggcc
 acacaggaaggggcaaccgtccttgtcaccacgaaaacaaatgactgttacaag---ggt
 gggccggggcctgggagtgacaccttctccgg-------gatatgggaatcggcttta--
 -------
->ENSRNOG00000021987|ENSRNOT00000035886|ENSRNOP00000034356
+>ENSRNOG00000021987_ENSRNOT00000035886_ENSRNOP00000034356
 ---------atggctcagcggtgcttccacagtgaatattttgacagtctgctgcatgct
 tgcaaaccgtgtcgcctgcgatg---ttccaa---ccctcctgcaccctgtcagccttac
 tgtgatccaa------gcatgaccagctcagtgagagggacgtacacggttctctggatc
@@ -154,7 +154,7 @@ gaggattgcatcaagagcaaccccaagggtgattctgaccatttcttcccacttccagcc
 atggaggagggggcgaccattcttgtcaccacgaaaacgggtgactatggcaag---ggt
 atgccaagtgctttg---caaagtgtcatggg-------gatggagaagccagctcactc
 cagataa
->ENSMMUG00000021520|ENSMMUT00000030290|ENSMMUP00000028345
+>ENSMMUG00000021520_ENSMMUT00000030290_ENSMMUP00000028345
 atgttgcagatggctcggcagtgctcccaaaatgaatattttgacagtttgttgcatgat
 tgcaaaccttgtcaacttcgatg---ttctagtactcctcctctaacatgtcagcgttat
 tgcaatgcaa------gtatgaccaattcagtgaaaggaatgaatgcgattctctggacc
@@ -166,7 +166,7 @@ gaagactgcatcaagaataaaccaaaggttgattctgaccattgctttccactcccagcc
 atggaggaaggcgcaaccattctcgtcaccacgaaaacgaatgactattgcaat---agc
 ctgtcagctgcttt------gagtgttacgga-------gatagagaaatcaatttctgc
 taggtaa
->ENSSHAG00000007261|ENSSHAT00000008447|ENSSHAP00000008379
+>ENSSHAG00000007261_ENSSHAT00000008447_ENSSHAP00000008379
 ---------atggctcaaaagtgcttccaaaatgaatattttgacaatttgctgtatgct
 tgcaaaccctgtcaccttcggtg---ttccaacacaccacctttggtgtgtcagagttat
 tgttatgcaaaaaaaggtaataccagtactcttaaaatcacagatgtgagtctttggatc
