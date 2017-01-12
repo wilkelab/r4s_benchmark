@@ -1,5 +1,6 @@
 #!/bin/bash
 prot_arr=("ENST00000000412" "ENST00000009530" "ENST00000011653" "ENST00000014914" "ENST00000023897" "ENST00000053243")
+nuc_aln_files=$HOME/r4s_benchmark/natural_prot/aln/*/*_clean_dna_reformatted.fasta
 
 if [ -f ./src/align_natural_prot.sh ]; then
 	rm ./src/align_natural_prot.sh  
