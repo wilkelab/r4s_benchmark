@@ -53,18 +53,26 @@ r_nobias_MutSel <- r_nobias_MutSel_raw %>%
             rmsd_inferred=sqrt(mean((score_norm - inferred_norm)^2)))
 
 rr_nobias_dNdS <- r_nobias_dNdS_raw %>% 
+  na.omit() %>%
+  group_by(bl,num_taxa,rep) %>% 
   mutate(score_norm=score/mean(score),true_norm=true/mean(true),inferred_norm=inferred/mean(inferred)) %>%
   filter(rep==1,num_taxa==512,bl==0.0025 | bl==0.04 | bl==0.64)
 
 rr_bias_dNdS <- r_bias_dNdS_raw %>% 
+  na.omit() %>%
+  group_by(bl,num_taxa,rep) %>% 
   mutate(score_norm=score/mean(score),true_norm=true/mean(true),inferred_norm=inferred/mean(inferred)) %>%
   filter(rep==1,num_taxa==512,bl==0.0025 | bl==0.04 | bl==0.64)
 
 rr_nobias_MutSel <- r_nobias_MutSel_raw %>% 
+  na.omit() %>%
+  group_by(bl,num_taxa,rep) %>% 
   mutate(score_norm=score/mean(score),true_norm=true/mean(true),inferred_norm=inferred/mean(inferred)) %>%
   filter(rep==1,num_taxa==512,bl==0.0025 | bl==0.04 | bl==0.64)
 
 rr_bias_MutSel <- r_bias_MutSel_raw %>% 
+  na.omit() %>%
+  group_by(bl,num_taxa,rep) %>% 
   mutate(score_norm=score/mean(score),true_norm=true/mean(true),inferred_norm=inferred/mean(inferred)) %>%
   filter(rep==1,num_taxa==512,bl==0.0025 | bl==0.04 | bl==0.64)
 
@@ -81,10 +89,8 @@ fancy_scientific <- function(l) {
 }
 
 #########################################################################
-### Plotting Figure 2:                                                ###
-### correlations between Rate4Site vs dN/dS no codon bias/codon bias  ###
-### RMSD between Rate4Site vs dN/dS no codon bias/codon bias          ###
-### bias between Rate4Site vs dN/dS no codon bias/codon bias          ###
+### Plotting:                                                         ###
+### Site-wise Rate4Site scores vs site-wise dN/dS for the dN/dS model ###
 #########################################################################
 
 ### Site-wise normalized R4S vs normalized dN/dS ####
@@ -93,7 +99,7 @@ r4s_vs_dNdS_nobias <- ggplot(rr_nobias_dNdS,aes(true_norm,score_norm))+
   geom_abline(slope=1,intercept=0)+
   #background_grid("xy")+
   #geom_smooth(aes(score,inferred),method="lm",se=FALSE)+
-  xlab("True dN/dS") +
+  xlab("True dN/dS (normalized)") +
   ylab("Rate4Site scores") +
   facet_wrap(~bl)+
   scale_x_continuous(breaks=seq(0,2,0.5),
@@ -111,7 +117,7 @@ r4s_vs_dNdS_bias <- ggplot(rr_bias_dNdS,aes(true_norm,score_norm))+
   geom_abline(slope=1,intercept=0)+
   #background_grid("xy")+
   #geom_smooth(aes(score,inferred),method="lm",se=FALSE)+
-  xlab("True dN/dS") +
+  xlab("True dN/dS (normalized)") +
   ylab("Rate4Site scores") +
   facet_wrap(~bl)+
   scale_x_continuous(breaks=seq(0,2,0.5),
@@ -123,7 +129,85 @@ r4s_vs_dNdS_bias <- ggplot(rr_bias_dNdS,aes(true_norm,score_norm))+
   coord_cartesian(xlim=c(0,2),ylim=c(0,3.51))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12))
-  
+
+p <- plot_grid(r4s_vs_dNdS_nobias+ggtitle("Constant dS"),
+               r4s_vs_dNdS_bias+ggtitle("Variable dS"),
+               labels="AUTO",
+               align = 'vh',
+               hjust = -1,
+               ncol=1,
+               nrow=2)
+
+save_plot("plots/site-wise_r4s_v_dNdS_true.png", p,
+          ncol = 1, # we're saving a grid plot of 2 columns
+          nrow = 2, # and 2 rows
+          # each individual subplot should have an aspect ratio of 1.3
+          base_height=4,
+          base_width=10)
+
+#########################################################################
+### Plotting:                                                         ###
+### Site-wise Rate4Site scores vs site-wise dN/dS for the MutSel model###
+#########################################################################
+
+### Site-wise normalized R4S vs normalized dN/dS ####
+r4s_vs_MutSel_nobias <- ggplot(rr_nobias_MutSel,aes(true_norm,score_norm))+
+  geom_point(size=2)+
+  geom_abline(slope=1,intercept=0)+
+  #background_grid("xy")+
+  #geom_smooth(aes(score,inferred),method="lm",se=FALSE)+
+  xlab("True dN/dS (normalized)") +
+  ylab("Rate4Site scores") +
+  facet_wrap(~bl)+
+  scale_x_continuous(breaks=seq(0,2,0.5),
+                     label=c("0","0.5","1.0","1.5","2.0"),
+                     expand = c(0.02, 0.02))+
+  scale_y_continuous(breaks=seq(0,4,1),
+                     label=c("0","1.0","2.0","3.0","4.0"),
+                     expand = c(0.02, 0.02))+
+  coord_cartesian(xlim=c(0,2),ylim=c(0,4.1))+
+  theme(axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12))
+
+r4s_vs_MutSel_bias <- ggplot(rr_bias_MutSel,aes(true_norm,score_norm))+
+  geom_point(size=2)+
+  geom_abline(slope=1,intercept=0)+
+  #background_grid("xy")+
+  #geom_smooth(aes(score,inferred),method="lm",se=FALSE)+
+  xlab("True dN/dS (normalized)") +
+  ylab("Rate4Site scores") +
+  facet_wrap(~bl)+
+  scale_x_continuous(breaks=seq(0,2,0.5),
+                     label=c("0","0.5","1.0","1.5","2.0"),
+                     expand = c(0.02, 0.02))+
+  scale_y_continuous(breaks=seq(0,4,1),
+                     label=c("0","1.0","2.0","3.0","4.0"),
+                     expand = c(0.02, 0.02))+
+  coord_cartesian(xlim=c(0,2),ylim=c(0,4.1))+
+  theme(axis.title = element_text(size = 14),
+        axis.text = element_text(size = 12))
+
+p <- plot_grid(r4s_vs_MutSel_nobias+ggtitle("Neutral synonymous codons"),
+               r4s_vs_MutSel_bias+ggtitle("Non-neutral synonymous codons"),
+               labels="AUTO",
+               align = 'vh',
+               hjust = -1,
+               ncol=1,
+               nrow=2)
+
+save_plot("plots/site-wise_r4s_v_MutSel_true.png", p,
+          ncol = 1, # we're saving a grid plot of 2 columns
+          nrow = 2, # and 2 rows
+          # each individual subplot should have an aspect ratio of 1.3
+          base_height=4,
+          base_width=10)
+
+#########################################################################
+### Plotting:                                                         ###
+### correlations between Rate4Site vs dN/dS no codon bias/codon bias  ###
+### RMSD between Rate4Site vs dN/dS no codon bias/codon bias          ###
+#########################################################################
+
 ############ Correlations vs Branch len ###########
 colfunc <- colorRampPalette(c("cyan2","navyblue"))
 dNdS_p_nobias_bl_cor_true <- ggplot(r_nobias_dNdS,aes(bl,cor_true,colour=factor(num_taxa)))+
@@ -208,65 +292,29 @@ dNdS_p_bias_bl_rmsd_true <- ggplot(r_bias_dNdS,aes(bl,rmsd_true,colour=factor(nu
 grobs <- ggplotGrob(dNdS_p_nobias_bl_cor_true)$grobs
 legend <- grobs[[which(sapply(grobs, function(x) x$name) == "guide-box")]]
 
-p <- ggdraw() +
-  draw_plot(r4s_vs_dNdS_nobias+ggtitle("Constant dS"), 0, .75, .9, .25) +
-  draw_plot(r4s_vs_dNdS_bias+ggtitle("Variable dS"), 0, .5, .9, .25) +
-  draw_plot(dNdS_p_nobias_bl_cor_true+theme(legend.position="none")+ggtitle("Constant dS"), 0, .25, .45, .25) +
-  draw_plot(dNdS_p_bias_bl_cor_true+theme(legend.position="none")+ylab(" ")+ggtitle("Variable dS"),0.45, .25, .45, .25) +
-  draw_plot(dNdS_p_nobias_bl_rmsd_true+theme(legend.position="none"),0, 0, .45, .25) +
-  draw_plot(dNdS_p_bias_bl_rmsd_true+theme(legend.position="none")+ylab(" "),0.45,0, .45, .25) +
-  draw_plot(legend,.9,.15,.1,.25)+
-  draw_plot_label(c("A","B","C","E","D","F"), c(0, 0, 0, 0.45, 0, 0.45), c(1,.75, .5, .5, .25, 0.25), size = 15)
+prow_bias <- plot_grid(dNdS_p_nobias_bl_cor_true+theme(legend.position="none")+ggtitle("Constant dS"),
+                       dNdS_p_bias_bl_cor_true+theme(legend.position="none",axis.title.y = element_blank())+ggtitle("Variable dS"),
+                       dNdS_p_nobias_bl_rmsd_true+theme(legend.position="none"),
+                       dNdS_p_bias_bl_rmsd_true+theme(legend.position="none",axis.title.y = element_blank()),
+                       labels=c("A","C","B","D"),
+                       align = 'vh',
+                       hjust = -1,
+                       ncol=2,
+                       nrow=2)
 
-save_plot("plots/fig2_r4s_v_dNdS_true.png", p,
-          ncol = 1, # we're saving a grid plot of 2 columns
-          nrow = 3, # and 2 rows
+p <- plot_grid( prow_bias, legend, rel_widths = c(2, .3))
+
+save_plot("plots/r4s_v_dNdS_true.png", p,
+          ncol = 2, # we're saving a grid plot of 2 columns
+          nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
-          base_height=6,
-          base_width=12)
+          base_aspect_ratio = 1.3)
 
 #########################################################################
 ### Plotting Figure 3:                                                ###
 ### correlations between Rate4Site vs MutSel no codon bias/codon bias ###
 ### RMSD between Rate4Site vs MutSel no codon bias/codon bias         ###
 #########################################################################
-
-### Site-wise normalized R4S vs normalized dN/dS ####
-r4s_vs_MutSel_nobias <- ggplot(rr_nobias_MutSel,aes(true_norm,score_norm))+
-  geom_point(size=2)+
-  geom_abline(slope=1,intercept=0)+
-  #background_grid("xy")+
-  #geom_smooth(aes(score,inferred),method="lm",se=FALSE)+
-  xlab("True dN/dS") +
-  ylab("Rate4Site scores") +
-  facet_wrap(~bl)+
-  scale_x_continuous(breaks=seq(0,2,0.5),
-                     label=c("0","0.5","1.0","1.5","2.0"),
-                     expand = c(0.02, 0.02))+
-  scale_y_continuous(breaks=seq(0,4,1),
-                     label=c("0","1.0","2.0","3.0","4.0"),
-                     expand = c(0.02, 0.02))+
-  coord_cartesian(xlim=c(0,2),ylim=c(0,4.1))+
-  theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 12))
-
-r4s_vs_MutSel_bias <- ggplot(rr_bias_MutSel,aes(true_norm,score_norm))+
-  geom_point(size=2)+
-  geom_abline(slope=1,intercept=0)+
-  #background_grid("xy")+
-  #geom_smooth(aes(score,inferred),method="lm",se=FALSE)+
-  xlab("True dN/dS") +
-  ylab("Rate4Site scores") +
-  facet_wrap(~bl)+
-  scale_x_continuous(breaks=seq(0,2,0.5),
-                     label=c("0","0.5","1.0","1.5","2.0"),
-                     expand = c(0.02, 0.02))+
-  scale_y_continuous(breaks=seq(0,4,1),
-                     label=c("0","1.0","2.0","3.0","4.0"),
-                     expand = c(0.02, 0.02))+
-  coord_cartesian(xlim=c(0,2),ylim=c(0,4.1))+
-  theme(axis.title = element_text(size = 14),
-        axis.text = element_text(size = 12))
 
 ############ Correlations vs Branch len ###########
 colfunc <- colorRampPalette(c("cyan2","navyblue"))
@@ -355,22 +403,23 @@ MutSel_p_bias_bl_rmsd_true <- ggplot(r_bias_MutSel,aes(bl,rmsd_true,colour=facto
 grobs <- ggplotGrob(MutSel_p_bias_bl_rmsd_true)$grobs
 legend <- grobs[[which(sapply(grobs, function(x) x$name) == "guide-box")]]
 
-p <- ggdraw() +
-  draw_plot(r4s_vs_MutSel_nobias+ggtitle("Neutral synonymous codons"), 0, .75, .9, .25) +
-  draw_plot(r4s_vs_MutSel_bias+ggtitle("Non-neutral synonymous codons"), 0, .5, .9, .25) +
-  draw_plot(MutSel_p_nobias_bl_cor_true+theme(legend.position="none")+ggtitle("Neutral synonymous codons"), 0, .25, .45, .25) +
-  draw_plot(MutSel_p_bias_bl_cor_true+theme(legend.position="none")+ylab(" ")+ggtitle("Non-neutral synonymous codons"),0.45, .25, .45, .25) +
-  draw_plot(MutSel_p_nobias_bl_rmsd_true+theme(legend.position="none"),0, 0, .45, .25) +
-  draw_plot(MutSel_p_bias_bl_rmsd_true+theme(legend.position="none")+ylab(" "),0.45,0, .45, .25) +
-  draw_plot(legend,.9,.15,.1,.25)+
-  draw_plot_label(c("A","B","C","E","D","F"), c(0, 0, 0, 0.45, 0, 0.45), c(1,.75, .5, .5, .25, 0.25), size = 15)
+prow_bias <- plot_grid(MutSel_p_nobias_bl_cor_true+theme(legend.position="none")+ggtitle("Neutral synonymous codons"),
+                       MutSel_p_bias_bl_cor_true+theme(legend.position="none",axis.title.y = element_blank())+ggtitle("Non-neutral synonymous codons"),
+                       MutSel_p_nobias_bl_rmsd_true+theme(legend.position="none"),
+                       MutSel_p_bias_bl_rmsd_true+theme(legend.position="none",axis.title.y = element_blank()),
+                       labels="AUTO",
+                       align = 'vh',
+                       hjust = -1,
+                       ncol=2,
+                       nrow=2)
 
-save_plot("plots/fig3_r4s_v_MutSel_true.png", p,
-          ncol = 1, # we're saving a grid plot of 2 columns
-          nrow = 3, # and 2 rows
+p <- plot_grid(prow_bias, legend, rel_widths = c(2, .3))
+
+save_plot("plots/r4s_v_MutSel_true.png", p,
+          ncol = 2, # we're saving a grid plot of 2 columns
+          nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
-          base_height=6,
-          base_width=12)
+          base_aspect_ratio = 1.3)
 
 ########################################################################
 ### Plotting Figure 4: Same as figure 2 but for inferred dN/dS       ###
@@ -472,9 +521,9 @@ prow_bias <- plot_grid(dNdS_p_nobias_bl_cor_inferred+theme(legend.position="none
                        ncol=2,
                        nrow=2)
 
-p_bias <- plot_grid( prow_bias, legend, rel_widths = c(2, .3))
+p <- plot_grid( prow_bias, legend, rel_widths = c(2, .3))
 
-save_plot("plots/fig4_r4s_v_dNdS_inferred.png", p_bias,
+save_plot("plots/r4s_v_dNdS_inferred.png", p,
           ncol = 2, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
@@ -580,9 +629,9 @@ prow_bias <- plot_grid(MutSel_p_nobias_bl_cor_inferred+theme(legend.position="no
                        ncol=2,
                        nrow=2)
 
-p_bias <- plot_grid( prow_bias, legend, rel_widths = c(2, .3))
+p <- plot_grid( prow_bias, legend, rel_widths = c(2, .3))
 
-save_plot("plots/fig5_r4s_v_MutSel_inferred.png", p_bias,
+save_plot("plots/r4s_v_MutSel_inferred.png", p,
           ncol = 2, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
