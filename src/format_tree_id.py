@@ -8,15 +8,28 @@ format_tree_id.py <tree_file> <reformated_tree_file>
 """
 		sys.exit()
 
-	fasta_file=argv[1]
-	out_fasta_file=argv[2]
+	tree_file=argv[1]
+	out_tree_file=argv[2]
 	
-	f=open(fasta_file,"r")
-	out=open(out_fasta_file,"w")
+	f=open(tree_file,"r")
+	out=open(out_tree_file,"w")
+	
 	for line in f:
+		line=line.strip()
 		if "|" in line:
 			line=line.replace("|","_")
-		out.write(line)
+		
+		new_line=''
+		for i in range(len(line)):
+			if "." in line[i]:
+				if line[i-2]==":":
+					new_line += line[i]
+				else:
+					new_line += "_"
+			else:
+				new_line += line[i]
+		
+		out.write(new_line+"\n")
 	
 if __name__ == "__main__":
 	main(sys.argv)
