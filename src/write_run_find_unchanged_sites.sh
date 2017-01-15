@@ -33,8 +33,8 @@ do
 	done
 done
 
-hiv_aln_files=./natural_prot/aln/processed_aln/*_clean_protein.fasta
-gpcr_aln_files=./natural_prot/aln/processed_aln/*_p_aligned.fasta
+hiv_aln_files=./natural_prot/aln/aligned_seqs/*_clean_protein.fasta
+gpcr_aln_files=./natural_prot/aln/aligned_seqs/*_p.fasta
 prot_aln_files=( ${hiv_aln_files[@]} ${gpcr_aln_files[@]} )
 
 for aln in ${prot_aln_files[*]}
