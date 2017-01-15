@@ -32,13 +32,13 @@ for (name in file_names) {
     
     print(protein_name)
     if (substr(protein_name,1,4)=="ENST") {
-      aln_file <- paste0("natural_prot/aln/processed_aln/",protein_name,"_p_aligned.fasta")
+      aln_file <- paste0("natural_prot/aln/aligned_seqs/",protein_name,"_p.fasta")
     } else {
-      aln_file <- paste0("natural_prot/aln/processed_aln/",protein_name,"_clean_protein.fasta")
+      aln_file <- paste0("natural_prot/aln/aligned_seqs/",protein_name,"_clean_protein.fasta")
     }
     f <- read.fasta(aln_file)
     
-    inferred_rates_file_name <- paste0("natural_prot/inferred_rates/",protein_name,"_FEL1_reformatted.txt")
+    inferred_rates_file_name <- paste0("natural_prot/inferred_dNdS/",protein_name,"_FEL1.txt")
     inf_r <- read.csv(inferred_rates_file_name)
 
     unchanged_sites_file_name <- paste0("natural_prot/filtered_sites/",protein_name,"_unchanged_sites.txt")

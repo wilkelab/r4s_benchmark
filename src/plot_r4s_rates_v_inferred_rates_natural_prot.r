@@ -9,11 +9,12 @@ setwd("r4s_benchmark/")
 r <- read_csv("natural_prot/processed_rates/all_orig_rates.csv")
 
 name_df <- data.frame(prot_name=unique(r$prot_name),
-                      plot_prot_name=c("Mannose-6-ph. rec.", ##Mannose-6-phosphate receptor
+                      plot_prot_name=c("M6PR", ##Mannose-6-phosphate receptor
                                        "CD74",
                                        "CD4",
-                                       "G prot.-coupled rec.", #full name "G protein-coupled\nreceptor class C"
-                                       "Gamma-aminobut. acid rec.", ##Gamma-aminobutyric acid type A receptor
+                                       "GPRC5A", #full name "G protein-coupled\nreceptor class C"
+                                       "GABRA1", ##Gamma-aminobutyric acid type A receptor
+                                       "TNFRSF17",
                                        "Capsid",
                                        "gp120",
                                        "Integrase",
@@ -55,13 +56,15 @@ r1_gpcr <- r1 %>% filter(prot_name=="ENST00000000412" |
                          prot_name=="ENST00000009530" | 
                          prot_name=="ENST00000011653" |
                          prot_name=="ENST00000014914" |
-                         prot_name=="ENST00000023897")
+                         prot_name=="ENST00000023897" |
+                          prot_name=="ENST00000053243")
  
  r1_gpcr_cor <- r_cor %>% filter(prot_name=="ENST00000000412" |
                             prot_name=="ENST00000009530" | 
                             prot_name=="ENST00000011653" |
                             prot_name=="ENST00000014914" |
-                            prot_name=="ENST00000023897")
+                            prot_name=="ENST00000023897" |
+                              prot_name=="ENST00000053243")
 
 r1_hiv <- r1 %>% filter(prot_name=="hiv1_capsid" |
                         prot_name=="hiv1_gp120" |
@@ -122,7 +125,7 @@ prow <- plot_grid(p_gpcr+ggtitle("Membrane proteins"),
                        ncol=1,
                        nrow=2)
 
-save_plot("plots/fig6_r4s_v_inf_rates_natural_prot.png", prow,
+save_plot("plots/r4s_v_dNdS_inferred_natural_prot.png", prow,
           ncol = 1, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
