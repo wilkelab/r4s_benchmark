@@ -8,7 +8,18 @@ library(readr)
 setwd("r4s_benchmark/")
 r <- read_csv("natural_prot/processed_rates/all_orig_rates.csv")
 
-name_df <- data.frame(prot_name=unique(r$prot_name),
+name_df <- data.frame(prot_name=c("ENST00000000412",
+                                  "ENST00000009530",
+                                  "ENST00000011653",
+                                  "ENST00000014914",
+                                  "ENST00000023897",
+                                  "ENST00000053243",
+                                  "hiv1_capsid",
+                                  "hiv1_gp120",
+                                  "hiv1_integrase",
+                                  "hiv1_matrix",
+                                  "hiv1_protease",
+                                  "hiv1_rt"),
                       plot_prot_name=c("M6PR", ##Mannose-6-phosphate receptor
                                        "CD74",
                                        "CD4",
@@ -22,31 +33,34 @@ name_df <- data.frame(prot_name=unique(r$prot_name),
                                        "Protease",
                                        "Reverse Transcriptase"))
 
-r1 <- r %>% inner_join(name_df)
+r1 <- r %>% 
+  inner_join(name_df) %>%
+  group_by(prot_name) %>%
+  mutate(score_norm=score/mean(score))
   
 r_cor <- r1 %>% 
   na.omit() %>%
   group_by(plot_prot_name,prot_name) %>%
-  summarize(cor=cor(inferred,score,method="spearman",use="pairwise.complete.obs"),
+  summarize(cor=cor(inferred,score_norm,method="spearman",use="pairwise.complete.obs"),
          p_value=cor.test(inferred,score)$p.value,
          cor_label=paste("ρ =", round(cor, 2))) 
 
 ##extract inferred rates and scores to be plotted in the geom_rug() 
- new_inf_lst <- rep(NA, length(r1$inferred))
- new_inf_lst[which(r1$inferred < .001)] = r1$inferred[r1$inferred < 0.001]
- r1$rug_inf <- new_inf_lst
+new_inf_lst <- rep(NA, length(r1$inferred))
+new_inf_lst[which(r1$inferred < .001)] = r1$inferred[r1$inferred < 0.001]
+r1$rug_inf <- new_inf_lst
  
- filter_inf <- r1$inferred
- filter_inf[which(r1$inferred < .001)] = rep(NA, length(which(r1$inferred < .001)))
- r1$inferred_filtered <- filter_inf
+filter_inf <- r1$inferred
+filter_inf[which(r1$inferred < .001)] = rep(NA, length(which(r1$inferred < .001)))
+r1$inferred_filtered <- filter_inf
    
 new_score_lst <- rep(NA, length(r1$inferred))
-new_score_lst[which(r1$inferred < 0.001)] = r1$score[r1$inferred < 0.001]
+new_score_lst[which(r1$inferred < 0.001)] = r1$score_norm[r1$inferred < 0.001]
 r1$rug_score <- new_score_lst
 
-filter_score <- r1$score
-filter_score[which(r1$inferred < .001)] = rep(NA, length(which(r1$inferred < .001)))
-r1$score_filtered <- filter_score
+filter_score_norm <- r1$score_norm
+filter_score_norm [which(r1$inferred < .001)] = rep(NA, length(which(r1$inferred < .001)))
+r1$score_filtered_norm <- filter_score_norm 
 
 ##################################################################################
 ### Plot figure 6:                                                             ###
@@ -80,7 +94,7 @@ r1_hiv_cor <- r_cor %>% filter(prot_name=="hiv1_capsid" |
                           prot_name=="hiv1_protease" |
                           prot_name=="hiv1_rt")
 
-p_gpcr <- ggplot(r1_gpcr,aes(score_filtered,inferred_filtered))+ 
+p_gpcr <- ggplot(r1_gpcr,aes(score_filtered_norm,inferred_filtered))+ 
   geom_point()+
   #geom_hline(yintercept=1)+
   #ggtitle(prot_name)+
@@ -93,13 +107,13 @@ p_gpcr <- ggplot(r1_gpcr,aes(score_filtered,inferred_filtered))+
   facet_wrap(~plot_prot_name)+
   scale_x_log10(breaks=c(0.1,1,10),label=c("0.1","1","10"))+
   scale_y_log10(breaks=c(0.01,0.1,1,10),label=c("0.01","0.1","1","10"))+
-  coord_cartesian(ylim=c(0.01, 13),xlim=c(0.09,12))+
+  coord_cartesian(ylim=c(0.01, 13),xlim=c(0.09,10))+
   theme(axis.title = element_text(size = 12),
         axis.text = element_text(size = 10),
         strip.text = element_text(size = 10))+
   geom_text(data=r1_gpcr_cor,aes(0.21,9,label=cor_label), inherit.aes=FALSE)
 
-p_hiv <- ggplot(r1_hiv,aes(score_filtered,inferred_filtered))+ 
+p_hiv <- ggplot(r1_hiv,aes(score_filtered_norm,inferred_filtered))+ 
   geom_point()+
   #ggtitle(prot_name)+
   geom_abline(slope=1,intercept=0)+
@@ -111,7 +125,7 @@ p_hiv <- ggplot(r1_hiv,aes(score_filtered,inferred_filtered))+
   facet_wrap(~plot_prot_name)+
   scale_x_log10(breaks=c(0.001,0.01,0.1,1,10),label=c("0.001","0.01","0.1","1","10"))+
   scale_y_log10(breaks=c(0.001,0.01,0.1,1,10),label=c("0.001","0.01","0.1","1","10"))+
-  coord_cartesian(ylim=c(0.0007, 13),xlim=c(0.0007,12))+
+  coord_cartesian(ylim=c(0.0007, 13),xlim=c(0.0007,16))+
   theme(axis.title = element_text(size = 12),
         axis.text = element_text(size = 10),
         strip.text = element_text(size = 10))+
