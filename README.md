@@ -4,7 +4,7 @@ This repository contains all the scripts and data to reproduce the results of:
 
 D. K. Sydykova, C. O. Wilke (preprint). Calculating site-specific evolutionary rates at the amino-acid or codon level yields similar rate estimates. PeerJ Preprints 5:e2739v1. [https://peerj.com/preprints/2739v1/] (https://peerj.com/preprints/2739v1/)
 
-##Contents:
+##Contents
 
 * `mech_codon` contains results for the alignments simulated with the dN/dS model.
 
@@ -52,7 +52,7 @@ D. K. Sydykova, C. O. Wilke (preprint). Calculating site-specific evolutionary r
 
 * `src` contains all of the scripts used to analyse the data and plot the figures. The usage of each script is described in the analysis section. 
 
-##Analysis:
+##Analysis
 	
 ###dN/dS model
 
