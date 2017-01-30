@@ -23,7 +23,7 @@ do
 					aln=rep${j}_n${i}_bl${br_len}_${bias}.fasta
 				fi
 				
-				echo "python ./src/translate_aln.py ../r4s_benchmark_data/aln/${model}/nuc/${aln} ../r4s_benchmark_data/aln/${model}/aa/${aln}" >> ./src/run_translate.sh 
+				echo "python ./src/translate_aln_codon_to_aa.py ../r4s_benchmark_data/aln/${model}/nuc/${aln} ../r4s_benchmark_data/aln/${model}/aa/${aln}" >> ./src/run_translate.sh 
 			done
 		done
 	done

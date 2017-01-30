@@ -18,7 +18,7 @@ D. K. Sydykova, C. O. Wilke (preprint). Calculating site-specific evolutionary r
 	
 	+ `r4s_rates` contains inferred site-wise Rate4site rates. 
 	 
-* `mut_sel` contains results for the alignments simulated with the mutation-selection (MutSel) model. MutSel alignments were simulated by Spielman et al. (2016). True site-wise dN/dS for their alignments can be found in their repository [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate)
+* `mut_sel` contains results for the alignments simulated with the mutation-selection (MutSel) model. MutSel alignments were simulated by Spielman et al. (2016). True site-wise and inferred dN/dS for their alignments can be found in their repository [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate)
 
 	+ `filtered_sites` contains information on all sites without any amino acid substitutions for each simulated alignment. 
 	
@@ -26,7 +26,7 @@ D. K. Sydykova, C. O. Wilke (preprint). Calculating site-specific evolutionary r
 	
 	+ `r4s_rates` contains inferred site-wise Rate4site rates. 
 	
-* `natural_prot` contains data and results for the natural alignments from Spielman and Wilke (2013) and Meyer and Wilke (2015). The data we used can be found at [https://github.com/sjspielman/mammalian_gpcr_selection](https://github.com/sjspielman/mammalian_gpcr_selection) and [https://github.com/ausmeyer/hiv_structural_determinants](https://github.com/ausmeyer/hiv_structural_determinants), respectively. 
+* `natural_prot` contains results for the natural alignments from Spielman and Wilke (2013) and Meyer and Wilke (2015). The data we used can be found at [https://github.com/sjspielman/mammalian_gpcr_selection](https://github.com/sjspielman/mammalian_gpcr_selection) and [https://github.com/ausmeyer/hiv_structural_determinants](https://github.com/ausmeyer/hiv_structural_determinants), respectively. 
 
 	+ `aln` contains HIV-1 and GPCR sequences used in our analysis
 	
@@ -50,13 +50,35 @@ D. K. Sydykova, C. O. Wilke (preprint). Calculating site-specific evolutionary r
 	
 * `plots` contains final figures used in the publication.
 
-* `src` contains all of the scripts used to analyse the data and plot the figures. The usage of each script is described in the analysis section. 
+* `src` contains all of the scripts used to analyze the data and plot the figures. The usage of each script is described in the analysis section below. 
 
 ##Analysis
 	
 ###dN/dS model
 
+1. Simulate sequence using `./src/write_run_sim_aln.sh`. This script will write `run_sim_aln.sh` to simulate dN/dS alignments.
+
+2. Translate simulated nucleotide alignments to amino acids using `./src/write_run_translate_aln.sh`.
+
+3. Infer site-wise dN/dS with `HyPhy` using the script in `dnds_inference/submit_run_inference.sh` directory in `src`.
+
+4. Infer site-wise Rate4Site scores using `./src/write_run_r4s_mech_codon.sh`. This script will write `run_r4s_mech_codon.sh` which uses `r4s_pipeline.sh` to run Rate4Site on simulated alignments. 
+
+5. Concatenate all rates into a table with `./src/concatenate_mech_codon_rates.r`. 
+
 ###MutSel model
 
+The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) in the same directory as the current repository.
+
+1. Translate simulated nucleotide alignments from Spielman et al. (2016) to amino acids using `./src/write_run_translate_aln.sh`.
+
+2. Infer site-wise Rate4Site scores using `./src/write_run_r4s_mut_sel.sh`. This script will write `run_r4s_mut_sel.sh` which uses `r4s_pipeline.sh` to run Rate4Site on simulated alignments. 
+
+3. Concatenate all rates into a table with `./src/concatenate_mut_sel_rates.r`. 
+
 ###Natural proteins
+
+1.
+
+2. 
 	
