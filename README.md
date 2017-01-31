@@ -26,11 +26,11 @@ D. K. Sydykova, C. O. Wilke (preprint). Calculating site-specific evolutionary r
 	
 * `r4s_rates` contains inferred site-wise Rate4site rates. 
 	
- `natural_prot` contains results for the natural alignments from Spielman and Wilke (2013) and Meyer and Wilke (2015). The data we used can be found at [https://github.com/sjspielman/mammalian_gpcr_selection](https://github.com/sjspielman/mammalian_gpcr_selection) and [https://github.com/ausmeyer/hiv_structural_determinants](https://github.com/ausmeyer/hiv_structural_determinants), respectively. 
+`natural_prot` contains results for the natural alignments from Spielman and Wilke (2013) and Meyer and Wilke (2015). The data we used can be found at [https://github.com/sjspielman/mammalian_gpcr_selection](https://github.com/sjspielman/mammalian_gpcr_selection) and [https://github.com/ausmeyer/hiv_structural_determinants](https://github.com/ausmeyer/hiv_structural_determinants), respectively. 
 
-* `aln` contains HIV-1 and GPCR sequences used in our analysis
+* `aln` contains HIV-1 and GPCR protein sequences used in our analysis
 
-	+ `aligned_seqs` contains GPCR amino acid sequences we aligned.
+	+ `aligned_seqs` contains amino acid sequences we aligned.
 	
 	+ `back_translated_aln` codon alignments that were translated back from amino acid alignments.
 	
@@ -50,10 +50,10 @@ D. K. Sydykova, C. O. Wilke (preprint). Calculating site-specific evolutionary r
 	
 `plots` contains final figures used in the publication.
 
-`src` contains all of the scripts used to analyze the data and plot the figures. The usage of each script is described in the analysis section below. 
+`src` contains all of the scripts used to analyze the data and plot the figures. The usage of each script is described in the section below. 
 
 ##Analysis
-	
+
 ###dN/dS model
 
 The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) in the same directory as the current repository.
@@ -64,7 +64,7 @@ The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_
 
 3. Translate simulated nucleotide alignments to amino acids using `./src/write_run_translate_aln.sh`.
 
-4. Infer site-wise dN/dS with `HyPhy` using the script in `dnds_inference/submit_run_inference.sh` directory in `src`. This script was copied from [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) and modified for this analysis.
+4. Infer site-wise dN/dS with `HyPhy` using the script in `./src/dnds_inference/submit_run_inference.sh`. This script was copied from [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) and modified for this analysis.
 
 5. Infer site-wise Rate4Site scores using `./src/write_run_r4s_mech_codon.sh`. This script will write `run_r4s_mech_codon.sh` which uses `r4s_pipeline.sh` to run Rate4Site on simulated alignments. 
 
@@ -88,7 +88,7 @@ The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_
 
 3. Infer trees from the amino acid sequences with RAxML. The script `./src/write_run_raxml.sh` will write `run_raxml.sh` which will run the inference. 
 
-4. Infer site-wise dN/dS with `HyPhy` using the script in `dnds_inference/submit_run_inference_nat_prot.sh` directory in `src`. This script was copied from [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) and modified for this analysis.
+4. Infer site-wise dN/dS with `HyPhy` using the script in `./src/dnds_inference/submit_run_inference_nat_prot.sh`. This script was copied from [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) and modified for this analysis.
 
 5. Infer site-wise Rate4Site scores using `./src/write_run_r4s_natural_prot.sh`. This script will write `run_r4s_natural_prot.sh` which will run Rate4Site on natural alignments. 
 
