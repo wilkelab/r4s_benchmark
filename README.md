@@ -64,7 +64,7 @@ The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_
 
 3. Translate simulated nucleotide alignments to amino acids using `./src/write_run_translate_aln.sh`.
 
-4. Infer site-wise dN/dS with `HyPhy` using the script in `./src/dnds_inference/submit_run_inference.sh`. This script was copied from [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) and modified for this analysis.
+4. Infer site-wise dN/dS with `HyPhy` using the script `./src/dnds_inference/submit_run_inference.sh`. This script was copied from [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) and modified for this analysis.
 
 5. Infer site-wise Rate4Site scores using `./src/write_run_r4s_mech_codon.sh`. This script will write `run_r4s_mech_codon.sh` which uses `r4s_pipeline.sh` to run Rate4Site on simulated alignments. 
 
@@ -88,7 +88,7 @@ The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_
 
 3. Infer trees from the amino acid sequences with RAxML. The script `./src/write_run_raxml.sh` will write `run_raxml.sh` which will run the inference. 
 
-4. Infer site-wise dN/dS with `HyPhy` using the script in `./src/dnds_inference/submit_run_inference_nat_prot.sh`. This script was copied from [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) and modified for this analysis.
+4. Infer site-wise dN/dS with `HyPhy` using the script `./src/dnds_inference/submit_run_inference_nat_prot.sh`. This script was copied from [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) and modified for this analysis.
 
 5. Infer site-wise Rate4Site scores using `./src/write_run_r4s_natural_prot.sh`. This script will write `run_r4s_natural_prot.sh` which will run Rate4Site on natural alignments. 
 
