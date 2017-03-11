@@ -1,29 +1,25 @@
-#!/bin/bash
-num_sim=30
-site_dupl=100000
-total_sites=12
+rep_num=50
+bias_arr=("bias" "nobias")
+taxa_num=11
+br_len_arr=(0.0025 0.01 0.04 0.16 0.64)
 
-if [ ! -d "$HOME/substitution_matrices_in_pheno_models/aln" ]; then
-	mkdir aln
-fi
-
-if [ ! -d "$HOME/substitution_matrices_in_pheno_models/aln/ten_sites" ]; then
-	mkdir aln
-fi
-
-if [ -f "$SCRATCH/run_sim_aln.sh" ]; then
-	rm $SCRATCH/run_sim_aln.sh
-fi
-
-
-for br_len in `seq 0.02 0.02 0.52` 
-do	
-	for n in $(seq 1 $num_sim) 
-	do
-		tree_file=n2_bl${br_len}.tre
-		aln_file=n2_bl${br_len}_${n}.fa
-		echo "python $HOME/simulate_aln.py $HOME/substitution_matrices_in_pheno_models/132L_A_foldx_ddG.txt $HOME/substitution_matrices_in_pheno_models/trees/${tree_file} $HOME/substitution_matrices_in_pheno_models/aln/ten_sites/${aln_file} ${site_dupl} ${total_sites}" >> $SCRATCH/run_sim_aln.sh	
+for bias in ${bias_arr[*]}
+do	 
+	for br_len in ${br_len_arr[*]} 
+	do	 
+		for i in $(seq 4 $taxa_num) 
+		do
+			for j in $(seq 1 $rep_num) 
+			do
+				aln=rep${j}_n${i}_bl${br_len}_${bias}.fasta
+				tree=n${i}_bl${br_len}.tre
+				rates_info_file=sim_rates_info_rep${j}_n${i}_bl${br_len}_${bias}.txt
+				rates_files=sim_rates_rep${j}_n${i}_bl${br_len}_${bias}.txt
+				echo python src/simulate_dNdS_aln.py $bias ../r4s_benchmark_data/trees/$tree ../r4s_benchmark_data/aln/$aln_file mech_codon/assigned_rates/$rates_files mech_codon/assigned_rates/$rates_info_file > ./src/run_sim_aln.sh
+			done
+		done
 	done
 done
 
-chmod +x $SCRATCH/run_sim_aln.sh
+chmod +x ./src/run_sim_aln.sh
+
