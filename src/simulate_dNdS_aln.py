@@ -44,9 +44,9 @@ def make_mc_model(bias, tree_file, aln_file, sim_rates_file, sim_rates_info_file
 	
 def main(argv):
 
-	if len(argv) != 6: # wrong number of arguments
+	if len(argv) != 7: # wrong number of arguments
 		print """Usage:
-simulate_aln.py <bias> <tree_file> <aln_file> <sim_rates_file> <sim_rates_info_file> 
+simulate_aln.py <bias> <tree_file> <aln_file> <sim_rates_file> <sim_rates_info_file> <rate_distr>
 """
 		sys.exit()
 
