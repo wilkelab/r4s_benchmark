@@ -5,10 +5,12 @@ library(cowplot)
 
 file_names = c("r4s_norm_rates","r4s_orig_rates")
 model = "mech_codon"
+gamma_distr_dir = '/gamma_distr'
+#gamma_distr_dir=''
 
 setwd("r4s_benchmark/")
 for (name in file_names) {
-  t1 <- list.files(paste0(model,"/r4s_rates/raw_rates"),pattern=name,full.names=T)
+  t1 <- list.files(paste0(model,"/r4s_rates/raw_rates",gamma_distr_dir),pattern=name,full.names=T)
   info = file.info(t1)
   t1 <- t1[info$size != 0]
   
@@ -46,7 +48,8 @@ for (name in file_names) {
       f_type="r4s_orig"
     }
     
-    true_rates_file_name <- paste0(model,"/assigned_rates/processed_rates/sim_rates_combined_rep",rep_num,"_n",n,"_bl",bl,"_",bias,".txt")
+    #true_rates_file_name <- paste0(model,"/assigned_rates/processed_rates/sim_rates_combined_rep",rep_num,"_n",n,"_bl",bl,"_",bias,".txt")
+    true_rates_file_name <- paste0(model,"/assigned_rates/processed_rates/sim_gamma_rates_combined_rep",rep_num,"_n",n,"_bl",bl,"_",bias,".txt")
     true_r <- read.table(true_rates_file_name,header=T)
     
     ##get simulated dN/dS by solving for dN/dS
@@ -54,10 +57,12 @@ for (name in file_names) {
     r$true <-  true_r$dNdS
 
     ##adding inferred FEL1 rates and fixing dN/dS=1 to be equal to 0 when sites have not changed
-    inferred_rates_file_name <- paste0(model,"/inferred_rates/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_FEL1.txt")
+    #inferred_rates_file_name <- paste0(model,"/inferred_rates/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_FEL1.txt")
+    inferred_rates_file_name <- paste0(model,"/inferred_rates/gamma_distr/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_FEL1.txt")
     inf_r <- read.csv(inferred_rates_file_name)
     
-    unchanged_sites_file_name <- paste0(model,"/filtered_sites/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_unchanged_sites.txt")
+    #unchanged_sites_file_name <- paste0(model,"/filtered_sites/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_unchanged_sites.txt")
+    unchanged_sites_file_name <- paste0(model,"/filtered_sites/gamma_distr/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_unchanged_sites.txt")
     sites_t <- read.table(unchanged_sites_file_name,header=T)
     
     filtered_inferred <- inf_r$dN.dS
@@ -71,5 +76,6 @@ for (name in file_names) {
   bias_r <- filter(d,type=="bias")
   nobias_r <- filter(d,type=="nobias")
   write.csv(bias_r,file=paste0(model,"/processed_rates/all_",name,"_bias.csv"),quote=F)
-  write.csv(nobias_r,file=paste0(model,"/processed_rates/all_",name,"_nobias.csv"),quote=F)
-  }
+  #write.csv(nobias_r,file=paste0(model,"/processed_rates/all_",name,"_nobias.csv"),quote=F)
+  write.csv(nobias_r,file=paste0(model,"/processed_rates/all_",name,"_gamma_nobias.csv"),quote=F)
+    }
