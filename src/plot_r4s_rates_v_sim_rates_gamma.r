@@ -126,7 +126,7 @@ prow_bias <- plot_grid(dNdS_p_nobias_bl_cor_true+theme(legend.position="none")+g
 
 p <- plot_grid( prow_bias, legend, rel_widths = c(2, .3))
 
-save_plot("plots/r4s_v_dNdS_true_gamma.png", p,
+save_plot("plots/r4s_v_dNdS_gamma.png", p,
           ncol = 2, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
