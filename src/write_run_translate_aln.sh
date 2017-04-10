@@ -26,9 +26,13 @@ do
 				fi
 				
 				if [ $distr = 'gamma' ]; then
-					echo "python ./src/translate_aln_codon_to_aa.py $SCRATCH/r4s_benchmark_data/aln/mech_codon/nuc/gamma_distr/${aln} $SCRATCH/r4s_benchmark_data/aln/mech_codon/aa/gamma_distr/${aln}" >> ./src/run_translate.sh 
+					for k in $(seq 1 6)
+					do
+						aln=rep${j}_n${i}_bl${br_len}_${bias}_gamma${k}.fasta
+						echo "python $HOME/r4s_benchmark/src/translate_aln_codon_to_aa.py $SCRATCH/r4s_benchmark_data/aln/mech_codon/nuc/gamma_distr/${aln} $SCRATCH/r4s_benchmark_data/aln/mech_codon/aa/gamma_distr/${aln}" >> ./src/run_translate.sh 
+					done
 				else
-					echo "python ./src/translate_aln_codon_to_aa.py $SCRATCH/r4s_benchmark_data/aln/${model}/nuc/${aln} $SCRATCH/r4s_benchmark_data/aln/${model}/aa/${aln}" >> ./src/run_translate.sh 
+					echo "python $HOME/r4s_benchmark/src/translate_aln_codon_to_aa.py $SCRATCH/r4s_benchmark_data/aln/${model}/nuc/${aln} $SCRATCH/r4s_benchmark_data/aln/${model}/aa/${aln}" >> ./src/run_translate.sh 
 				fi
 			done
 		done

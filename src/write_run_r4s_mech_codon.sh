@@ -6,6 +6,7 @@ bias_arr=('nobias')
 taxa_num=8
 br_len_arr=(0.0025 0.01 0.04 0.16 0.64)
 model='mech_codon'
+distr='gamma'
 
 if [ ! -d "../../../home1/02159/ds29583/r4s_benchmark/${model}/r4s_rates" ]; then
 	mkdir ../../../home1/02159/ds29583/r4s_benchmark/${model}/r4s_rates
@@ -32,7 +33,14 @@ do
 		do
 			for j in $(seq 1 $rep_num) 
 			do
-				echo "../../../home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh $bias $br_len $i $j $model" >> ../../../home1/02159/ds29583/run_bl${br_len}_r4s_mech_codon.sh
+				if [ $distr = 'gamma' ]; then
+					for k in $(seq 1 6)
+					do
+						echo "../../../home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh $bias $br_len $i $j $model $distr $k" >> ../../../home1/02159/ds29583/run_bl${br_len}_r4s_mech_codon.sh
+					done
+				else
+					echo "../../../home1/02159/ds29583/r4s_benchmark/src/r4s_pipeline.sh $bias $br_len $i $j $model" >> ../../../home1/02159/ds29583/run_bl${br_len}_r4s_mech_codon.sh
+				fi
 			done
 		done
 	chmod +x ../../../home1/02159/ds29583/run_bl${br_len}_r4s_mech_codon.sh 

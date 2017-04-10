@@ -9,7 +9,7 @@ from Bio.Align import MultipleSeqAlignment
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 
-def make_mc_model(bias, tree_file, aln_file, sim_rates_file, sim_rates_info_file, rate_distr):
+def make_mc_model(bias, tree_file, aln_file, sim_rates_file, sim_rates_info_file, rate_distr, shape_param=None, rate_param=None):
 	tree=read_tree(file = tree_file)
 	kappa=4.5
 	length=100
@@ -19,9 +19,8 @@ def make_mc_model(bias, tree_file, aln_file, sim_rates_file, sim_rates_info_file
 		
 	if rate_distr=='gamma':
 		##shape and rate parameters used from A. G. Meyer, C. O. Wilke (2015). The utility of protein structure as a predictor of site-wise dN/dS varies widely among HIV-1 proteins.
-		##gamma shape=0.312 and gamma rate=1.027 for integrase (Table 2 in the paper).
-		##Set shape=0.312 and scale=1/rate=1/1.027. Mean=0.312*1/1.027= 0.304
-		dNdS_lst = np.random.gamma(0.312,1/1.027,10000)
+		##Table 2 in the paper
+		dNdS_lst = np.random.gamma(shape_param,1/rate_param,10000)
 		
 	if bias=="nobias": ##simulate varying dN 
 		parameters = {"kappa":4.5, "omega": dNdS_lst} #set dN value range 0.1 - 1.6
@@ -44,9 +43,9 @@ def make_mc_model(bias, tree_file, aln_file, sim_rates_file, sim_rates_info_file
 	
 def main(argv):
 
-	if len(argv) != 7: # wrong number of arguments
+	if len(argv) != 7 and len(argv) != 9: # wrong number of arguments
 		print """Usage:
-simulate_aln.py <bias> <tree_file> <aln_file> <sim_rates_file> <sim_rates_info_file> <rate_distr>
+simulate_aln.py <bias> <tree_file> <aln_file> <sim_rates_file> <sim_rates_info_file> <rate_distr> <shape_param> <rate_param>
 """
 		sys.exit()
 
@@ -57,7 +56,11 @@ simulate_aln.py <bias> <tree_file> <aln_file> <sim_rates_file> <sim_rates_info_f
 	sim_rates_info_file=argv[5]
 	rate_distr=argv[6]
 	
-	make_mc_model(bias, tree_file, aln_file, sim_rates_file, sim_rates_info_file, rate_distr)
+	if len(argv)==9:
+		shape_param=float(argv[7])
+		rate_param=float(argv[8])
+	
+	make_mc_model(bias, tree_file, aln_file, sim_rates_file, sim_rates_info_file, rate_distr, shape_param, rate_param)
 		
 if __name__ == "__main__":
 	main(sys.argv)
