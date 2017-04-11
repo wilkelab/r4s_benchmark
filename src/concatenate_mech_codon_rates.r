@@ -8,7 +8,7 @@ model = "mech_codon"
 
 setwd("r4s_benchmark/")
 for (name in file_names) {
-  t1 <- list.files(paste0(model,"/r4s_rates/raw_rates/"),pattern=name,full.names=T)
+  t1 <- list.files(paste0(model,"/r4s_rates/raw_rates"),pattern=name,full.names=T)
   info = file.info(t1)
   t1 <- t1[info$size != 0]
   
@@ -55,13 +55,17 @@ for (name in file_names) {
     r$true <-  true_r$dNdS
     
     ##adding inferred FEL1 rates and fixing dN/dS=1 to be equal to 0 when sites have not changed
-    unchanged_sites_file_name <- paste0(model,"/filtered_sites/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_unchanged_sites.txt")
-    unchanged_sites_file_name <- gsub(paste0("r4s_rates/raw_rates/g",name), 
-                                      "assigned_rates/processed_rates/sim_rates_combined", t1[i])
-    sites_t <- read.table(unchanged_sites_file_name,header=T)
+    temp_file_name <- gsub(paste0("r4s_rates/raw_rates/",name,"_"), 
+                                      "filtered_sites/", t1[i])
+    unchanged_sites_file <- gsub(".txt", 
+                                 "_unchanged_sites.txt", temp_file_name)
+    sites_t <- read.table(unchanged_sites_file,header=T)
     
-    inferred_rates_file_name <- paste0(model,"/inferred_rates/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_FEL1.txt")
-    inf_r <- read.csv(inferred_rates_file_name)
+    temp_file_name <- gsub(paste0("r4s_rates/raw_rates/",name,"_"), 
+         "inferred_rates/", t1[i])
+    inferred_rates_file <- gsub(".txt", 
+                                 "_FEL1.txt", temp_file_name)
+    inf_r <- read.csv(inferred_rates_file)
     
     filtered_inferred <- inf_r$dN.dS
     filtered_inferred[sites_t$unchanged_site]=rep(0,length(which(sites_t$unchanged_site)))
