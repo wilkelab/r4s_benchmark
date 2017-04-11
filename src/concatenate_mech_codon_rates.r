@@ -46,30 +46,27 @@ for (name in file_names) {
       f_type="r4s_orig"
     }
     
-    #true_rates_file_name <- paste0(model,"/assigned_rates/processed_rates/sim_rates_combined_rep",rep_num,"_n",n,"_bl",bl,"_",bias,".txt")
-    true_rates_file_name <- paste0(model,"/assigned_rates/processed_rates/sim_gamma_rates_combined_rep",rep_num,"_n",n,"_bl",bl,"_",bias,".txt")
-    true_r <- read.table(true_rates_file_name,header=T)
+    true_rates_file <- gsub(paste0("r4s_rates/raw_rates/",name), 
+                            "assigned_rates/processed_rates/sim_rates_combined", t1[i])
+    true_r <- read.table(true_rates_file,header=T)
     
     ##get simulated dN/dS by solving for dN/dS
     true_r$dNdS <-  as.numeric(true_r$dN)/as.numeric(true_r$dS)
     r$true <-  true_r$dNdS
-
+    
     ##adding inferred FEL1 rates and fixing dN/dS=1 to be equal to 0 when sites have not changed
-    if (gamma_distr_dir == '/gamma_distr') {
-      #inferred_rates_file_name <- paste0(model,"/inferred_rates/gamma_distr/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_FEL1.txt")
-      #unchanged_sites_file_name <- paste0(model,"/filtered_sites/gamma_distr/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_unchanged_sites.txt")
-    } else {
-      unchanged_sites_file_name <- paste0(model,"/filtered_sites/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_unchanged_sites.txt")
-      sites_t <- read.table(unchanged_sites_file_name,header=T)
-      
-      inferred_rates_file_name <- paste0(model,"/inferred_rates/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_FEL1.txt")
-      inf_r <- read.csv(inferred_rates_file_name)
-      
-      filtered_inferred <- inf_r$dN.dS
-      filtered_inferred[sites_t$unchanged_site]=rep(0,length(which(sites_t$unchanged_site)))
-      r$inferred <- filtered_inferred
-    }
-
+    unchanged_sites_file_name <- paste0(model,"/filtered_sites/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_unchanged_sites.txt")
+    unchanged_sites_file_name <- gsub(paste0("r4s_rates/raw_rates/g",name), 
+                                      "assigned_rates/processed_rates/sim_rates_combined", t1[i])
+    sites_t <- read.table(unchanged_sites_file_name,header=T)
+    
+    inferred_rates_file_name <- paste0(model,"/inferred_rates/rep",rep_num,"_n",n,"_bl",bl,"_",bias,"_FEL1.txt")
+    inf_r <- read.csv(inferred_rates_file_name)
+    
+    filtered_inferred <- inf_r$dN.dS
+    filtered_inferred[sites_t$unchanged_site]=rep(0,length(which(sites_t$unchanged_site)))
+    r$inferred <- filtered_inferred
+    
     if (i==1) {
       d <- r
     } else d <- rbind(d, r)
@@ -77,6 +74,5 @@ for (name in file_names) {
   bias_r <- filter(d,type=="bias")
   nobias_r <- filter(d,type=="nobias")
   write.csv(bias_r,file=paste0(model,"/processed_rates/all_",name,"_bias.csv"),quote=F)
-  #write.csv(nobias_r,file=paste0(model,"/processed_rates/all_",name,"_nobias.csv"),quote=F)
-  write.csv(nobias_r,file=paste0(model,"/processed_rates/all_",name,"_gamma_nobias.csv"),quote=F)
-    }
+  write.csv(nobias_r,file=paste0(model,"/processed_rates/all_",name,"_nobias.csv"),quote=F)
+}
