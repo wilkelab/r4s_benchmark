@@ -1,37 +1,32 @@
 library(dplyr)
 library(tidyr)
 
+setwd("r4s_benchmark")
 model="mech_codon"
-t1 <- list.files(paste0(model,"/assigned_rates/raw_rates/gamma_distr"),pattern="sim_rates_rep",full.names=T)
+distr_dir = 'gamma_distr'
+#distr_dir = 'uniform_distr'
+
+t1 <- list.files(paste0(model,"/assigned_rates/raw_rates/",distr_dir),pattern="sim_rates_rep",full.names=T)
 
 for (i in 1:length(t1)) {
   f1 <- t1[i] #sim_rates
-  
-  str <- regexpr("_\\w+.txt",f1)[1]
-  end <- regexpr(".txt",f1)[1]
-  bias <- substr(f1,str+1,end-1)
-  
-  str <- regexpr("bl\\d+",f1)[1]
-  end <- regexpr("_\\w+.txt",f1)[1]
-  bl <- as.numeric(substr(f1,str+2,end-1))
 
-  str <- regexpr("rep\\d+",f1)[1]
-  end <- regexpr("_n\\d+",f1)[1]
-  rep <- as.numeric(substr(f1,str+3,end-1))
-
-  str <- regexpr("n\\d+",f1)[1]
-  end <- regexpr("_bl\\d+",f1)[1]
-  n <- as.numeric(substr(f1,str+1,end-1))
+  info_rate_file <- gsub("sim_rates", "sim_rates_info", f1)
+  info_rate_t <- read.table(info_rate_file,header=T)
   
-  info_rate_file <- paste0("sim_rates_info_rep",rep,"_n",n,"_bl",bl,"_",bias,".txt")
-  info_rate_t <- read.table(paste0(model,"/assigned_rates/raw_rates/gamma_distr/",info_rate_file),header=T)
-    
   rate_t <- read.table(f1,header=T)
   
   j <- rate_t %>% select(-c(Partition_Index)) %>% 
     inner_join(info_rate_t,by="Rate_Category") %>%
     separate(Rate_Factor, into = c("dN", "dS"), sep = "\\,") 
 
-  outfile <- paste0(model,"/assigned_rates/processed_rates/sim_gamma_rates_combined_rep",rep,"_n",n,"_bl",bl,"_",bias,".txt")
-  write.table(j,outfile,sep="\t",quote=F,row.names=F)
+  if (distr_dir=='gamma_distr') {
+    outtemp <- gsub("sim_rates", "sim_gamma_rates_combined", f1)
+    outfinal <- gsub("raw_rates/gamma_distr", "processed_rates", outtemp)
+    write.table(j,outfinal,sep="\t",quote=F,row.names=F)
+  } else {
+    outtemp <- gsub("sim_rates", "sim_rates_combined", f1)
+    outfinal <- gsub("raw_rates/uniform_distr", "processed_rates", outtemp)
+    write.table(j,outfinal,sep="\t",quote=F,row.names=F)
+  }
 }
