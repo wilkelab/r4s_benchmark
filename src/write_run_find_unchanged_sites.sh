@@ -34,7 +34,11 @@ do
 					out_file=rep${j}_n${i}_bl${br_len}_${bias}_unchanged_sites.txt
 					
 					if [ $distr = "gamma" ]; then
-						echo "python ./src/find_unchanged_sites.py $SCRATCH/r4s_benchmark_data/aln/${model}/aa/gamma_distr/${aln} ./${model}/filtered_sites/gamma_distr/${out_file}"  >> ./src/run_find_unchanged_sites.sh
+						aln=rep${j}_n${i}_bl${br_len}_${bias}.fasta
+						for gamma in gamma1 gamma2 gamma3 gamma4 gamma5 gamma6
+						do 
+							echo "python ./src/find_unchanged_sites.py ../r4s_benchmark_data/aln/${model}/aa/gamma_distr/${aln} ./${model}/filtered_sites/gamma_distr/${out_file}"  >> ./src/run_find_unchanged_sites.sh
+						done
 					else
 						echo "python ./src/find_unchanged_sites.py ../r4s_benchmark_data/aln/${model}/aa/${aln} ./${model}/filtered_sites/${out_file}"  >> ./src/run_find_unchanged_sites.sh
 					fi

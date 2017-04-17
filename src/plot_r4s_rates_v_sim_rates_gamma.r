@@ -54,7 +54,8 @@ for (i in c(1:6)) {
     theme(axis.title = element_text(size = 14),
           axis.text = element_text(size = 12),
           legend.text = element_text(size = 11),
-          legend.title = element_text(size = 12))
+          legend.title = element_text(size = 12),
+          legend.position="none")
   
   ############### RMSD vs Branch len ###############
   rmsd_p <- ggplot(r,aes(bl,rmsd_true,colour=factor(num_taxa))) + 
@@ -74,7 +75,8 @@ for (i in c(1:6)) {
     theme(axis.title = element_text(size = 14),
           axis.text = element_text(size = 12),
           legend.text = element_text(size = 11),
-          legend.title = element_text(size = 12))
+          legend.title = element_text(size = 12),
+          legend.position="none")
   
   plot_lst[[length(plot_lst)+1]] <- cor_p
   plot_lst[[length(plot_lst)+1]] <- rmsd_p
@@ -83,22 +85,17 @@ for (i in c(1:6)) {
 grobs <- ggplotGrob(cor_p)$grobs
 legend <- grobs[[which(sapply(grobs, function(x) x$name) == "guide-box")]]
 
-prow <- plot_grid(plot_lst[[1]]+theme(legend.position="none"),
-                  plot_lst[[2]]+theme(legend.position="none"),
-                  plot_lst[[5]]+theme(legend.position="none"),
-                  plot_lst[[6]]+theme(legend.position="none"),
-                  plot_lst[[11]]+theme(legend.position="none"),
-                  plot_lst[[12]]+theme(legend.position="none"),
+prow <- plot_grid(plotlist=plot_lst,
                   labels="AUTO",
                   align = 'vh',
                   hjust = -1,
                   ncol=2,
-                  nrow=3)
+                  nrow=6)
 
 p <- plot_grid(prow, legend, rel_widths = c(2, .3))
 
 save_plot("plots/r4s_v_dNdS_gamma.png", p,
           ncol = 2, # we're saving a grid plot of 2 columns
-          nrow = 3, # and 2 rows
+          nrow = 6, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
           base_aspect_ratio = 1.3)
