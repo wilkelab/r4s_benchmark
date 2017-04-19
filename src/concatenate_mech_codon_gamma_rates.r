@@ -48,10 +48,18 @@ for (name in file_names) {
     true_rates_file <- gsub(paste0("r4s_rates/raw_rates/gamma_distr/",name), 
                             "assigned_rates/processed_rates/sim_gamma_rates_combined", t1[i])
     true_r <- read.table(true_rates_file,header=T)
-      
+    
     ##get simulated dN/dS by solving for dN/dS
     true_r$dNdS <-  as.numeric(true_r$dN)/as.numeric(true_r$dS)
     r$true <-  true_r$dNdS
+    
+    ##adding inferred FEL1 rates and fixing dN/dS=1 to be equal to 0 when sites have not changed
+    temp_file_name <- gsub(paste0("r4s_rates/raw_rates/",name,"_"), 
+                           "filtered_sites/", t1[i])
+    unchanged_sites_file <- gsub(".txt", 
+                                 "_unchanged_sites.txt", temp_file_name)
+    sites_t <- read.table(unchanged_sites_file,header=T)
+    
       
     if (i==1) {
       d <- r
