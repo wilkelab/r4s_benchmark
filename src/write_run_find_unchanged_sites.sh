@@ -10,41 +10,11 @@ fi
 if [ $distr = "gamma" ]; then
 	for aln in ${aln_file_arr[*]} 
 	do	 
-<<<<<<< HEAD
 		temp=`echo $aln | grep -oP 'rep.*\.fasta$'`
 		out_file=`echo $temp | sed s/.fasta/_unchanged_sites.txt/`
 		model='mech_codon'
 		
 		echo python ./src/find_unchanged_sites.py ${aln} ./${model}/filtered_sites/gamma_distr/${out_file}  >> ./src/run_find_unchanged_sites.sh
-=======
-		for bias in ${bias_arr[*]}
-		do	 
-			#for i in $(seq 7 $taxa_num)
-			for i in $(seq 4 $taxa_num) 
-			do
-				for j in $(seq 1 $rep_num) 
-				do
-					if [ $model = "mut_sel" ]; then
-						aln=rep${j}_n${i}_bl${br_len}_unequalpi_${bias}.fasta
-					else
-						aln=rep${j}_n${i}_bl${br_len}_${bias}.fasta
-					fi
-					
-					out_file=rep${j}_n${i}_bl${br_len}_${bias}_unchanged_sites.txt
-					
-					if [ $distr = "gamma" ]; then
-						aln=rep${j}_n${i}_bl${br_len}_${bias}.fasta
-						for gamma in gamma1 gamma2 gamma3 gamma4 gamma5 gamma6
-						do 
-							echo "python ./src/find_unchanged_sites.py ../r4s_benchmark_data/aln/${model}/aa/gamma_distr/${aln} ./${model}/filtered_sites/gamma_distr/${out_file}"  >> ./src/run_find_unchanged_sites.sh
-						done
-					else
-						echo "python ./src/find_unchanged_sites.py ../r4s_benchmark_data/aln/${model}/aa/${aln} ./${model}/filtered_sites/${out_file}"  >> ./src/run_find_unchanged_sites.sh
-					fi
-				done
-			done
-		done
->>>>>>> 5f1cc8fea7765dc7bce182d3fb6a847569a64351
 	done
 else
 	for aln in ${aln_file_arr[*]} 
