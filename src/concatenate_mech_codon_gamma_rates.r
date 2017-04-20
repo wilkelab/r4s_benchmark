@@ -53,13 +53,23 @@ for (name in file_names) {
     true_r$dNdS <-  as.numeric(true_r$dN)/as.numeric(true_r$dS)
     r$true <-  true_r$dNdS
     
-    ##adding inferred FEL1 rates and fixing dN/dS=1 to be equal to 0 when sites have not changed
-    temp_file_name <- gsub(paste0("r4s_rates/raw_rates/",name,"_"), 
-                           "filtered_sites/", t1[i])
+    ##adding inferred FEL1 rates  
+    temp_file_name <- gsub(paste0("r4s_rates/raw_rates/gamma_distr/",name,"_"), 
+                           "inferred_rates/gamma_distr/", t1[i])
+    inferred_rates_file <- gsub(".txt", 
+                                "_FEL1.txt", temp_file_name)
+    inf_r <- read.csv(inferred_rates_file)
+    
+    ##fixing dN/dS=1 to be equal to 0 when sites have not changed
+    temp_file_name <- gsub(paste0("r4s_rates/raw_rates/gamma_distr/",name,"_"), 
+                           "filtered_sites/gamma_distr/", t1[i])
     unchanged_sites_file <- gsub(".txt", 
                                  "_unchanged_sites.txt", temp_file_name)
     sites_t <- read.table(unchanged_sites_file,header=T)
     
+    filtered_inferred <- inf_r$dN.dS
+    filtered_inferred[sites_t$unchanged_site]=rep(0,length(which(sites_t$unchanged_site)))
+    r$inferred <- filtered_inferred
       
     if (i==1) {
       d <- r
