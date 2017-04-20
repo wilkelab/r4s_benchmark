@@ -72,8 +72,8 @@ for (i in c(1:6)) {
     stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
     xlab("Branch Length") +
     ylab("RMSD") +
-    coord_cartesian(ylim=c(0,5),xlim=c(0.0023,0.66))+
-    scale_y_continuous(breaks=seq(0,5,1))+
+    coord_cartesian(ylim=c(0,4),xlim=c(0.0023,0.66))+
+    scale_y_continuous(breaks=seq(0,4,1))+
     theme(axis.title = element_text(size = 14),
           axis.text = element_text(size = 12),
           legend.text = element_text(size = 11),
@@ -113,8 +113,8 @@ for (i in c(1:6)) {
     stat_summary(fun.y = mean,geom = "line",aes(color=factor(num_taxa)),size=0.6)+
     xlab("Branch Length") +
     ylab("RMSD") +
-    coord_cartesian(ylim=c(0,5),xlim=c(0.0023,0.66))+
-    scale_y_continuous(breaks=seq(0,5,1))+
+    coord_cartesian(ylim=c(0,4),xlim=c(0.0023,0.66))+
+    scale_y_continuous(breaks=seq(0,4,1))+
     theme(axis.title = element_text(size = 14),
           axis.text = element_text(size = 12),
           legend.text = element_text(size = 11),
