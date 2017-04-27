@@ -138,7 +138,7 @@ p <- plot_grid(r4s_vs_dNdS_nobias+ggtitle("Constant dS"),
                ncol=1,
                nrow=2)
 
-save_plot("plots/site-wise_r4s_v_dNdS_true.png", p,
+save_plot("plots/site-wise_r4s_v_dNdS_true.pdf", p,
           ncol = 1, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
@@ -195,7 +195,7 @@ p <- plot_grid(r4s_vs_MutSel_nobias+ggtitle("Neutral synonymous codons"),
                ncol=1,
                nrow=2)
 
-save_plot("plots/site-wise_r4s_v_MutSel_true.png", p,
+save_plot("plots/site-wise_r4s_v_MutSel_true.pdf", p,
           ncol = 1, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
@@ -304,7 +304,7 @@ prow_bias <- plot_grid(dNdS_p_nobias_bl_cor_true+theme(legend.position="none")+g
 
 p <- plot_grid( prow_bias, legend, rel_widths = c(2, .3))
 
-save_plot("plots/r4s_v_dNdS_true.png", p,
+save_plot("plots/r4s_v_dNdS_true.pdf", p,
           ncol = 2, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
@@ -415,7 +415,7 @@ prow_bias <- plot_grid(MutSel_p_nobias_bl_cor_true+theme(legend.position="none")
 
 p <- plot_grid(prow_bias, legend, rel_widths = c(2, .3))
 
-save_plot("plots/r4s_v_MutSel_true.png", p,
+save_plot("plots/r4s_v_MutSel_true.pdf", p,
           ncol = 2, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
@@ -523,7 +523,7 @@ prow_bias <- plot_grid(dNdS_p_nobias_bl_cor_inferred+theme(legend.position="none
 
 p <- plot_grid( prow_bias, legend, rel_widths = c(2, .3))
 
-save_plot("plots/r4s_v_dNdS_inferred.png", p,
+save_plot("plots/r4s_v_dNdS_inferred.pdf", p,
           ncol = 2, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
@@ -631,7 +631,7 @@ prow_bias <- plot_grid(MutSel_p_nobias_bl_cor_inferred+theme(legend.position="no
 
 p <- plot_grid( prow_bias, legend, rel_widths = c(2, .3))
 
-save_plot("plots/r4s_v_MutSel_inferred.png", p,
+save_plot("plots/r4s_v_MutSel_inferred.pdf", p,
           ncol = 2, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3

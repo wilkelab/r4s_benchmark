@@ -154,7 +154,7 @@ prow <- plot_grid(p_gpcr+ggtitle("Membrane proteins"),
                        ncol=1,
                        nrow=2)
 
-save_plot("plots/r4s_v_dNdS_inferred_natural_prot.png", prow,
+save_plot("plots/r4s_v_dNdS_inferred_natural_prot.pdf", prow,
           ncol = 1, # we're saving a grid plot of 2 columns
           nrow = 2, # and 2 rows
           # each individual subplot should have an aspect ratio of 1.3
