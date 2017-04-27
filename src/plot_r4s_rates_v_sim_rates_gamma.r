@@ -11,6 +11,12 @@ r_nobias_dNdS_raw <- read_csv("mech_codon/processed_rates/all_r4s_orig_rates_gam
 #####################################################################
 ### Calculating correlations, RMSD, and bias                      ###
 #####################################################################
+#gamma1:capsid
+#gamma2:gp120
+#gamma3:matrix
+#gamma4:ingetrase
+#gamma5:protease
+#gamma6:reverse transcriptase
 
 gamma_t <- data.frame(gamma_distr=c(1:6),
                       shape=c(0.23, 0.35, 0.647, 0.312, 0.378, 0.238),
@@ -125,11 +131,11 @@ for (i in c(1:6)) {
     grobs <- ggplotGrob(cor_true_p)$grobs
     legend <- grobs[[which(sapply(grobs, function(x) x$name) == "guide-box")]]
     
-    prow <- plot_grid(cor_true_p + theme(legend.position="none")+ggtitle("true dN/dS"),
-                      cor_inferred_p + ggtitle("inferred dN/dS"),
+    prow <- plot_grid(cor_true_p + theme(legend.position="none")+ggtitle("True dN/dS"),
+                      cor_inferred_p + ggtitle("Inferred dN/dS"),
                       rmsd_true_p,
                       rmsd_inferred_p,
-                      labels="AUTO",
+                      labels=c("A","C","B","D"),
                       align = 'vh',
                       hjust = -1,
                       ncol=2,
@@ -137,7 +143,7 @@ for (i in c(1:6)) {
     
     p <- plot_grid(prow, legend, rel_widths = c(2, .3))
     
-    save_plot(paste0("plots/r4s_v_dNdS_gamma",i,".png"), p,
+    save_plot(paste0("plots/r4s_v_dNdS_gamma",i,".pdf"), p,
               ncol = 2, # we're saving a grid plot of 2 columns
               nrow = 2, # and 2 rows
               # each individual subplot should have an aspect ratio of 1.3
