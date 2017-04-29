@@ -45,19 +45,20 @@ name_df <- data.frame(prot_name=c("ENST00000000412",
                                        "Protease",
                                        "Reverse Transcriptase"))
 
-r1 <- r %>% 
-  inner_join(name_df) %>%
+r_temp <- r %>% 
+  left_join(name_df,by="prot_name") %>%
   group_by(prot_name) %>%
   mutate(score_norm=score/mean(score),
-         panel_label=paste0(plot_prot_name[1],"\nn = ",num_taxa[1],", l = ",n(pos)))
+         panel_label=paste0(plot_prot_name[1],"\nn = ",num_taxa[1],", l = ",n()))
 
-r1 <- r1 %>% 
+r1 <- r_temp %>% 
   na.omit()  %>%
   summarize(cor=cor(inferred,score_norm,method="spearman",use="pairwise.complete.obs"),
-         p_value=cor.test(inferred,score)$p.value,
-         cor_label=paste("ρ =", round(cor, 2))) %>% 
-  select(cor_label,prot_name) %>%
-  left_join(r1)
+         p_value=cor.test(inferred,score)$p.value) %>%
+         #cor_label=paste("ρ =", round(cor, 2))) %>% 
+  #select(cor_label,prot_name) %>%
+  #select(prot_name) %>%
+  left_join(r_temp,by="prot_name")
 
 
 ##extract inferred rates and scores to be plotted in the geom_rug() 
@@ -126,7 +127,7 @@ p_gpcr <- ggplot(r1_gpcr,aes(score_filtered_norm,inferred_filtered))+
   theme(axis.title = element_text(size = 12),
         axis.text = element_text(size = 10),
         strip.text = element_text(size = 10))+
-  geom_text(aes(0.21,9,label=cor_label))
+  geom_text(aes(0.21,9,label=paste("rho ==", round(cor,2))), parse=T)
 
 p_hiv <- ggplot(r1_hiv,aes(score_filtered_norm,inferred_filtered))+ 
   geom_point()+
@@ -144,7 +145,7 @@ p_hiv <- ggplot(r1_hiv,aes(score_filtered_norm,inferred_filtered))+
   theme(axis.title = element_text(size = 12),
         axis.text = element_text(size = 10),
         strip.text = element_text(size = 10))+
-  geom_text(aes(0.004,9,label=cor_label))
+  geom_text(aes(0.004,9,label=paste("rho ==", round(cor,2))), parse=T)
 
 prow <- plot_grid(p_gpcr+ggtitle("Membrane proteins"),
                        p_hiv+ggtitle("HIV 1 proteins"),
