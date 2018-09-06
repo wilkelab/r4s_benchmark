@@ -2,7 +2,7 @@
 
 This repository contains all the scripts and data to reproduce the results of:
 
-D. K. Sydykova, C. O. Wilke (2017). Calculating site-specific evolutionary rates at the amino-acid or codon level yields similar rate estimates. PeerJ 5:e3391. [https://doi.org/10.7717/peerj.3391] (https://doi.org/10.7717/peerj.3391)
+D. K. Sydykova, C. O. Wilke (2017). Calculating site-specific evolutionary rates at the amino-acid or codon level yields similar rate estimates. PeerJ 5:e3391. [https://doi.org/10.7717/peerj.3391](https://doi.org/10.7717/peerj.3391)
 
 ## Contents
 
@@ -18,7 +18,7 @@ D. K. Sydykova, C. O. Wilke (2017). Calculating site-specific evolutionary rates
 	
 * `r4s_rates` contains inferred site-wise Rate4site rates. 
 	 
-`mut_sel` contains results for the alignments simulated with the mutation-selection (MutSel) model. MutSel alignments were simulated by Spielman et al. (2016). True site-wise and inferred dN/dS for their alignments can be found in their repository [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate)
+`mut_sel` contains results for the alignments simulated with the mutation-selection (MutSel) model. MutSel alignments were simulated by Spielman et al. (2016). True site-wise and inferred dN/dS for their alignments can be found in their repository [https://github.com/sjspielman/dnds_1rate_2rate](https://github.com/sjspielman/dnds_1rate_2rate)
 
 * `filtered_sites` contains information on all sites without any amino acid substitutions for each simulated alignment. 
 	
@@ -56,15 +56,15 @@ D. K. Sydykova, C. O. Wilke (2017). Calculating site-specific evolutionary rates
 
 ### dN/dS model
 
-The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) in the same directory as the current repository.
+The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_2rate](https://github.com/sjspielman/dnds_1rate_2rate) in the same directory as the current repository.
 
-1. Copy trees from [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) using the command line `cp ../dnds_1rate_2rate/trees/n*_bl*.tre ./trees/`.
+1. Copy trees from [https://github.com/sjspielman/dnds_1rate_2rate](https://github.com/sjspielman/dnds_1rate_2rate) using the command line `cp ../dnds_1rate_2rate/trees/n*_bl*.tre ./trees/`.
 
 2. Simulate alignments using `./src/write_run_sim_aln.sh`. This script will write `run_sim_aln.sh` to simulate dN/dS alignments. 
 
 3. Translate simulated nucleotide alignments to amino acids using `./src/write_run_translate_aln.sh`.
 
-4. Infer site-wise dN/dS with `HyPhy` using the script `./src/dnds_inference/submit_run_inference.sh`. This script was copied from [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) and modified for this analysis.
+4. Infer site-wise dN/dS with `HyPhy` using the script `./src/dnds_inference/submit_run_inference.sh`. This script was copied from [https://github.com/sjspielman/dnds_1rate_2rate](https://github.com/sjspielman/dnds_1rate_2rate) and modified for this analysis.
 
 5. Infer site-wise Rate4Site scores using `./src/write_run_r4s_mech_codon.sh`. This script will write `run_r4s_mech_codon.sh` which uses `r4s_pipeline.sh` to run Rate4Site on simulated alignments. 
 
@@ -72,7 +72,7 @@ The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_
 
 ### MutSel model
 
-The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) in the same directory as the current repository.
+The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_2rate](https://github.com/sjspielman/dnds_1rate_2rate) in the same directory as the current repository.
 
 1. Translate simulated nucleotide alignments from Spielman et al. (2016) to amino acids using `./src/write_run_translate_aln.sh`.
 
@@ -88,7 +88,7 @@ The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_
 
 3. Infer trees from the amino acid sequences with RAxML. The script `./src/write_run_raxml.sh` will write `run_raxml.sh` which will run the inference. 
 
-4. Infer site-wise dN/dS with `HyPhy` using the script `./src/dnds_inference/submit_run_inference_nat_prot.sh`. This script was copied from [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) and modified for this analysis.
+4. Infer site-wise dN/dS with `HyPhy` using the script `./src/dnds_inference/submit_run_inference_nat_prot.sh`. This script was copied from [https://github.com/sjspielman/dnds_1rate_2rate](https://github.com/sjspielman/dnds_1rate_2rate) and modified for this analysis.
 
 5. Infer site-wise Rate4Site scores using `./src/write_run_r4s_natural_prot.sh`. This script will write `run_r4s_natural_prot.sh` which will run Rate4Site on natural alignments. 
 
