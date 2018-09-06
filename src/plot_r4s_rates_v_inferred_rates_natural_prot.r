@@ -147,8 +147,8 @@ p_hiv <- ggplot(r1_hiv,aes(score_filtered_norm,inferred_filtered))+
         strip.text = element_text(size = 10))+
   geom_text(aes(0.004,9,label=paste("rho ==", round(cor,2))), parse=T)
 
-prow <- plot_grid(p_gpcr+ggtitle("Membrane proteins"),
-                       p_hiv+ggtitle("HIV 1 proteins"),
+prow <- plot_grid(p_gpcr,
+                       p_hiv,
                        labels=c("A","B"),
                        align = 'vh',
                        hjust = -1,

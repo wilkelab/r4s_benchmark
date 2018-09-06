@@ -1,10 +1,10 @@
-#Calculating site-specific evolutionary rates at the amino-acid or codon level yields similar rate estimates
+# Calculating site-specific evolutionary rates at the amino-acid or codon level yields similar rate estimates
 
 This repository contains all the scripts and data to reproduce the results of:
 
-D. K. Sydykova, C. O. Wilke (preprint). Calculating site-specific evolutionary rates at the amino-acid or codon level yields similar rate estimates. PeerJ Preprints 5:e2739v1. [https://peerj.com/preprints/2739v1/] (https://peerj.com/preprints/2739v1/)
+D. K. Sydykova, C. O. Wilke (2017). Calculating site-specific evolutionary rates at the amino-acid or codon level yields similar rate estimates. PeerJ 5:e3391. [https://doi.org/10.7717/peerj.3391] (https://doi.org/10.7717/peerj.3391)
 
-##Contents
+## Contents
 
 `mech_codon` contains results for the alignments simulated with the dN/dS model.
 
@@ -52,9 +52,9 @@ D. K. Sydykova, C. O. Wilke (preprint). Calculating site-specific evolutionary r
 
 `src` contains all of the scripts used to analyze the data and plot the figures. The usage of each script is described in the section below. 
 
-##Analysis
+## Analysis
 
-###dN/dS model
+### dN/dS model
 
 The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) in the same directory as the current repository.
 
@@ -70,7 +70,7 @@ The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_
 
 6. Concatenate all rates into a table with `./src/concatenate_mech_codon_rates.r`. 
 
-###MutSel model
+### MutSel model
 
 The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_2rate] (https://github.com/sjspielman/dnds_1rate_2rate) in the same directory as the current repository.
 
@@ -80,7 +80,7 @@ The analysis in this section requires [https://github.com/sjspielman/dnds_1rate_
 
 3. Concatenate all rates into a table with `./src/concatenate_mut_sel_rates.r`. 
 
-###Natural proteins
+### Natural proteins
 
 1. Align amino acid sequences using `./src/write_run_align_natural_prot.sh`.
 

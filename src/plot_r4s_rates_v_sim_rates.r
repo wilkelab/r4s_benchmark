@@ -130,8 +130,8 @@ r4s_vs_dNdS_bias <- ggplot(rr_bias_dNdS,aes(true_norm,score_norm))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12))
 
-p <- plot_grid(r4s_vs_dNdS_nobias+ggtitle("Constant dS"),
-               r4s_vs_dNdS_bias+ggtitle("Variable dS"),
+p <- plot_grid(r4s_vs_dNdS_nobias,
+               r4s_vs_dNdS_bias,
                labels="AUTO",
                align = 'vh',
                hjust = -1,
@@ -187,8 +187,8 @@ r4s_vs_MutSel_bias <- ggplot(rr_bias_MutSel,aes(true_norm,score_norm))+
   theme(axis.title = element_text(size = 14),
         axis.text = element_text(size = 12))
 
-p <- plot_grid(r4s_vs_MutSel_nobias+ggtitle("Neutral synonymous codons"),
-               r4s_vs_MutSel_bias+ggtitle("Non-neutral synonymous codons"),
+p <- plot_grid(r4s_vs_MutSel_nobias,
+               r4s_vs_MutSel_bias,
                labels="AUTO",
                align = 'vh',
                hjust = -1,
